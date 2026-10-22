@@ -673,3 +673,12 @@ For orientation, one iteration of `event_loop`:
   cache-owning rank still enters the replica MIN; raising would hang healthy
   peers. Clients are not failed. The D role never prefetches: its admission
   probes Device only.
+
+## External encoder with an aggregated language model
+
+`--enable-encoder-disaggregation` explicitly enables the existing EPD admission
+and receive-buffer budgeting in aggregated (`null`) mode. Only requests carrying
+encoder handshakes wait for remote embeddings; local image and text requests
+retain their normal admission path. The device side owns receive buffers and
+reassembly as on a prefill node. This does not construct a P/D KV-transfer peer
+or change where decode executes.
