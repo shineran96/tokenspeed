@@ -26,4 +26,4 @@
 
 ## 十轮递增前缀压测 skill
 
-另见 [tokenspeed-pd-prefix-bench](skills/tokenspeed-pd-prefix-bench/SKILL.md)：100K prime、110K–200K 十轮、每轮 1K 输出，prime 全局屏障后各会话独立推进。该目录可单独复制到 Codex skills 目录。包含历史脚本及数据引用；脚本路由映射需迁移校验，完整 token 数据不随仓库分发。
+另见 [tokenspeed-pd-prefix-bench](skills/tokenspeed-pd-prefix-bench/SKILL.md)：100K prime、110K–200K 十轮、每轮 1K 输出，prime 全局屏障后各会话独立推进。该目录可单独复制到 Codex skills 目录。包含历史脚本和完整压缩输入 `skills/tokenspeed-pd-prefix-bench/data/sessions128.json.gz`；脚本路由映射仍需迁移校验。解压方法及 SHA256 见该 skill 的 references/data.md。

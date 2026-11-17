@@ -1,0 +1,15 @@
+{
+  "file": "sessions128.json.gz",
+  "compression": "gzip",
+  "compressed_bytes": 32195255,
+  "compressed_sha256": "c1b605d07284f21f9fbb91187116790372e7f5f5501020047dcf7ec048644718",
+  "uncompressed_bytes": 121539987,
+  "uncompressed_sha256": "6ae10b8740c882349cf99fe11c59ca83b966e3c387adeaade248ae9ff3c8bd7f",
+  "sessions": 128,
+  "tokens_per_session": 204800,
+  "tokenizer": "DeepSeek-V4.1-Flash-1017",
+  "prime_tokens": 102400,
+  "chunk_tokens": 10240,
+  "formal_rounds": 10,
+  "output_tokens": 1024
+}

@@ -21,7 +21,7 @@ description: 使用 LongBench 来源数据进行 TokenSpeed PD 十轮递增前�
 
 `original/bench_v2.py` 和 `original/client_v2.py` 保留历史实测脚本供参考，**不是通用即用入口**：client 写死三个 worker 及 P 索引映射。迁移前按执行文档核对接口、映射和配置，在新实验目录调整副本，保存差异。
 
-数据采用引用方式，不将完整 LongBench token 序列纳入 Git。不要将四轮数据当成十轮输入，也不要声称本仓库包含完整输入文件。
+完整十轮输入已归档为 `data/sessions128.json.gz`，解压和哈希验证方法见 references/data.md。不要将四轮数据当成十轮输入。
 
 ## 交付
 
