@@ -639,10 +639,12 @@ if _HAS_DEEP_EP_GEMM:
 # requirement only bites for internode low-latency traffic.
 
 
-def _mxfp4_bf16_get_dispatcher(
-    plan: dict,
-    w: torch.nn.Module,
-    x: torch.Tensor,
+def _mxfp4_bf16_get_dispatcher(plan: dict, w: torch.nn.Module, x: torch.Tensor) -> DeepEPDispatcher:
+    return _mxfp4_get_dispatcher(plan, w, x, use_fp8=False)
+
+
+def _mxfp4_get_dispatcher(
+    plan: dict, w: torch.nn.Module, x: torch.Tensor, *, use_fp8: bool,
 ) -> DeepEPDispatcher:
     """Build (once per plan) the dispatcher owning this layer's DeepEP legs.
 
@@ -677,9 +679,8 @@ def _mxfp4_bf16_get_dispatcher(
         deepep_mode=deepep_mode,
         async_finish=False,
         return_recv_hook=True,
-        # BF16 on the wire: these W4A16 backends consume BF16 directly, so the
-        # FP8 wire cast of the DeepGEMM path would only add quantization error.
-        use_fp8=False,
+        # Wire precision is selected explicitly by the expert backend.
+        use_fp8=use_fp8,
     )
     plan["_deepep_dispatcher"] = dispatcher
     return dispatcher

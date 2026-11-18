@@ -727,3 +727,22 @@ under CUDA Graph replay, including empty expert counts.
 This adapter does not change DeepEP buffer ownership or the wire protocol.
 The compact allocation still uses a graph-safe upper bound; it does not
 allocate a host-synchronized exact receive size.
+
+### Experimental Humming MXFP4 with Legacy DeepEP (SM90)
+
+The optional `humming` solution uses the independent Humming package, not
+FlashInfer's mixed-input implementation. It consumes checkpoint MXFP4 weights,
+dispatches block-128 FP8 activations, computes grouped-masked experts, and combines
+BF16 outputs. Route weights are applied once by DeepEP combine. It currently
+requires standard clamped SwiGLU, precomputed routing, and low-latency DeepEP.
+
+Install Humming in the serving virtual environment. The integration prototype
+was tested against upstream commit
+`d0c7af98d7f556132f86e671de7f397991e2df2b`; other versions are unverified.
+Select the backend explicitly; the existing CUTLASS and Marlin solutions remain.
+
+Receive counts stay on device. Scale conversion touches valid rows only, while
+expert output allocation still reserves the configured receive capacity.
+Default Humming accumulation can vary with layout; FP8 activation quantization
+can amplify those differences. Batch-invariant diagnostic checks do not establish
+model accuracy or end-to-end performance for the default path.
