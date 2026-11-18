@@ -1,0 +1,4 @@
+*.log
+*.jsonl
+__pycache__/
+config.local.sh
