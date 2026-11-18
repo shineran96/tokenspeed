@@ -190,3 +190,48 @@ def test_w4a16_ep_masks_nonlocal_experts() -> None:
     torch.testing.assert_close(
         acc, expected.float(), atol=float(2e-2 * magnitude), rtol=2e-2
     )
+
+def test_w4a16_masked_receive_graph() -> None:
+    """Changing GPU receive counts must not require recapturing the graph."""
+    _requires_sm90_flashinfer()
+    from tokenspeed_kernel.ops.moe.flashinfer import (
+        flashinfer_cutlass_mxfp4_masked_moe_apply,
+        flashinfer_cutlass_mxfp4_w4a16_moe_weights,
+    )
+
+    x, raw, _, _, _, _, limit, _ = _case(64, seed=31)
+    # Distinct local expert weights and nonzero EP rank check ID translation.
+    w = _weights({k: v.clone() for k, v in raw.items()}, 8, 2, 1, limit)
+    flashinfer_cutlass_mxfp4_w4a16_moe_weights({}, w)
+    source = x.reshape(8, 8, 256)
+    counts = torch.full((8,), 8, dtype=torch.int32, device=x.device)
+
+    def run():
+        return flashinfer_cutlass_mxfp4_masked_moe_apply(
+            source.clone(), counts, w, 64, 1, False
+        )
+
+    with autotune(tune_mode=True, tuning_buckets=None, round_up=None):
+        run()
+    for _ in range(3):
+        run()
+    torch.cuda.synchronize()
+    graph = torch.cuda.CUDAGraph()
+    with torch.cuda.graph(graph):
+        output = run()
+    ids = torch.arange(8, device=x.device, dtype=torch.int32)
+    ids = ids.repeat_interleave(8).reshape(-1, 1)
+    reference = _clamped_swiglu_moe_reference(
+        x, raw, ids, torch.ones((64, 1), device=x.device), limit
+    ).reshape_as(source)
+    atol = float(reference.abs().max()) * 2e-2
+    for values in ([8, 3, 0, 5, 1, 8, 0, 4], [0] * 8, [8] * 8,
+                   [0, 0, 0, 0, 0, 0, 0, 1]):
+        counts.copy_(torch.tensor(values, device=x.device, dtype=torch.int32))
+        graph.replay()
+        torch.cuda.synchronize()
+        valid = torch.arange(8, device=x.device)[None, :] < counts[:, None]
+        torch.testing.assert_close(
+            output[valid].float(), reference[valid].float(),
+            rtol=2e-2, atol=atol,
+        )

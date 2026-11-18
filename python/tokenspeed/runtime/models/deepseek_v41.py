@@ -2322,8 +2322,8 @@ class DeepseekV41DecoderLayer(nn.Module):
                 image_mask,
                 sum(counts),
                 max(counts),
-                ctx=ctx if self.ffn.use_mega_moe else None,
-                comm_manager=self.comm_manager if self.ffn.use_mega_moe else None,
+                ctx=ctx,
+                comm_manager=self.comm_manager,
             )
         # DP ranks may mix image and text rows. Carry the routing mask in
         # the same gather as the activations; keep the wire width 16B aligned.

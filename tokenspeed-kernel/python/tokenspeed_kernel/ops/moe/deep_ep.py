@@ -639,7 +639,7 @@ if _HAS_DEEP_EP_GEMM:
 # requirement only bites for internode low-latency traffic.
 
 
-def _marlin_mxfp4_get_dispatcher(
+def _mxfp4_bf16_get_dispatcher(
     plan: dict,
     w: torch.nn.Module,
     x: torch.Tensor,
@@ -677,7 +677,7 @@ def _marlin_mxfp4_get_dispatcher(
         deepep_mode=deepep_mode,
         async_finish=False,
         return_recv_hook=True,
-        # bf16 on the wire: Marlin consumes bf16 activations directly, so the
+        # BF16 on the wire: these W4A16 backends consume BF16 directly, so the
         # FP8 wire cast of the DeepGEMM path would only add quantization error.
         use_fp8=False,
     )
@@ -818,7 +818,7 @@ def marlin_mxfp4_deepep_moe_apply(
     if topk_weights is None or topk_ids is None:
         raise ValueError("Marlin MXFP4 DeepEP MoE requires precomputed top-k")
 
-    dispatcher = _marlin_mxfp4_get_dispatcher(plan, w, x)
+    dispatcher = _mxfp4_bf16_get_dispatcher(plan, w, x)
     topk_ids = topk_ids.to(torch.int64)
     topk_weights = topk_weights.to(torch.float32)
 

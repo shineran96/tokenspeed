@@ -43,7 +43,12 @@ from tokenspeed.runtime.layers.moe.topk import (
     TopKOutput,
     simulated_router_logits,
 )
-from tokenspeed.runtime.layers.moe.utils import RoutingMethodType, get_moe_backend
+from tokenspeed.runtime.layers.moe.utils import (
+    RoutingMethodType,
+    get_all2all_backend,
+    get_moe_backend,
+    use_deepep_low_latency,
+)
 from tokenspeed.runtime.layers.quantization import Fp8Config, Mxfp4Config
 from tokenspeed.runtime.layers.quantization.base_config import QuantizationConfig
 from tokenspeed.runtime.utils import add_prefix
@@ -216,7 +221,12 @@ class DeepseekV4MoE(nn.Module):
         moe_backend = get_moe_backend()
         self.use_mega_moe = moe_backend.is_mega_moe()
         self.use_gluon_petit = moe_backend.is_gluon_petit()
-        self.owns_ep_communication = self.use_mega_moe or self.use_gluon_petit
+        self.use_deepep = get_all2all_backend().is_deepep()
+        self.owns_ep_communication = (
+            self.use_mega_moe or self.use_gluon_petit or self.use_deepep
+        )
+        if self.use_deepep and (self.use_mega_moe or self.use_gluon_petit):
+            raise ValueError("DeepEP cannot be combined with another collective MoE backend")
         # Petit's VMM-backed collective and auxiliary-stream shared experts do
         # not replay safely together. Keep both branches on the main stream.
         self.stream_fork = StreamFork(None if self.use_gluon_petit else aux_stream)
@@ -270,8 +280,8 @@ class DeepseekV4MoE(nn.Module):
         )
 
         if config.n_shared_experts is not None:
-            # MegaMoE outputs are complete, so its shared expert stays dense and local.
-            if self.use_mega_moe or self.use_gluon_petit:
+            # Collective MoE returns complete local rows; shared experts use dense TP.
+            if self.owns_ep_communication:
                 shared_tp_rank = mapping.dense.tp_rank
                 shared_tp_size = mapping.dense.tp_size
                 shared_tp_group = mapping.dense.tp_group
@@ -448,6 +458,7 @@ class DeepseekV4MoE(nn.Module):
         num_global_tokens: int,
         max_num_tokens_per_gpu: int,
         do_finalize: bool,
+        low_latency: bool | None,
     ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         return self.experts(
             hidden_states=hidden_states,
@@ -455,6 +466,7 @@ class DeepseekV4MoE(nn.Module):
             num_global_tokens=num_global_tokens,
             max_num_tokens_per_gpu=max_num_tokens_per_gpu,
             do_finalize=do_finalize,
+            low_latency=low_latency,
         )
 
     def _forward_shared_experts(
@@ -475,7 +487,7 @@ class DeepseekV4MoE(nn.Module):
             shared, _ = comm_manager.post_dense_comm(shared, None, ctx)
         return shared
 
-    def forward_mega_moe(
+    def forward_collective(
         self,
         hidden_states: torch.Tensor,
         input_ids: torch.Tensor,
@@ -484,27 +496,35 @@ class DeepseekV4MoE(nn.Module):
         ctx: ForwardContext,
         comm_manager: CommManager,
     ) -> torch.Tensor:
+        if ctx is None or comm_manager is None:
+            raise ValueError("Collective MoE requires forward context and communication manager")
+        low_latency = (
+            use_deepep_low_latency(ctx, self.mapping.attn.dp_size)
+            if self.use_deepep else None
+        )
         with nvtx_range("moe_select_experts"):
             topk_output = self._compute_topk_output(hidden_states, input_ids)
         if self.shared_expert_fused:
             # The routed output already includes the shared expert.
-            with nvtx_range("moe_mega_experts"):
+            with nvtx_range("moe_collective_experts"):
                 return self._forward_routed_experts(
                     hidden_states,
                     topk_output,
                     num_global_tokens,
                     max_num_tokens_per_gpu,
                     do_finalize=True,
+                    low_latency=low_latency,
                 )
         shared = None
         with self.stream_fork.scope(enable=get_is_capture_mode()) as fork:
-            with nvtx_range("moe_mega_experts"):
+            with nvtx_range("moe_collective_experts"):
                 routed = self._forward_routed_experts(
                     hidden_states,
                     topk_output,
                     num_global_tokens,
                     max_num_tokens_per_gpu,
                     do_finalize=True,
+                    low_latency=low_latency,
                 )
             with fork.branch():
                 shared = self._forward_shared_experts(
@@ -543,6 +563,7 @@ class DeepseekV4MoE(nn.Module):
                     num_global_tokens,
                     max_num_tokens_per_gpu,
                     do_finalize=not deferred_finalize,
+                    low_latency=None,
                 )
             with fork.branch():
                 shared = self._forward_shared_experts(hidden_states)
@@ -573,10 +594,10 @@ class DeepseekV4MoE(nn.Module):
         comm_manager: CommManager | None = None,
         out: torch.Tensor | None = None,
     ) -> torch.Tensor:
-        if self.use_mega_moe:
+        if self.use_mega_moe or self.use_deepep:
             if out is not None:
-                raise ValueError("DeepSeek V4 MegaMoE does not support out")
-            return self.forward_mega_moe(
+                raise ValueError("DeepSeek V4 collective MoE does not support out")
+            return self.forward_collective(
                 hidden_states,
                 input_ids,
                 num_global_tokens,

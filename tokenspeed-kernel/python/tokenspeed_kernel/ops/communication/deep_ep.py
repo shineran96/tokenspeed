@@ -160,6 +160,7 @@ class DeepEPBuffer:
     _num_max_dispatch_tokens_per_rank: int | None = None
     _num_experts: int | None = None
     _deepep_mode: DeepEPMode | None = None
+    _uses_multiple_layouts: bool = False
 
     @classmethod
     def get_deepep_buffer(
@@ -257,7 +258,11 @@ class DeepEPBuffer:
         experts, a bigger low-latency capacity, or a mode whose leg was never
         allocated) would corrupt dispatch instead of failing.
         """
-        if hidden_size != cls._hidden_size or num_experts != cls._num_experts:
+        experts_fit = num_experts == cls._num_experts or (
+            num_experts is not None and cls._num_experts is not None
+            and 0 < num_experts < cls._num_experts
+        )
+        if hidden_size != cls._hidden_size or not experts_fit:
             raise ValueError(
                 "DeepEP buffer was allocated for hidden_size="
                 f"{cls._hidden_size}, num_experts={cls._num_experts}; cannot "
@@ -281,6 +286,20 @@ class DeepEPBuffer:
                     f"{cls._num_max_dispatch_tokens_per_rank} tokens per rank; "
                     f"cannot serve {num_max_dispatch_tokens_per_rank}"
                 )
+
+        if num_experts != cls._num_experts or (
+            deepep_mode.enable_low_latency()
+            and num_max_dispatch_tokens_per_rank != cls._num_max_dispatch_tokens_per_rank
+        ):
+            cls._uses_multiple_layouts = True
+
+    @classmethod
+    def prepare_low_latency_dispatch(cls, tokens: int, hidden: int, experts: int):
+        # Different expert counts put low-latency counters at different offsets.
+        # Record the clean in every dispatch when layouts share storage so
+        # arbitrary target/draft graph replay order cannot use stale counters.
+        if cls._uses_multiple_layouts:
+            cls._buffer.clean_low_latency_buffer(tokens, hidden, experts)
 
     @classmethod
     def clean_buffer(cls):
@@ -716,6 +735,9 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
             const auto num_warps = kNumWarpGroups * kNumWarpsPerGroup;
         """
         buffer = self._get_buffer()
+        DeepEPBuffer.prepare_low_latency_dispatch(
+            self.num_max_dispatch_tokens_per_rank, self.hidden_size, self.num_experts
+        )
         packed_recv_hidden, packed_recv_count, self.handle, event, hook = (
             buffer.low_latency_dispatch(
                 hidden_states,

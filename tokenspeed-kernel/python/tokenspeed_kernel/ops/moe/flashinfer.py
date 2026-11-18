@@ -1774,6 +1774,46 @@ if platform.is_nvidia:
             enable_pdl=enable_pdl,
         )[0]
 
+    def flashinfer_cutlass_mxfp4_masked_moe_apply(
+        recv_x: torch.Tensor,
+        counts: torch.Tensor,
+        w: torch.nn.Module,
+        num_global_tokens: int,
+        top_k: int,
+        enable_pdl: bool,
+    ) -> torch.Tensor:
+        """Compute device-counted BF16 expert rows for DeepEP combine.
+
+        recv_x is [local experts, receive capacity, hidden]; counts holds
+        valid rows per expert on the GPU. num_global_tokens and top_k bound
+        the compact allocation without copying counts to the host.
+        w holds the existing W4A16 weights and EP ownership metadata.
+        Returns recv_x with valid rows replaced by unweighted expert outputs;
+        DeepEP combine must apply the original routing weights exactly once.
+        """
+        from tokenspeed_kernel.ops.moe._deep_ep.layout import (
+            pack_recv_rows,
+            unpack_recv_rows,
+        )
+
+        # CUTLASS performs its own expert tiling, so no Marlin row alignment.
+        packed, _, expert_ids, total, offsets = pack_recv_rows(
+            recv_x, counts, num_global_tokens, top_k, 1
+        )
+        live = torch.arange(packed.shape[0], device=packed.device) < total[0]
+        # The existing CUTLASS EP interface expects global expert IDs.
+        ids = torch.where(
+            live, expert_ids + w.ep_rank * w.num_local_experts, -1
+        ).reshape(-1, 1)
+        # Unused capacity must not expose uninitialized NaNs to fused routing.
+        packed = packed.masked_fill(~live[:, None], 0)
+        output = _cutlass_mxfp4_apply(
+            packed, w, torch.ones_like(ids, dtype=torch.float32), ids,
+            True, enable_pdl, _W4A16,
+            [w.w13_weight_scale, w.w2_weight_scale], False,
+        )
+        return unpack_recv_rows(output, counts, offsets, recv_x, 1)
+
     _CAPABILITY = CapabilityRequirement(
         vendors=frozenset({"nvidia"}),
         # The *_for_sm90_mixed_gemm layouts feed FlashInfer's fused_moe_90
@@ -1811,6 +1851,72 @@ if platform.is_nvidia:
             # saturate the FP8 conversion, so unclamped layers never plan here.
             traits["activation_clamped"] = frozenset({True})
         return traits
+
+    _deepep_traits = _traits("input")
+    _deepep_traits.update(
+        supports_all_to_all_ep=frozenset({True}),
+        deepep_modes=frozenset({"low_latency"}),
+    )
+
+    @register_kernel(
+        "moe",
+        "apply",
+        name="flashinfer_cutlass_mxfp4_deepep_moe_apply",
+        solution="flashinfer_cutlass",
+        weight_preprocessor=flashinfer_cutlass_mxfp4_w4a16_moe_weights,
+        capability=_CAPABILITY,
+        signatures=format_signatures("x", "dense", {torch.bfloat16}),
+        traits=_deepep_traits,
+        priority=Priority.PORTABLE,
+    )
+    def flashinfer_cutlass_mxfp4_deepep_moe_apply(
+        plan: dict,
+        x: torch.Tensor,
+        w: torch.nn.Module,
+        router_logits: torch.Tensor,
+        topk_weights: torch.Tensor | None = None,
+        topk_ids: torch.Tensor | None = None,
+        num_tokens_global: int | None = None,
+        max_num_tokens_per_gpu: int | None = None,
+        do_finalize: bool = True,
+        enable_pdl: bool = False,
+        low_latency: bool | None = None,
+        overlap_fn=None,
+    ) -> torch.Tensor:
+        """Apply W4A16 experts through Legacy DeepEP low-latency collectives.
+
+        x holds this rank's BF16 token rows. topk_ids are global expert IDs;
+        topk_weights are applied by combine only. plan supplies the shared
+        process group and configured receive capacity. num_tokens_global
+        bounds compact expert rows, including graph padding. w contains
+        preprocessed CUTLASS weights with the original EP ownership.
+        Returns combined local token outputs; no outer reduction is needed.
+        """
+        from tokenspeed_kernel.ops.communication.deep_ep import DeepEPMode
+        from tokenspeed_kernel.ops.moe.deep_ep import _mxfp4_bf16_get_dispatcher
+
+        if not do_finalize:
+            raise ValueError("CUTLASS DeepEP MoE cannot defer finalization")
+        if topk_ids is None or topk_weights is None:
+            raise ValueError("CUTLASS DeepEP MoE requires precomputed routing")
+        dispatcher = _mxfp4_bf16_get_dispatcher(plan, w, x)
+        if dispatcher.deepep_mode.resolve(low_latency) != DeepEPMode.low_latency:
+            raise ValueError("CUTLASS DeepEP currently requires low_latency mode")
+        ids = topk_ids.to(torch.int64)
+        weights = topk_weights.to(torch.float32)
+        bound = (
+            num_tokens_global if num_tokens_global is not None
+            else plan["deepep_low_latency_max_num_tokens_per_gpu"] * w.ep_size
+        )
+        dispatcher.dispatch_a(x, ids, weights, low_latency=True)
+        if overlap_fn is not None:
+            overlap_fn()
+        recv_x, _, _, _, _, _, counts = dispatcher.dispatch_b()
+        output = flashinfer_cutlass_mxfp4_masked_moe_apply(
+            recv_x, counts, w, bound, ids.shape[1], enable_pdl
+        )
+        dispatcher.combine_a(output, ids, weights, low_latency=True)
+        return dispatcher.combine_b()
 
     @register_kernel(
         "moe",

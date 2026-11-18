@@ -3935,13 +3935,14 @@ def test_routing_matches_reference_bias_and_normalization(topk, vision, with_ima
     )
     moe.hash_indices_dtype = torch.int64
     moe.use_mega_moe = False
+    moe.use_deepep = False
     moe.use_gluon_petit = False
     empty = logits[:0]
     target = torch.empty_like(empty)
     assert moe(empty, image_mask, 0, 0) is empty
     assert moe(empty, image_mask, 0, 0, out=target) is target
     moe.use_mega_moe = True
-    with pytest.raises(ValueError, match="MegaMoE does not support out"):
+    with pytest.raises(ValueError, match="collective MoE does not support out"):
         moe(empty, image_mask, 0, 0, out=target)
     router_logits, actual_bias, _, _ = moe._routing_inputs(logits, image_mask)
     weights, ids = moe_topk(
@@ -4454,3 +4455,24 @@ def test_mega_moe_takes_the_shared_expert_once(monkeypatch, caplog, case):
         shared.down_proj.weight_scale_inv,
     )
     assert all(t.data_ptr() == p.data_ptr() for t, p in zip(tensors, params))
+
+
+def test_deepep_dp16_shared_expert_uses_dense_partition(monkeypatch):
+    from tokenspeed.runtime.distributed.mapping import DenseLayerMapping
+    from tokenspeed.runtime.layers.moe.utils import All2AllBackend
+
+    mapping = _mapping(0, 1, 16)
+    mapping.dense = DenseLayerMapping(rank=0, world_size=16, tp_size=1, dp_size=16)
+    _mock_loader_hardware(monkeypatch, mapping)
+    for module in (v41, v4, expert_module):
+        monkeypatch.setattr(module, "get_moe_backend", lambda: MoeBackend.MARLIN)
+    monkeypatch.setattr(v4, "get_all2all_backend", lambda: All2AllBackend.DEEPEP)
+    monkeypatch.setattr(pg_manager, "get_process_group", lambda *args: None)
+    metadata = vars(_loader_config())
+    metadata.update(hidden_size=256, moe_intermediate_size=2304, n_routed_experts=32)
+    config = v41.DeepseekV41Config(text_config=metadata).text_config
+    with torch.device("meta"):
+        moe = v41.DeepseekV41MoE(config, mapping, _quant(), 0, "ffn", None)
+    # Ordinary EP16 would split K to 144, which cannot hold FP8 blocks of 32.
+    assert moe.shared_experts.down_proj.weight.shape[-1] == 2304
+    assert moe.experts.num_local_experts == 2

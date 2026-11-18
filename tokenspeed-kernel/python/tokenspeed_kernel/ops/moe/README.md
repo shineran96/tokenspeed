@@ -710,3 +710,20 @@ also exercise uneven/empty owners over multiple GPUs:
 python -m torch.distributed.run --standalone --nproc-per-node=2 -m pytest -q \
   tokenspeed-kernel/test/nvidia/ops/moe/test_deep_gemm_mxfp4_mega_moe.py
 ```
+
+## SM90 CUTLASS MXFP4 with Legacy DeepEP
+
+The W4A16 adapter supports low-latency dispatch/combine with BF16 wire
+activations. Select the CUTLASS backend with DeepEP low-latency mode;
+normal-mode transfers are not advertised by this adapter.
+
+Receive counts remain on the GPU. Valid expert rows are compacted into a
+fixed-capacity tensor bounded by global source rows and top-k, with invalid
+routes masked out. The existing CUTLASS EP interface receives global expert
+IDs. Outputs are restored to the receive layout, and DeepEP combine applies
+the original route weights exactly once. The same path runs eagerly and
+under CUDA Graph replay, including empty expert counts.
+
+This adapter does not change DeepEP buffer ownership or the wire protocol.
+The compact allocation still uses a graph-safe upper bound; it does not
+allocate a host-synchronized exact receive size.

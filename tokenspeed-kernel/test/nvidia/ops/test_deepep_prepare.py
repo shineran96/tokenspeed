@@ -179,6 +179,7 @@ def buffer_allocations(monkeypatch):
     monkeypatch.setattr(deep_ep, "_get_available_gpu_memory", lambda device: 100.0)
     monkeypatch.setattr(deep_ep, "_resolve_allow_mnnvl", lambda device: False)
     monkeypatch.setattr(torch.cuda, "current_device", lambda: 0)
+    monkeypatch.setattr(deep_ep.DeepEPBuffer, "_uses_multiple_layouts", False)
     for name in (
         "_buffer",
         "_dispatch_mode",
