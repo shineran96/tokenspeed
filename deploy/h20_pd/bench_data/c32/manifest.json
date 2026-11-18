@@ -1,0 +1,23 @@
+{
+  "input_sha256": "2da77d5525c47b7c07d27320688bfaed06ed48d92939b8e7a758375016eb1158",
+  "input_count": 64,
+  "c32_selection": "first 32 inputs",
+  "inputs_per_request": 128928,
+  "output_tokens": 2048,
+  "archives": {
+    "pd-ep8-default.tar.gz": {
+      "sha256": "af5c8f938c1209716342b388c10a12252a513d9375b9eae78e5029a0aee4930f",
+      "bytes": 697621,
+      "files": 147
+    },
+    "pd-ep8-bf16.tar.gz": {
+      "sha256": "2b58e89695321a52a6e42f50435e282218cb97ab2374ffd0ea1e6fdba2e37fc1",
+      "bytes": 696472,
+      "files": 147
+    },
+    "inputs.json.gz": {
+      "sha256": "36d05357d3934c40cd30dc29f62ac492ce09e4f5c47157f561bddc58cd8a35c0",
+      "bytes": 23116116
+    }
+  }
+}
