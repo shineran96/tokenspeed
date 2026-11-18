@@ -134,3 +134,5 @@ FlashInfer AOT模块，不重新编译TS或安装依赖，继承已有CUDA兼容
 ## Committed branch scope
 
 This directory contains the historical non-DeepEP DP8 baseline launchers, not an EP16 Humming deployment. Use an installed Python environment compatible with this branch and an SMG version supporting the listed TokenSpeed options. TS_ROOT defaults to the repository containing this directory; set it explicitly after copying this folder elsewhere. CONFIG may point to an edited config.example.sh. For command inspection use DRY_RUN=1.
+
+完整部署、SMG 与 DeepEP EP8/EP16 测试请参阅 [DEPLOYMENT.md](DEPLOYMENT.md)。
