@@ -235,3 +235,52 @@ def test_w4a16_masked_receive_graph() -> None:
             output[valid].float(), reference[valid].float(),
             rtol=2e-2, atol=atol,
         )
+
+
+@pytest.mark.parametrize("num_experts", [8, 24])
+@pytest.mark.parametrize("counts_host", ["empty", "skew", "spread"])
+def test_cutlass_receive_pack_graph(num_experts, counts_host):
+    from tokenspeed_kernel.ops.moe._deep_ep.layout import (
+        compact_row_capacity,
+        pack_cutlass_recv_rows,
+    )
+
+    device = "cuda"
+    counts_list = (
+        [0] * num_experts if counts_host == "empty"
+        else [7] + [0] * (num_experts - 1) if counts_host == "skew"
+        else [i % 4 for i in range(num_experts)]
+    )
+    recv = torch.full(
+        (num_experts, 16, 5120), float("nan"), device=device, dtype=torch.bfloat16
+    )
+    for expert, count in enumerate(counts_list):
+        recv[expert, :count].normal_()
+    counts = torch.tensor(counts_list, device=device, dtype=torch.int32)
+    rows = compact_row_capacity(32, 3, num_experts, 16, 1)
+
+    def reference(current_counts):
+        packed = torch.zeros((rows, 5120), device=device, dtype=recv.dtype)
+        ids = torch.full((rows, 1), -1, device=device, dtype=torch.int32)
+        offsets = []
+        offset = 0
+        for expert, count in enumerate(current_counts):
+            offsets.append(offset)
+            packed[offset:offset + count].copy_(recv[expert, :count])
+            ids[offset:offset + count] = expert + 48
+            offset += count
+        return (
+            packed, ids,
+            torch.ones((rows, 1), device=device, dtype=torch.float32),
+            torch.tensor(offsets, device=device, dtype=torch.int32),
+        )
+
+    pack_cutlass_recv_rows(recv, counts, 32, 3, 48)
+    graph = torch.cuda.CUDAGraph()
+    with torch.cuda.graph(graph):
+        actual = pack_cutlass_recv_rows(recv, counts, 32, 3, 48)
+    for current_counts in (counts_list, [0] * num_experts, counts_list):
+        counts.copy_(torch.tensor(current_counts, device=device, dtype=torch.int32))
+        graph.replay()
+        for got, expected in zip(actual, reference(current_counts)):
+            torch.testing.assert_close(got, expected, rtol=0, atol=0)

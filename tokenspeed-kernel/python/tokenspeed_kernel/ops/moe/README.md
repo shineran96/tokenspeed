@@ -746,3 +746,7 @@ expert output allocation still reserves the configured receive capacity.
 Default Humming accumulation can vary with layout; FP8 activation quantization
 can amplify those differences. Batch-invariant diagnostic checks do not establish
 model accuracy or end-to-end performance for the default path.
+
+The Legacy CUTLASS MXFP4 adapter packs valid received expert rows together with global expert IDs and unit routing weights. Unused compact capacity is zeroed and assigned ID -1 in the same kernel. Counts and offsets remain on the GPU for eager execution and CUDA Graph replay; DeepEP combine applies the original routing weights.
+
+Low-latency-only DeepEP buffers keep a fixed wire expert layout and dispatch capacity across target and draft layers. Smaller expert layouts remap IDs within each rank and expose only their logical expert rows to computation. Combine restores the wire shape; normal and automatic modes retain layout preparation.

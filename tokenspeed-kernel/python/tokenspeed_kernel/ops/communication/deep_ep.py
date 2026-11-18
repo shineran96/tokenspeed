@@ -638,6 +638,8 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
         self.return_recv_hook = return_recv_hook
         self.use_fp8 = use_fp8
         self.ue8m0_scales = ue8m0_scales
+        self._wire_local_experts: int = 0
+        self._wire_topk_idx: torch.Tensor | None = None
 
     def dispatch_a(
         self,
@@ -735,15 +737,35 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
             const auto num_warps = kNumWarpGroups * kNumWarpsPerGroup;
         """
         buffer = self._get_buffer()
-        DeepEPBuffer.prepare_low_latency_dispatch(
-            self.num_max_dispatch_tokens_per_rank, self.hidden_size, self.num_experts
+        # A low-latency-only buffer can keep its allocated wire geometry for
+        # all expert layouts. This avoids counter-offset changes across
+        # target/draft graphs and the per-dispatch global clean barriers.
+        fixed_layout = self.deepep_mode == DeepEPMode.low_latency
+        wire_experts = DeepEPBuffer._num_experts if fixed_layout else self.num_experts
+        wire_capacity = (
+            DeepEPBuffer._num_max_dispatch_tokens_per_rank
+            if fixed_layout else self.num_max_dispatch_tokens_per_rank
         )
+        if not fixed_layout:
+            DeepEPBuffer.prepare_low_latency_dispatch(
+                wire_capacity, self.hidden_size, wire_experts
+            )
+        self._wire_local_experts = wire_experts // self.group.size()
+        if wire_experts != self.num_experts:
+            local_experts = self.num_experts // self.group.size()
+            topk_idx = torch.where(
+                topk_idx >= 0,
+                (topk_idx // local_experts) * self._wire_local_experts
+                + topk_idx % local_experts,
+                topk_idx,
+            )
+        self._wire_topk_idx = topk_idx
         packed_recv_hidden, packed_recv_count, self.handle, event, hook = (
             buffer.low_latency_dispatch(
                 hidden_states,
                 topk_idx,
-                self.num_max_dispatch_tokens_per_rank,
-                self.num_experts,
+                wire_capacity,
+                wire_experts,
                 use_fp8=use_fp8,
                 # Ask DeepEP to both round and pack the scales in the
                 # column-major TMA layout its low-latency API exposes. On
@@ -754,6 +776,13 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
                 return_recv_hook=self.return_recv_hook,
             )
         )
+        local_experts = self.num_experts // self.group.size()
+        if wire_experts != self.num_experts:
+            if isinstance(packed_recv_hidden, tuple):
+                packed_recv_hidden = tuple(t[:local_experts] for t in packed_recv_hidden)
+            else:
+                packed_recv_hidden = packed_recv_hidden[:local_experts]
+            packed_recv_count = packed_recv_count[:local_experts]
         return packed_recv_hidden, packed_recv_count, event, hook
 
     def combine_a(
@@ -780,6 +809,14 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
         moe_origin_input: torch.Tensor = None,
     ):
         buffer = self._get_buffer()
+        topk_idx = self._wire_topk_idx
+        if hidden_states.shape[0] != self._wire_local_experts:
+            # Unused wire expert slots have zero counts and are never read.
+            wire_output = hidden_states.new_empty(
+                (self._wire_local_experts, *hidden_states.shape[1:])
+            )
+            wire_output[:hidden_states.shape[0]].copy_(hidden_states)
+            hidden_states = wire_output
         combine_kwargs = {}
         if moe_origin_input is not None:
             # Trees whose low-latency combine carries the identity-expert leg

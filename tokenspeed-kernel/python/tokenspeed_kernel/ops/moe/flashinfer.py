@@ -1792,23 +1792,16 @@ if platform.is_nvidia:
         DeepEP combine must apply the original routing weights exactly once.
         """
         from tokenspeed_kernel.ops.moe._deep_ep.layout import (
-            pack_recv_rows,
+            pack_cutlass_recv_rows,
             unpack_recv_rows,
         )
 
-        # CUTLASS performs its own expert tiling, so no Marlin row alignment.
-        packed, _, expert_ids, total, offsets = pack_recv_rows(
-            recv_x, counts, num_global_tokens, top_k, 1
+        packed, ids, weights, offsets = pack_cutlass_recv_rows(
+            recv_x, counts, num_global_tokens, top_k,
+            w.ep_rank * w.num_local_experts,
         )
-        live = torch.arange(packed.shape[0], device=packed.device) < total[0]
-        # The existing CUTLASS EP interface expects global expert IDs.
-        ids = torch.where(
-            live, expert_ids + w.ep_rank * w.num_local_experts, -1
-        ).reshape(-1, 1)
-        # Unused capacity must not expose uninitialized NaNs to fused routing.
-        packed = packed.masked_fill(~live[:, None], 0)
         output = _cutlass_mxfp4_apply(
-            packed, w, torch.ones_like(ids, dtype=torch.float32), ids,
+            packed, w, weights, ids,
             True, enable_pdl, _W4A16,
             [w.w13_weight_scale, w.w2_weight_scale], False,
         )

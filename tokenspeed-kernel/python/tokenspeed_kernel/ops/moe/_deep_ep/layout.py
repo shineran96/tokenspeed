@@ -298,3 +298,69 @@ def unpack_recv_rows(
         BLOCK_H=256,
     )
     return recv_x
+
+
+@triton.jit
+def _pack_cutlass_rows_kernel(
+    recv_ptr, counts_ptr, offsets_ptr, packed_ptr, ids_ptr, weights_ptr,
+    recv_m, HIDDEN: tl.constexpr, NUM_EXPERTS: tl.constexpr,
+    EXPERTS_PAD: tl.constexpr, EXPERT_BASE: tl.constexpr, BLOCK_H: tl.constexpr,
+):
+    row = tl.program_id(0).to(tl.int64)
+    column = tl.program_id(1) * BLOCK_H + tl.arange(0, BLOCK_H)
+    experts = tl.arange(0, EXPERTS_PAD)
+    counts = tl.load(counts_ptr + experts, experts < NUM_EXPERTS, other=0)
+    offsets = tl.load(offsets_ptr + experts, experts < NUM_EXPERTS, other=0)
+    selected = (
+        (experts < NUM_EXPERTS)
+        & (row >= offsets)
+        & (row < offsets + counts)
+    )
+    valid = tl.sum(selected.to(tl.int32), 0) > 0
+    expert = tl.sum(tl.where(selected, experts, 0), 0).to(tl.int64)
+    local_row = tl.sum(tl.where(selected, row - offsets, 0), 0)
+    address = (expert * recv_m + local_row) * HIDDEN + column
+    values = tl.load(recv_ptr + address, valid & (column < HIDDEN), other=0)
+    tl.store(packed_ptr + row * HIDDEN + column, values, column < HIDDEN)
+    if tl.program_id(1) == 0:
+        tl.store(ids_ptr + row, tl.where(valid, expert + EXPERT_BASE, -1))
+        tl.store(weights_ptr + row, 1.0)
+
+
+def pack_cutlass_recv_rows(
+    recv_x: torch.Tensor,
+    counts: torch.Tensor,
+    num_global_tokens: int,
+    top_k: int,
+    expert_base: int,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Pack received rows and CUTLASS routing metadata without host counts.
+
+    recv_x is contiguous BF16 [local experts, receive capacity, hidden].
+    counts contains GPU int32 valid row counts; num_global_tokens and top_k
+    bound the compact allocation. expert_base converts local expert IDs to
+    global IDs. Returns activations, IDs, unit weights and expert offsets.
+    Unused rows are zero with ID -1; DeepEP combine applies route weights.
+    """
+    experts, recv_m, hidden = recv_x.shape
+    rows = compact_row_capacity(num_global_tokens, top_k, experts, recv_m, 1)
+    packed = torch.empty((rows, hidden), device=recv_x.device, dtype=recv_x.dtype)
+    offsets = torch.empty((experts,), device=recv_x.device, dtype=torch.int32)
+    total = torch.empty((1,), device=recv_x.device, dtype=torch.int32)
+    ids = torch.empty((rows, 1), device=recv_x.device, dtype=torch.int32)
+    weights = torch.empty((rows, 1), device=recv_x.device, dtype=torch.float32)
+    _layout_kernel[(1,)](
+        counts, offsets, total,
+        NUM_EXPERTS=experts, BLOCK_M=1,
+        EXPERTS_PAD=triton.next_power_of_2(experts),
+    )
+    torch._assert_async(
+        total[0] <= rows, "DeepEP receive rows exceed the compact CUTLASS bound"
+    )
+    _pack_cutlass_rows_kernel[(rows, triton.cdiv(hidden, 1024))](
+        recv_x, counts, offsets, packed, ids, weights, recv_m,
+        HIDDEN=hidden, NUM_EXPERTS=experts,
+        EXPERTS_PAD=triton.next_power_of_2(experts),
+        EXPERT_BASE=expert_base, BLOCK_H=1024,
+    )
+    return packed, ids, weights, offsets
