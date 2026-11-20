@@ -7,7 +7,9 @@ quantization, and the KV cache write. Models describe which steps apply to a
 write its new K/V rows themselves. An MLA model still normalizes its latent
 and projects its absorbed query before the prologue. DeepSeek V4.1
 attention is not a `PagedAttention` layer and keeps its own fused steps over
-its own cache groups.
+its own cache groups. On Hopper its SWA page writer applies KV RMSNorm together
+with RoPE in prefill and decode. With query context parallelism enabled, the
+model normalizes local SWA rows before the prefill all-gather.
 
 ## One entry per attention shape
 

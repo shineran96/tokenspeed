@@ -1678,7 +1678,8 @@ class DeepseekV41Attention(nn.Module):
                 self.rotary_emb._prepare_cache(swa.device)
                 swa_rope_cache = self.rotary_emb.cos_sin_cache
                 if (
-                    current_platform().is_blackwell
+                    (current_platform().is_hopper and not self.mapping.attn.has_qcp)
+                    or current_platform().is_blackwell
                     or current_platform().is_cdna4
                     or current_platform().is_cdna5
                 ):

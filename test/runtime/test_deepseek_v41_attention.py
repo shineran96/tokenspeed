@@ -571,8 +571,13 @@ def test_attention_model_query_shards(monkeypatch, layer, lengths):
     config.qk_rope_head_dim = 64
     config.max_position_embeddings = 512
     with torch.device("cuda"):
+        # One attention-DP rank owns complete requests locally, while QCP
+        # distributes the same requests' query rows across ranks below.
+        reference_mapping = Mapping(
+            rank=0, world_size=8, attn_tp_size=1, attn_dp_size=8, moe_ep_size=8
+        )
         reference_attention = DeepseekV41Attention(
-            config, _mapping(0, 1, 1), layer, 20, None, "attention", aux_stream=None
+            config, reference_mapping, layer, 20, None, "attention", aux_stream=None
         )
     _initialize(reference_attention)
     total = sum(lengths)
