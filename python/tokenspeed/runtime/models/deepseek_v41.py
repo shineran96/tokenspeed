@@ -1824,12 +1824,12 @@ class DeepseekV41MoE(DeepseekV4MoE):
     def __init__(self, config, mapping, quant_config, layer_index, prefix, aux_stream):
         expert_config = config
         mega_moe = get_moe_backend().is_mega_moe()
-        # Allocation precedes kernel planning; match Blackwell MXFP4 MegaMoE's
+        # Allocation precedes kernel planning; match Hopper and Blackwell MXFP4 MegaMoE's
         # 128-wide intermediate alignment.
         alignment = (
             128
             if mega_moe
-            and current_platform().is_blackwell
+            and (current_platform().is_hopper or current_platform().is_blackwell)
             and config.expert_dtype == "fp4"
             else 512
         )

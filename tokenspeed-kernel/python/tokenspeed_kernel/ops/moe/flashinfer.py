@@ -24,6 +24,7 @@ import dataclasses
 import functools
 import math
 import warnings
+from typing import TYPE_CHECKING
 
 import torch
 import torch.nn.functional as F
@@ -35,6 +36,9 @@ from tokenspeed_kernel.platform import (
 )
 from tokenspeed_kernel.registry import Priority, register_kernel
 from tokenspeed_kernel.signature import format_signatures
+
+if TYPE_CHECKING:
+    from flashinfer.moe_ep import MoEEpMegaLayer, MoEEpMegaWorkspace
 
 platform = current_platform()
 
@@ -1797,13 +1801,22 @@ if platform.is_nvidia:
         )
 
         packed, ids, weights, offsets = pack_cutlass_recv_rows(
-            recv_x, counts, num_global_tokens, top_k,
+            recv_x,
+            counts,
+            num_global_tokens,
+            top_k,
             w.ep_rank * w.num_local_experts,
         )
         output = _cutlass_mxfp4_apply(
-            packed, w, weights, ids,
-            True, enable_pdl, _W4A16,
-            [w.w13_weight_scale, w.w2_weight_scale], False,
+            packed,
+            w,
+            weights,
+            ids,
+            True,
+            enable_pdl,
+            _W4A16,
+            [w.w13_weight_scale, w.w2_weight_scale],
+            False,
         )
         return unpack_recv_rows(output, counts, offsets, recv_x, 1)
 
@@ -1844,6 +1857,118 @@ if platform.is_nvidia:
             # saturate the FP8 conversion, so unclamped layers never plan here.
             traits["activation_clamped"] = frozenset({True})
         return traits
+
+    @dataclasses.dataclass
+    class _HopperMegaMoEState:
+        layer: MoEEpMegaLayer
+        workspaces: dict[int, MoEEpMegaWorkspace]
+
+    def flashinfer_hopper_mega_moe_weights(plan: dict, w: torch.nn.Module) -> None:
+        from flashinfer.moe_ep import (
+            BootstrapConfig,
+            FleetParams,
+            MegaConfig,
+            MoEEpLayer,
+            PrequantizedMoEWeights,
+            Sm90_Fp8_Mxfp4_Bf16_PullCutedsl_MegaMoeConfig,
+        )
+
+        if w.tp_size != 1 or w.ep_size < 2:
+            raise ValueError("Hopper MegaMoE requires MoE TP=1 and expert parallelism")
+        group = plan["process_group"]
+        if group.size() != w.ep_size or group.rank() != w.ep_rank:
+            raise ValueError(
+                "Hopper MegaMoE requires the expert-parallel process group"
+            )
+        layer = MoEEpLayer(
+            BootstrapConfig(
+                world_size=w.ep_size,
+                rank=w.ep_rank,
+                process_group=group,
+                device=w.w13_weight.device.index,
+            ),
+            FleetParams(
+                num_experts=w.num_experts,
+                max_tokens_per_rank=plan["persistent_max_num_tokens_per_gpu"],
+                token_hidden_size=w.hidden_size,
+            ),
+            PrequantizedMoEWeights(
+                w13=w.w13_weight,
+                w2=w.w2_weight,
+                w13_scale=w.w13_weight_scale,
+                w2_scale=w.w2_weight_scale,
+            ),
+            backend=MegaConfig(
+                megakernel=Sm90_Fp8_Mxfp4_Bf16_PullCutedsl_MegaMoeConfig(
+                    intermediate_size=w.intermediate_size,
+                    top_k=w.top_k,
+                    gate_up_clamp=_swiglu_limit(w),
+                ),
+                quantize_input=True,
+                preprocess_weights=True,
+            ),
+        )
+        # NVSHMEM allocation is collective. Reserve the buckets before any
+        # rank can enter a forward with outstanding device-side collectives.
+        limit = plan["persistent_max_num_tokens_per_gpu"]
+        capacities = [1 << i for i in range((limit - 1).bit_length())] + [limit]
+        # Idle ranks can stage rows outside inference mode.
+        with torch.inference_mode(False):
+            workspaces = {n: layer.create_workspace(n) for n in capacities}
+        w._moe_backend_state = _HopperMegaMoEState(layer, workspaces)
+        # FlashInfer now owns the transformed weights. Release the checkpoint copy.
+        w.w13_weight = w.w2_weight = None
+        w.w13_weight_scale = w.w2_weight_scale = None
+
+    @register_kernel(
+        "moe",
+        "apply",
+        name="flashinfer_hopper_mxfp4_mega_moe_apply",
+        solution="mega_moe",
+        capability=_CAPABILITY,
+        signatures=format_signatures("x", "dense", {torch.bfloat16}),
+        traits={
+            **_traits("input"),
+            "activation_clamped": frozenset({True}),
+            "persistent_workspace": frozenset({True}),
+            "ispp_alignment": frozenset({128}),
+            "hidden_alignment": frozenset({128}),
+        },
+        priority=Priority.SPECIALIZED,
+        weight_preprocessor=flashinfer_hopper_mega_moe_weights,
+    )
+    def flashinfer_hopper_mxfp4_mega_moe_apply(
+        plan: dict,
+        x: torch.Tensor,
+        w: torch.nn.Module,
+        router_logits: torch.Tensor | None,
+        topk_weights: torch.Tensor,
+        topk_ids: torch.Tensor,
+        num_tokens_global: int | None,
+        max_num_tokens_per_gpu: int | None,
+        do_finalize: bool,
+        enable_pdl: bool,
+    ) -> torch.Tensor:
+        from flashinfer.moe_ep import MoEEpTensors
+
+        if not do_finalize:
+            raise ValueError("Hopper MegaMoE requires complete finalization")
+        limit = plan["persistent_max_num_tokens_per_gpu"]
+        # Workspace allocation is collective. Size it from the EP-wide bound,
+        # including on idle ranks, and reuse the same handle during graph replay.
+        bound = limit if max_num_tokens_per_gpu is None else max_num_tokens_per_gpu
+        if not x.shape[0] <= bound <= limit:
+            raise ValueError(
+                f"Hopper MegaMoE batch exceeds its token bound ({bound}, {limit})"
+            )
+        capacity = min(limit, 1 << (max(1, bound) - 1).bit_length())
+        state = w._moe_backend_state
+        tensors = MoEEpTensors(
+            hidden_states=x,
+            topk_ids=topk_ids.to(torch.int64),
+            topk_weights=topk_weights.float(),
+        )
+        return state.layer(tensors, workspace=state.workspaces[capacity])
 
     _deepep_traits = _traits("input")
     _deepep_traits.update(
@@ -1898,7 +2023,8 @@ if platform.is_nvidia:
         ids = topk_ids.to(torch.int64)
         weights = topk_weights.to(torch.float32)
         bound = (
-            num_tokens_global if num_tokens_global is not None
+            num_tokens_global
+            if num_tokens_global is not None
             else plan["deepep_low_latency_max_num_tokens_per_gpu"] * w.ep_size
         )
         dispatcher.dispatch_a(x, ids, weights, low_latency=True)

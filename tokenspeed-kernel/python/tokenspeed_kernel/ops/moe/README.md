@@ -667,6 +667,22 @@ output exists as the residual prefix once the next entry (or the closing
 AttnRes) has added its feed-forward row, so drafter captures are taken there.
 
 
+## Hopper MXFP4 MegaMoE
+
+On a single Hopper NVLink node, select `--moe-backend mega_moe` with
+`--all2all-backend none` for DSV4.1 MXFP4 experts. The kernel package's
+`hopper-mega-moe-cu13` extra supplies the NVSHMEM Python binding for CUDA 13.
+Use MoE TP=1, EP across GPUs, BF16 input and standard clamped SwiGLU.
+FlashInfer 0.7.3 preprocesses the packed weights once and stages BF16 rows
+as FP8 before dispatch. Its pull-style CuTeDSL kernel returns BF16 routed
+outputs. The model computes the shared expert separately.
+
+The existing persistent per-rank token limit covers both prefill and decode.
+Workspace buckets are allocated in a fixed order during model loading.
+All EP ranks select the same workspace capacity from the maximum row count,
+including ranks with zero rows. FlashInfer pools equal workspaces across
+layers and reuses their addresses for CUDA graph replay.
+
 ## Qwen4 MXFP4 MegaMoE
 
 Qwen4 MXFP4 checkpoints can use `--moe-backend mega_moe` (or its
