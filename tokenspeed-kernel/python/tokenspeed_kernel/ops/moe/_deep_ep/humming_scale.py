@@ -19,27 +19,45 @@
 # SOFTWARE.
 
 import torch
-from tokenspeed_kernel._triton import triton, tl
+from tokenspeed_kernel._triton import tl, triton
+
 
 @triton.jit
-def _copy_scale(src, dst, counts, capacity, groups, se, sr, sg,
-                BLOCK: tl.constexpr, WORKERS: tl.constexpr):
-    e=tl.program_id(0).to(tl.int64)
-    start=tl.program_id(1)*BLOCK
-    count=tl.load(counts+e)
-    for offset in range(start,count*groups,WORKERS*BLOCK):
-        idx=offset+tl.arange(0,BLOCK)
-        row=(idx//groups).to(tl.int64)
-        col=idx%groups
-        val=tl.load(src+e*se+row*sr+col*sg,idx<count*groups,other=0)
-        tl.store(dst+(e*capacity+row)*groups+col,val,idx<count*groups)
+def _copy_scale(
+    src,
+    dst,
+    counts,
+    capacity,
+    groups,
+    se,
+    sr,
+    sg,
+    BLOCK: tl.constexpr,
+    WORKERS: tl.constexpr,
+):
+    e = tl.program_id(0).to(tl.int64)
+    start = tl.program_id(1) * BLOCK
+    count = tl.load(counts + e)
+    for offset in range(start, count * groups, WORKERS * BLOCK):
+        idx = offset + tl.arange(0, BLOCK)
+        row = (idx // groups).to(tl.int64)
+        col = idx % groups
+        val = tl.load(src + e * se + row * sr + col * sg, idx < count * groups, other=0)
+        tl.store(dst + (e * capacity + row) * groups + col, val, idx < count * groups)
 
-def copy_scales(scales: torch.Tensor, counts: torch.Tensor, out: torch.Tensor | None = None):
+
+def copy_scales(
+    scales: torch.Tensor, counts: torch.Tensor, out: torch.Tensor | None = None
+):
     """Copy only GPU-counted rows from DeepEP scales to Humming [E*C,G]."""
-    experts,capacity,groups=scales.shape
+    experts, capacity, groups = scales.shape
     if scales.dtype != torch.float32 or counts.shape != (experts,):
         raise ValueError("expected FP32 expert scales and one count per expert")
     if out is None:
-        out=torch.empty((experts*capacity,groups),device=scales.device,dtype=scales.dtype)
-    _copy_scale[(experts,8)](scales,out,counts,capacity,groups,*scales.stride(),BLOCK=256,WORKERS=8)
+        out = torch.empty(
+            (experts * capacity, groups), device=scales.device, dtype=scales.dtype
+        )
+    _copy_scale[(experts, 8)](
+        scales, out, counts, capacity, groups, *scales.stride(), BLOCK=256, WORKERS=8
+    )
     return out

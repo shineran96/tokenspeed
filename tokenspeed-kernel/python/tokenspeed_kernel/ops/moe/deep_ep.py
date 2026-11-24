@@ -639,12 +639,18 @@ if _HAS_DEEP_EP_GEMM:
 # requirement only bites for internode low-latency traffic.
 
 
-def _mxfp4_bf16_get_dispatcher(plan: dict, w: torch.nn.Module, x: torch.Tensor) -> DeepEPDispatcher:
+def _mxfp4_bf16_get_dispatcher(
+    plan: dict, w: torch.nn.Module, x: torch.Tensor
+) -> DeepEPDispatcher:
     return _mxfp4_get_dispatcher(plan, w, x, use_fp8=False)
 
 
 def _mxfp4_get_dispatcher(
-    plan: dict, w: torch.nn.Module, x: torch.Tensor, *, use_fp8: bool,
+    plan: dict,
+    w: torch.nn.Module,
+    x: torch.Tensor,
+    *,
+    use_fp8: bool,
 ) -> DeepEPDispatcher:
     """Build (once per plan) the dispatcher owning this layer's DeepEP legs.
 

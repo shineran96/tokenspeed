@@ -226,7 +226,9 @@ class DeepseekV4MoE(nn.Module):
             self.use_mega_moe or self.use_gluon_petit or self.use_deepep
         )
         if self.use_deepep and (self.use_mega_moe or self.use_gluon_petit):
-            raise ValueError("DeepEP cannot be combined with another collective MoE backend")
+            raise ValueError(
+                "DeepEP cannot be combined with another collective MoE backend"
+            )
         # Petit's VMM-backed collective and auxiliary-stream shared experts do
         # not replay safely together. Keep both branches on the main stream.
         self.stream_fork = StreamFork(None if self.use_gluon_petit else aux_stream)
@@ -497,10 +499,13 @@ class DeepseekV4MoE(nn.Module):
         comm_manager: CommManager,
     ) -> torch.Tensor:
         if ctx is None or comm_manager is None:
-            raise ValueError("Collective MoE requires forward context and communication manager")
+            raise ValueError(
+                "Collective MoE requires forward context and communication manager"
+            )
         low_latency = (
             use_deepep_low_latency(ctx, self.mapping.attn.dp_size)
-            if self.use_deepep else None
+            if self.use_deepep
+            else None
         )
         with nvtx_range("moe_select_experts"):
             topk_output = self._compute_topk_output(hidden_states, input_ids)

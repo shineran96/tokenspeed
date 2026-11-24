@@ -4157,6 +4157,7 @@ def test_pd_kvp_decode_config(size):
     with pytest.raises(ValueError, match="DSpark speculation only"):
         DeepseekV41Config.generate(args, model, False)
 
+
 @pytest.mark.parametrize("reindex", [False, True])
 def test_unbatched_indexer_preserves_request_windows(monkeypatch, reindex):
     monkeypatch.setattr(dsv41, "prefill_indexer_batching_supported", lambda _: False)

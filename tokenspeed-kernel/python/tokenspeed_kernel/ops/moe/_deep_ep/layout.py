@@ -302,20 +302,25 @@ def unpack_recv_rows(
 
 @triton.jit
 def _pack_cutlass_rows_kernel(
-    recv_ptr, counts_ptr, offsets_ptr, packed_ptr, ids_ptr, weights_ptr,
-    recv_m, HIDDEN: tl.constexpr, NUM_EXPERTS: tl.constexpr,
-    EXPERTS_PAD: tl.constexpr, EXPERT_BASE: tl.constexpr, BLOCK_H: tl.constexpr,
+    recv_ptr,
+    counts_ptr,
+    offsets_ptr,
+    packed_ptr,
+    ids_ptr,
+    weights_ptr,
+    recv_m,
+    HIDDEN: tl.constexpr,
+    NUM_EXPERTS: tl.constexpr,
+    EXPERTS_PAD: tl.constexpr,
+    EXPERT_BASE: tl.constexpr,
+    BLOCK_H: tl.constexpr,
 ):
     row = tl.program_id(0).to(tl.int64)
     column = tl.program_id(1) * BLOCK_H + tl.arange(0, BLOCK_H)
     experts = tl.arange(0, EXPERTS_PAD)
     counts = tl.load(counts_ptr + experts, experts < NUM_EXPERTS, other=0)
     offsets = tl.load(offsets_ptr + experts, experts < NUM_EXPERTS, other=0)
-    selected = (
-        (experts < NUM_EXPERTS)
-        & (row >= offsets)
-        & (row < offsets + counts)
-    )
+    selected = (experts < NUM_EXPERTS) & (row >= offsets) & (row < offsets + counts)
     valid = tl.sum(selected.to(tl.int32), 0) > 0
     expert = tl.sum(tl.where(selected, experts, 0), 0).to(tl.int64)
     local_row = tl.sum(tl.where(selected, row - offsets, 0), 0)
@@ -350,17 +355,28 @@ def pack_cutlass_recv_rows(
     ids = torch.empty((rows, 1), device=recv_x.device, dtype=torch.int32)
     weights = torch.empty((rows, 1), device=recv_x.device, dtype=torch.float32)
     _layout_kernel[(1,)](
-        counts, offsets, total,
-        NUM_EXPERTS=experts, BLOCK_M=1,
+        counts,
+        offsets,
+        total,
+        NUM_EXPERTS=experts,
+        BLOCK_M=1,
         EXPERTS_PAD=triton.next_power_of_2(experts),
     )
     torch._assert_async(
         total[0] <= rows, "DeepEP receive rows exceed the compact CUTLASS bound"
     )
     _pack_cutlass_rows_kernel[(rows, triton.cdiv(hidden, 1024))](
-        recv_x, counts, offsets, packed, ids, weights, recv_m,
-        HIDDEN=hidden, NUM_EXPERTS=experts,
+        recv_x,
+        counts,
+        offsets,
+        packed,
+        ids,
+        weights,
+        recv_m,
+        HIDDEN=hidden,
+        NUM_EXPERTS=experts,
         EXPERTS_PAD=triton.next_power_of_2(experts),
-        EXPERT_BASE=expert_base, BLOCK_H=1024,
+        EXPERT_BASE=expert_base,
+        BLOCK_H=1024,
     )
     return packed, ids, weights, offsets

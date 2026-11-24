@@ -191,6 +191,7 @@ def test_w4a16_ep_masks_nonlocal_experts() -> None:
         acc, expected.float(), atol=float(2e-2 * magnitude), rtol=2e-2
     )
 
+
 def test_w4a16_masked_receive_graph() -> None:
     """Changing GPU receive counts must not require recapturing the graph."""
     _requires_sm90_flashinfer()
@@ -225,15 +226,21 @@ def test_w4a16_masked_receive_graph() -> None:
         x, raw, ids, torch.ones((64, 1), device=x.device), limit
     ).reshape_as(source)
     atol = float(reference.abs().max()) * 2e-2
-    for values in ([8, 3, 0, 5, 1, 8, 0, 4], [0] * 8, [8] * 8,
-                   [0, 0, 0, 0, 0, 0, 0, 1]):
+    for values in (
+        [8, 3, 0, 5, 1, 8, 0, 4],
+        [0] * 8,
+        [8] * 8,
+        [0, 0, 0, 0, 0, 0, 0, 1],
+    ):
         counts.copy_(torch.tensor(values, device=x.device, dtype=torch.int32))
         graph.replay()
         torch.cuda.synchronize()
         valid = torch.arange(8, device=x.device)[None, :] < counts[:, None]
         torch.testing.assert_close(
-            output[valid].float(), reference[valid].float(),
-            rtol=2e-2, atol=atol,
+            output[valid].float(),
+            reference[valid].float(),
+            rtol=2e-2,
+            atol=atol,
         )
 
 
@@ -247,9 +254,13 @@ def test_cutlass_receive_pack_graph(num_experts, counts_host):
 
     device = "cuda"
     counts_list = (
-        [0] * num_experts if counts_host == "empty"
-        else [7] + [0] * (num_experts - 1) if counts_host == "skew"
-        else [i % 4 for i in range(num_experts)]
+        [0] * num_experts
+        if counts_host == "empty"
+        else (
+            [7] + [0] * (num_experts - 1)
+            if counts_host == "skew"
+            else [i % 4 for i in range(num_experts)]
+        )
     )
     recv = torch.full(
         (num_experts, 16, 5120), float("nan"), device=device, dtype=torch.bfloat16
@@ -266,11 +277,12 @@ def test_cutlass_receive_pack_graph(num_experts, counts_host):
         offset = 0
         for expert, count in enumerate(current_counts):
             offsets.append(offset)
-            packed[offset:offset + count].copy_(recv[expert, :count])
-            ids[offset:offset + count] = expert + 48
+            packed[offset : offset + count].copy_(recv[expert, :count])
+            ids[offset : offset + count] = expert + 48
             offset += count
         return (
-            packed, ids,
+            packed,
+            ids,
             torch.ones((rows, 1), device=device, dtype=torch.float32),
             torch.tensor(offsets, device=device, dtype=torch.int32),
         )

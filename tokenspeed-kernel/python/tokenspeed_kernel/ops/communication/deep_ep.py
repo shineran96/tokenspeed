@@ -259,7 +259,8 @@ class DeepEPBuffer:
         allocated) would corrupt dispatch instead of failing.
         """
         experts_fit = num_experts == cls._num_experts or (
-            num_experts is not None and cls._num_experts is not None
+            num_experts is not None
+            and cls._num_experts is not None
             and 0 < num_experts < cls._num_experts
         )
         if hidden_size != cls._hidden_size or not experts_fit:
@@ -289,7 +290,8 @@ class DeepEPBuffer:
 
         if num_experts != cls._num_experts or (
             deepep_mode.enable_low_latency()
-            and num_max_dispatch_tokens_per_rank != cls._num_max_dispatch_tokens_per_rank
+            and num_max_dispatch_tokens_per_rank
+            != cls._num_max_dispatch_tokens_per_rank
         ):
             cls._uses_multiple_layouts = True
 
@@ -744,7 +746,8 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
         wire_experts = DeepEPBuffer._num_experts if fixed_layout else self.num_experts
         wire_capacity = (
             DeepEPBuffer._num_max_dispatch_tokens_per_rank
-            if fixed_layout else self.num_max_dispatch_tokens_per_rank
+            if fixed_layout
+            else self.num_max_dispatch_tokens_per_rank
         )
         if not fixed_layout:
             DeepEPBuffer.prepare_low_latency_dispatch(
@@ -779,7 +782,9 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
         local_experts = self.num_experts // self.group.size()
         if wire_experts != self.num_experts:
             if isinstance(packed_recv_hidden, tuple):
-                packed_recv_hidden = tuple(t[:local_experts] for t in packed_recv_hidden)
+                packed_recv_hidden = tuple(
+                    t[:local_experts] for t in packed_recv_hidden
+                )
             else:
                 packed_recv_hidden = packed_recv_hidden[:local_experts]
             packed_recv_count = packed_recv_count[:local_experts]
@@ -815,7 +820,7 @@ class _DeepEPDispatcherImplLowLatency(_DeepEPDispatcherImplBase):
             wire_output = hidden_states.new_empty(
                 (self._wire_local_experts, *hidden_states.shape[1:])
             )
-            wire_output[:hidden_states.shape[0]].copy_(hidden_states)
+            wire_output[: hidden_states.shape[0]].copy_(hidden_states)
             hidden_states = wire_output
         combine_kwargs = {}
         if moe_origin_input is not None:
