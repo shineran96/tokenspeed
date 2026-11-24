@@ -752,9 +752,10 @@ dispatches block-128 FP8 activations, computes grouped-masked experts, and combi
 BF16 outputs. Route weights are applied once by DeepEP combine. It currently
 requires standard clamped SwiGLU, precomputed routing, and low-latency DeepEP.
 
-Install Humming in the serving virtual environment. The integration prototype
-was tested against upstream commit
-`d0c7af98d7f556132f86e671de7f397991e2df2b`; other versions are unverified.
+Install Humming in the serving virtual environment using the pinned
+[active-row scheduling patch](../../thirdparty/patches/humming/README.md).
+Its grouped-mask workers read live GPU counts while retaining padded buffers
+and CUDA Graph addresses; allocation capacity still bounds supported batches.
 Select the backend explicitly; the existing CUTLASS and Marlin solutions remain.
 
 Receive counts stay on device. Scale conversion touches valid rows only, while
