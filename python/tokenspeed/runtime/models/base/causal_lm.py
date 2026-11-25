@@ -318,6 +318,7 @@ class BaseCausalLM(nn.Module):
             tp_group=self.mapping.lm_head.tp_group,
             attn_tp_size=self.mapping.attn.tp_size,
             dp_lm_head_tp=self.mapping.attn.has_dp and self.mapping.lm_head.has_tp,
+            query_group=(self.mapping.attn.query_group if self.mapping.attn.has_qcp else None),
         )
 
     def post_init(self) -> None:

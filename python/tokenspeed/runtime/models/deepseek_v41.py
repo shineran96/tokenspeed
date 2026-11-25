@@ -855,13 +855,7 @@ class DeepseekV41Compressor(nn.Module):
                 else F.linear(x.float(), self.wkv_wgate.weight.float())
             )
         if key_rows is not None:
-            projected = key_rows.plan.to_span_order(
-                token_all_gather_rows(
-                    projected.contiguous(),
-                    key_rows.group,
-                    list(key_rows.plan.row_counts),
-                )
-            )
+            projected = key_rows.gather(projected.contiguous())
         if self.ratio == 2:
             content, scores = projected.chunk(2, dim=-1)
             content, positions, requests = backend.compress(
@@ -1378,12 +1372,22 @@ class DeepseekV41Attention(nn.Module):
         rows = _row_plan(self.layer_id, self.ced_decoder_start, ctx)
         meta = rows.source
         source_gather = (
-            QueryShardGather(rows.source_shard, self.mapping.attn.qcp_group)
+            QueryShardGather(
+                rows.source_shard,
+                self.mapping.attn.query_group,
+                local_group=None,
+                cross_node_group=None,
+            )
             if rows.source_shard is not None
             else None
         )
         query_gather = (
-            QueryShardGather(rows.query_shard, self.mapping.attn.qcp_group)
+            QueryShardGather(
+                rows.query_shard,
+                self.mapping.attn.query_group,
+                local_group=None,
+                cross_node_group=None,
+            )
             if rows.query_shard is not None
             else None
         )
@@ -2938,7 +2942,7 @@ class DeepseekV41Model(nn.Module):
                 widths = [tap.shape[-1] for tap in taps]
                 packed = token_all_gather_rows(
                     torch.cat(taps, dim=-1),
-                    self.mapping.attn.qcp_group,
+                    self.mapping.attn.query_group,
                     list(plan.row_counts),
                 )
                 captured = list(plan.to_span_order(packed).split(widths, dim=-1))
@@ -2950,7 +2954,7 @@ class DeepseekV41Model(nn.Module):
                 hidden = gather_sampled_rows(
                     hidden,
                     plan,
-                    group=self.mapping.attn.qcp_group,
+                    group=self.mapping.attn.query_group,
                 )
             else:
                 hidden = hidden[:0]

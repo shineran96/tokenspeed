@@ -1,4 +1,4 @@
-from types import SimpleNamespace
+from tokenspeed.runtime.distributed.mapping import Mapping
 
 import pytest
 
@@ -42,19 +42,9 @@ def _mapping(
     dp_size: int,
     world_size: int,
     global_rank: int,
-) -> SimpleNamespace:
-    tp_rank = global_rank % tp_size
-    dp_rank = global_rank // tp_size % dp_size
-    return SimpleNamespace(
-        rank=global_rank,
-        world_size=world_size,
-        attn=SimpleNamespace(
-            tp_size=tp_size,
-            tp_rank=tp_rank,
-            dp_size=dp_size,
-            dp_rank=dp_rank,
-        ),
-    )
+) -> Mapping:
+    return Mapping(rank=global_rank, world_size=world_size,
+                   attn_tp_size=tp_size, attn_dp_size=dp_size)
 
 
 def test_topology_preserves_typed_attention_coordinates() -> None:

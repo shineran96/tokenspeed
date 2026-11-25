@@ -348,9 +348,9 @@ def model_wide_kwargs(
         kvp_size=attn_mapping.kvp_size,
         kvp_rank=attn_mapping.kvp_rank,
         kvp_group=attn_mapping.kvp_group,
-        qcp_size=attn_mapping.qcp_size,
-        qcp_rank=attn_mapping.qcp_rank,
-        qcp_group=attn_mapping.qcp_group,
+        qcp_size=attn_mapping.query_size,
+        qcp_rank=attn_mapping.query_rank,
+        qcp_group=attn_mapping.query_group,
     )
     if server_args.speculative_algorithm is not None:
         kwargs.update(

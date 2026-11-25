@@ -361,7 +361,13 @@ class CommManager:
             # The shard is the scattered table (attention DP is refused under
             # query sharding, so one group); a model that narrowed its rows to
             # the sampled rows reports that through collective_num_tokens.
-            return list(plan.rows_for_collective(ctx.collective_num_tokens))
+            counts = list(plan.rows_for_collective(ctx.collective_num_tokens))
+            if self.mapping.mqcp_size > 1:
+                # Dense and expert weights form a complete model within each node.
+                width = self.mapping.attn.qcp_size
+                first = plan.rank // width * width
+                counts = counts[first : first + width]
+            return counts
         global_counts = (
             ctx.collective_global_num_tokens
             if ctx.collective_global_num_tokens is not None

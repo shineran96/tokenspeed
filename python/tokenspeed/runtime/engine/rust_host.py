@@ -1157,7 +1157,7 @@ class HostBootstrap:
         self._gpu_id = gpu_id
         self._port_args = port_args
         self._memory_sampler: MemoryMetricSampler | None = None
-        attn_tp_rank = mapping.attn.tp_rank
+        attn_tp_rank = mapping.attn.replica_rank
         dp_rank = mapping.attn.dp_rank
         global_rank = mapping.rank
 
@@ -1302,7 +1302,7 @@ class HostBootstrap:
                 multimodal_encoder_dtype=specs.multimodal_encoder_dtype,
                 world_size=server_args.world_size or mapping.world_size,
                 dp_size=mapping.attn.dp_size,
-                attn_tp_size=server_args.attn_tp_size or mapping.attn.tp_size,
+                attn_tp_size=mapping.attn.replica_size,
                 dp_rank=dp_rank,
                 kv_cache_size_tokens=geometry.token_capacity,
                 bootstrap=(
@@ -1342,9 +1342,9 @@ class HostBootstrap:
                 encoder_model_facts=device.encoder_model_facts,
                 mapping=mapping,
                 attn_tp_rank=attn_tp_rank,
-                attn_tp_size=server_args.attn_tp_size or mapping.attn.tp_size,
+                attn_tp_size=mapping.attn.replica_size,
                 attn_tp_cpu_group=pg_manager.get_process_group(
-                    "gloo", mapping.attn.tp_group
+                    "gloo", mapping.attn.replica_group
                 ),
                 pg_manager=pg_manager,
             )
@@ -1404,7 +1404,7 @@ class HostBootstrap:
                     else (
                         tuple(mapping.world_group)
                         if mapping.has_pp
-                        else tuple(mapping.attn.tp_group)
+                        else tuple(mapping.attn.replica_group)
                     )
                 ),
                 pp_ranks=tuple(mapping.pp_group) if mapping.has_pp else None,
@@ -1510,14 +1510,14 @@ class HostBootstrap:
                     attn_mapping=mapping.attn,
                     # With a pipeline every stage rendezvouses around a trace.
                     sync_size=(
-                        mapping.world_size if mapping.has_pp else mapping.attn.tp_size
+                        mapping.world_size if mapping.has_pp else mapping.attn.replica_size
                     ),
                     sync_group=pg_manager.get_process_group(
                         "gloo",
                         (
                             mapping.world_group
                             if mapping.has_pp
-                            else mapping.attn.tp_group
+                            else mapping.attn.replica_group
                         ),
                     ),
                 ),
@@ -1529,7 +1529,7 @@ class HostBootstrap:
                     else None
                 ),
                 attn_tp_cpu_group=pg_manager.get_process_group(
-                    "gloo", mapping.attn.tp_group
+                    "gloo", mapping.attn.replica_group
                 ),
                 epd_publisher=(
                     epd_receive.publisher if epd_receive is not None else None
@@ -1578,7 +1578,7 @@ class HostBootstrap:
             return
         if not raw_metrics_enabled(self._server_args):
             return
-        if self._server_args.mapping.attn.tp_rank != 0:
+        if self._server_args.mapping.attn.replica_rank != 0:
             return
         configs = self._port_args.metrics_producer_configs
         if not configs:

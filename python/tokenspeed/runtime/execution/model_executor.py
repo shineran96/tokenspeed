@@ -518,6 +518,8 @@ class ModelExecutorConfig:
             if server_args.speculative_algorithm
             else 1
         )
+        if server_args.mapping.mqcp_size > 1 and model_config.hf_config.model_type != "deepseek_v41":
+            raise ValueError("MQCP currently supports DeepSeek V4.1 prefill only")
         rope_parameters = get_rope_parameters(model_config.hf_text_config)
         model_is_mrope = bool(rope_parameters and "mrope_section" in rope_parameters)
 
@@ -565,8 +567,8 @@ class ModelExecutorConfig:
             prefill_only=server_args.disaggregation_mode == "prefill",
             input_logprob_chunk_tokens=server_args.input_logprob_chunk_tokens,
             decode_only_attention=server_args.disaggregation_mode == "decode",
-            query_shard_size=server_args.mapping.attn.qcp_size,
-            query_shard_rank=server_args.mapping.attn.qcp_rank,
+            query_shard_size=server_args.mapping.attn.query_size,
+            query_shard_rank=server_args.mapping.attn.query_rank,
             enable_memory_saver=server_args.enable_memory_saver,
             data_parallel_size=server_args.mapping.attn.dp_size,
             attention_tp_size=server_args.mapping.attn.tp_size,

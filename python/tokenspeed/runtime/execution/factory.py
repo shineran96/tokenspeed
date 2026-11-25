@@ -317,8 +317,8 @@ def create_model_executor(
         device=config.device,
         max_req_pool_size=config.max_req_pool_size,
         vocab_size=config.vocab_size,
-        # Same TP group as LogitsProcessor.
-        tp_group=model_runner.mapping.attn.tp_group,
+        # Sampling decisions belong to the whole request replica, including MQCP.
+        tp_group=model_runner.mapping.attn.replica_group,
     )
 
     return ModelExecutor(

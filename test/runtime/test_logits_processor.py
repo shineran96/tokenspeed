@@ -1622,7 +1622,9 @@ def test_input_logprob_chunks_never_take_the_multicast_gather(
 # --------------------------------------------------------------------------
 
 
-def _sharded_processor(monkeypatch, size: int, rank: int) -> LogitsProcessor:
+def _sharded_processor(
+    monkeypatch, size: int, rank: int, *, query_group=None, tp_group=None
+) -> LogitsProcessor:
     """A head sharded over ``size`` ranks whose vocab all-gather is faked as
     the identity on a full-vocab head (each rank holds the whole head here);
     the shard's row gathers are recorded by the test."""
@@ -1632,7 +1634,8 @@ def _sharded_processor(monkeypatch, size: int, rank: int) -> LogitsProcessor:
         ),
         tp_rank=rank,
         tp_size=size,
-        tp_group=tuple(range(size)),
+        tp_group=tuple(range(size)) if tp_group is None else tp_group,
+        query_group=query_group,
         attn_tp_size=1,
         dp_lm_head_tp=False,
     )
@@ -1646,8 +1649,9 @@ def _sharded_processor(monkeypatch, size: int, rank: int) -> LogitsProcessor:
     return proc
 
 
+@pytest.mark.parametrize("local_tp_size", [2, 4])
 def test_a_sharded_forward_gathers_the_planned_rows_then_the_sampled_rows(
-    monkeypatch,
+    monkeypatch, local_tp_size,
 ):
     """Under a query shard the processor receives the shard's rows. The head
     is vocab-sharded over the same group, so it first all-gathers the
@@ -1722,7 +1726,12 @@ def test_a_sharded_forward_gathers_the_planned_rows_then_the_sampled_rows(
         plan = QueryShardPlan.from_forward(
             total_tokens=total, input_lengths=lengths, size=4, rank=rank, device="cpu"
         )
-        proc = _sharded_processor(monkeypatch, 4, rank)
+        first = rank // local_tp_size * local_tp_size
+        proc = _sharded_processor(
+            monkeypatch, local_tp_size, rank % local_tp_size,
+            query_group=tuple(range(4)),
+            tp_group=tuple(range(first, first + local_tp_size)),
+        )
         split = plan.split_rows(plan_rows)
         assert split.rows_per_rank == (3, 2, 2, 0)
         md = LogitsMetadata(

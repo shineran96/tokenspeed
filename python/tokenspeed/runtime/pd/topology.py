@@ -27,6 +27,8 @@ from typing import Protocol
 class _AttentionParallelMapping(Protocol):
     tp_size: int
     tp_rank: int
+    replica_size: int
+    replica_rank: int
     dp_size: int
     dp_rank: int
 
@@ -87,8 +89,8 @@ class PDParallelTopology:
         """
         attention = mapping.attn
         return cls(
-            tp_size=attention.tp_size,
-            tp_rank=attention.tp_rank,
+            tp_size=attention.replica_size,
+            tp_rank=attention.replica_rank,
             dp_size=attention.dp_size,
             dp_rank=attention.dp_rank,
             world_size=mapping.world_size,

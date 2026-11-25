@@ -84,8 +84,51 @@ class QueryShardGather:
 
     plan: QueryShardPlan
     group: tuple[int, ...]
+    local_group: tuple[int, ...] | None = None
+    cross_node_group: tuple[int, ...] | None = None
+
+    def gather(self, rows: torch.Tensor) -> torch.Tensor:
+        """Gather new rows in global span order, optionally using two levels.
+
+        With explicit groups, cross-node peers first gather local shards. The
+        node-local group then distributes those shards using the local fabric.
+        Both steps carry only this forward's projected rows, never KV history.
+        """
+        counts = list(self.plan.row_counts)
+        if self.local_group is None:
+            return self.plan.to_span_order(
+                token_all_gather_rows(rows, self.group, counts)
+            )
+        width = len(self.local_group)
+        nodes = len(self.cross_node_group)
+        local_rank = self.plan.rank % width
+        cross_counts = [counts[n * width + local_rank] for n in range(nodes)]
+        paired = token_all_gather_rows(rows, self.cross_node_group, cross_counts)
+        local_counts = [sum(counts[n * width + i] for n in range(nodes)) for i in range(width)]
+        gathered = token_all_gather_rows(paired, self.local_group, local_counts)
+        # The two gathers concatenate local-rank first, then node. Restore the
+        # plan's node-major rank order before applying the global row map.
+        pieces = [None] * len(counts)
+        offset = 0
+        for i in range(width):
+            for n in range(nodes):
+                rank = n * width + i
+                pieces[rank] = gathered[offset : offset + counts[rank]]
+                offset += counts[rank]
+        return self.plan.to_span_order(torch.cat(pieces, dim=0))
 
     def __post_init__(self) -> None:
+        if (self.local_group is None) != (self.cross_node_group is None):
+            raise ValueError("MQCP gather requires both local and cross-node groups")
+        if self.local_group is not None:
+            width = len(self.local_group)
+            if width * len(self.cross_node_group) != self.plan.size:
+                raise ValueError("MQCP gather groups must cover the query plan")
+            first = self.plan.rank // width * width
+            if self.local_group != self.group[first : first + width]:
+                raise ValueError("MQCP local group does not match the query plan")
+            if self.cross_node_group != self.group[self.plan.rank % width :: width]:
+                raise ValueError("MQCP cross-node group does not match the query plan")
         if len(self.group) != self.plan.size:
             raise ValueError(
                 f"query shard group of {len(self.group)} ranks does not match a "
@@ -483,11 +526,7 @@ class PagedAttention(nn.Module):
             out = MLAPrologueOutput(
                 query=query, key=None, value=None, latent=latent_cache
             )
-        gathered = plan.to_span_order(
-            token_all_gather(
-                out.latent.contiguous(), key_rows.group, list(plan.row_counts)
-            )
-        )
+        gathered = key_rows.gather(out.latent.contiguous())
         latent_store(
             gathered,
             kv_lora_rank=out.latent.shape[-1] - q_pe.shape[-1],
@@ -566,9 +605,7 @@ class PagedAttention(nn.Module):
             )
         width = extra_rows.shape[1]
         payload = torch.cat((extra_rows, out.latent), dim=1).contiguous()
-        gathered = plan.to_span_order(
-            token_all_gather_rows(payload, key_rows.group, list(plan.row_counts))
-        )
+        gathered = key_rows.gather(payload)
         latent_store(
             gathered[:, width:],
             kv_lora_rank=out.latent.shape[-1] - q_pe.shape[-1],

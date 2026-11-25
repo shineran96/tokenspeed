@@ -2,8 +2,10 @@
 
 V4.1 has three independent responsibilities: QCP partitions prefill queries,
 KVP partitions persistent global KV and indexer K pages, and DCP computes
-decode attention over those pages. All groups are subgroups of attention TP;
-these modes do not add devices.
+decode attention over those pages. In a single-node request these groups
+are subgroups of attention TP.
+With MQCP, query and KV ownership may span the full request replica while
+weight TP stays node-local; these groups do not add devices.
 
 ## Query computation
 
@@ -107,7 +109,9 @@ For V4.1 aggregated KVP+DCP, select the backend and matching sizes:
 --decode-context-parallel-size 8
 ```
 
-KVP may be any supported divisor of attention TP. Shared launch validation
+KVP may be any supported divisor of attention TP. With MQCP, the supported
+choices are 1 or the full global query width; weight TP stays node-local.
+See [MQCP](mqcp.md). Shared launch validation
 requires matching KVP/DCP sizes for aggregated and PD decode engines, and
 separate prefill/decode rounds for aggregated DCP. QCP can be enabled with
 either replicated or sharded KV. V4.1-specific restrictions are listed below.

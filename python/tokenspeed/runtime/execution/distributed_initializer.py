@@ -228,6 +228,9 @@ class DistributedInitializer:
         # The query-context-parallel group of a sharded extend; equal to the
         # attention TP group while qcp == tp, so this is idempotent there.
         pg_manager.init_process_group(config.mapping.attn.qcp_group)
+        pg_manager.init_process_group(config.mapping.attn.query_group)
+        pg_manager.init_process_group(config.mapping.attn.mqcp_group)
+        pg_manager.init_process_group(config.mapping.attn.replica_group)
         pg_manager.init_process_group(config.mapping.attn.dp_group)
         # No-op at the default linear_attn.tp == attn.tp (same group,
         # idempotent).

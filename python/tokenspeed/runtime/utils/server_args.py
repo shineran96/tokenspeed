@@ -632,6 +632,7 @@ class ServerArgs:
     # Query context parallelism on the PD prefill role: shard every extend
     # forward's rows over the attention TP group (1 = off; equals
     # kv_parallel_size when on).
+    mqcp_size: int | None = None
     query_context_parallel_size: int = 1
     disable_deepseek_v41_token_blacklist: bool = False
     deepseek_v41_attention_query_swa_min_tokens: int = 4096
@@ -1225,12 +1226,29 @@ class ServerArgs:
         nprocs_per_node = self.nprocs_per_node
         nnodes = 1 if self.nnodes is None else self.nnodes
         pp_size = self.pipeline_parallel_size
+        mqcp_size = 1 if self.mqcp_size is None else self.mqcp_size
+        if mqcp_size < 1:
+            raise ValueError("--mqcp-size must be positive")
+        if mqcp_size > 1 and (
+            self.disaggregation_mode != "prefill"
+            or self.enable_mixed_batch
+            or not self.enforce_eager
+            or self.engram_host_table
+        ):
+            raise ValueError("MQCP requires eager prefill, GPU Engram and no mixed batch")
+
+        if mqcp_size > 1 and (
+            self.dp_sampling
+            or self.disable_sampling_tp_sync
+            or self.speculative_algorithm not in (None, "DSPARK")
+        ):
+            raise ValueError("MQCP requires replica-synchronized sampling, no DP sampling, and optional DSPARK")
 
         attn_tp_size = self.attn_tp_size
         attn_dp_size = self.data_parallel_size
 
         if world_size is None:
-            world_size = pp_size
+            world_size = pp_size * mqcp_size
             if attn_tp_size is not None:
                 world_size *= attn_tp_size
             if attn_dp_size is not None:
@@ -1250,7 +1268,9 @@ class ServerArgs:
                 f"world_size ({world_size}) must be divisible by "
                 f"--pipeline-parallel-size ({pp_size})"
             )
-        stage_world_size = world_size // pp_size
+        if world_size % (pp_size * mqcp_size):
+            raise ValueError("world size must be divisible by PP times MQCP")
+        stage_world_size = world_size // pp_size // mqcp_size
 
         attn_tp_size, attn_dp_size = _resolve_parallelism_sizes(
             stage_world_size, attn_tp_size, attn_dp_size
@@ -1309,6 +1329,7 @@ class ServerArgs:
             attn_head_tp_size=self.attn_head_tp_size,
             lm_head_tp_size=self.lm_head_tp_size,
             attn_qcp_size=self.query_context_parallel_size,
+            mqcp_size=mqcp_size,
             dense_tp_size=dense_tp_size,
             dense_dp_size=dense_dp_size,
             moe_tp_size=moe_tp_size,
@@ -1346,7 +1367,7 @@ class ServerArgs:
         validate_context_parallel_roles(
             kvp_size=self.mapping.attn.kvp_size,
             dcp_size=self.decode_context_parallel_size,
-            qcp_size=self.mapping.attn.qcp_size,
+            qcp_size=self.mapping.attn.query_size,
             disaggregation_mode=self.disaggregation_mode,
             enable_mixed_batch=self.enable_mixed_batch,
         )
@@ -2095,7 +2116,7 @@ class ServerArgs:
             and not self.emulate_rank_zero
             and (current_platform().is_hopper_plus or platform.is_amd)
             and (
-                self.mapping.nnodes == 1
+                (self.mapping.nnodes == 1 or self.mapping.mqcp_size > 1)
                 or (self._beam_checkpoint and platform.is_hopper_plus)
             )
             and self.mapping.has_attn_tp
@@ -4587,6 +4608,12 @@ class ServerArgs:
             "projections and scoring over attention TP. Set 1 to disable "
             "(default), or the attention TP size to enable. KV remains "
             "replicated; this does not enable the generic QCP execution path.",
+        )
+        parser.add_argument(
+            "--mqcp-size",
+            type=int,
+            default=None,
+            help="Number of nodes cooperating on one prefill query span; requires local full QCP.",
         )
         parser.add_argument(
             "--query-context-parallel-size",

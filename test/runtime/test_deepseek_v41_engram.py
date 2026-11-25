@@ -1135,3 +1135,45 @@ def test_query_sharded_embedding_matches_full_lookup(monkeypatch, counts):
         monkeypatch.setattr(engram, "token_reduce_scatter", scatter)
         actual = table(ids[plan.local_row_ids], query_shard=plan)
         torch.testing.assert_close(actual, expected[plan.local_row_ids], rtol=0, atol=0)
+
+
+@pytest.mark.parametrize("length", [1, 17, 65])
+def test_mqcp_engram_matches_full_lookup(monkeypatch, length):
+    from tokenspeed.runtime.execution.query_shard import QueryShardPlan
+
+    codes, scales = _weights(19, 64)
+    ids = torch.arange(length * 3).reshape(-1, 3) % 19
+    expected = _dequant(codes, scales)[ids]
+    monkeypatch.setattr(engram, "all_reduce", lambda tensor, **kwargs: tensor)
+    tables, partials, plans = [], [], []
+    for rank in range(16):
+        mapping = Mapping(rank=rank, world_size=16, attn_tp_size=8,
+            attn_qcp_size=8, mqcp_size=2, nnodes=2, dense_tp_size=8,
+            moe_tp_size=1, moe_ep_size=8)
+        table = RowShardedEngramEmbedding(19,64,mapping,"cpu",False,"gpu",1)
+        table.weight_loader(table.weight,codes)
+        table.weight_loader(table.scale,scales)
+        tables.append(table)
+        partials.append(table(ids,query_shard=None).flatten(1))
+        plans.append(QueryShardPlan.from_forward(total_tokens=length,
+            input_lengths=[length],size=16,rank=rank,device="cpu"))
+    for rank, (table, plan) in enumerate(zip(tables,plans)):
+        first = rank // 8 * 8
+        node_rows = torch.cat([q.local_row_ids for q in plans[first:first+8]])
+        counts = list(plan.row_counts[first:first+8])
+        total = torch.stack(partials[first:first+8]).sum(0)
+
+        def gather(local, group, row_counts):
+            torch.testing.assert_close(local,ids[plan.local_row_ids])
+            assert group == tuple(range(first,first+8)) and row_counts == counts
+            return ids[node_rows]
+
+        def scatter(local, group, row_counts):
+            torch.testing.assert_close(local,partials[rank][node_rows],rtol=0,atol=0)
+            assert group == tuple(range(first,first+8)) and row_counts == counts
+            return total[plan.local_row_ids]
+
+        monkeypatch.setattr(engram,"token_all_gather_rows",gather)
+        monkeypatch.setattr(engram,"token_reduce_scatter",scatter)
+        actual = table(ids[plan.local_row_ids],query_shard=plan)
+        torch.testing.assert_close(actual,expected[plan.local_row_ids],rtol=0,atol=0)

@@ -54,16 +54,16 @@ def _resolve_parallelism_sizes(world_size: int, *sizes: int | None) -> tuple[int
     return tuple(resolved)
 
 
-def _resolve_kvp_size(tp_size: int, kvp_size: int) -> int:
-    """Validate KV parallelism within resolved attention TP.
+def _resolve_kvp_size(replica_size: int, kvp_size: int) -> int:
+    """Validate KV parallelism within the resolved request replica.
 
     KVP shards the KV cache pages page-cyclically over a consecutive subgroup
-    of attention TP; it adds no world-size dimension.
+    of the request replica (local TP times MQCP); it adds no world-size dimension.
     """
     if isinstance(kvp_size, bool) or not isinstance(kvp_size, int) or kvp_size < 1:
         raise ValueError("kvp_size must be a positive integer")
-    if tp_size % kvp_size:
-        raise ValueError("attention TP size must be divisible by KVP size")
+    if replica_size % kvp_size:
+        raise ValueError("attention replica size must be divisible by KVP size")
     return kvp_size
 
 
@@ -243,13 +243,21 @@ class AttentionLayerMapping(MappingBase):
         kvp_size: int = 1,
         head_tp_size: int | None = None,
         qcp_size: int = 1,
+        mqcp_size: int = 1,
     ):
         super().__init__(rank, world_size)
         self.tp_size, self.dp_size = _resolve_parallelism_sizes(
             self.world_size, tp_size, dp_size
         )
-        self.kvp_size = _resolve_kvp_size(self.tp_size, kvp_size)
         self.qcp_size = _resolve_qcp_size(self.tp_size, qcp_size)
+        if mqcp_size < 1:
+            raise ValueError("MQCP size must be positive")
+        if mqcp_size > 1 and (self.dp_size != 1 or self.qcp_size != self.tp_size):
+            raise ValueError("MQCP requires DP1 and local QCP equal to TP")
+        self.mqcp_size = mqcp_size
+        # MQCP keeps weight TP local, but cache owners span the full request
+        # replica. KVP adds no devices and must divide that replica width.
+        self.kvp_size = _resolve_kvp_size(self.replica_size, kvp_size)
         # Width of the group the head projections (q_b/kv_b/o_proj) shard
         # over. Equal to the ranks holding the same rows (tp_size, or 1 under
         # query sharding) unless head TP widens it over DP ranks or over the
@@ -310,16 +318,46 @@ class AttentionLayerMapping(MappingBase):
     def qcp_group(self) -> Group:
         return _make_parallelism_group(self.rank, self.qcp_size, stride=1)
 
+    @property
+    def query_size(self) -> int:
+        """Total query shards across local QCP and MQCP."""
+        return self.qcp_size * self.mqcp_size
+
+    @cached_property
+    def query_rank(self) -> int:
+        return self.rank % self.query_size
+
+    @cached_property
+    def query_group(self) -> Group:
+        return _make_parallelism_group(self.rank, self.query_size)
+
+    @cached_property
+    def mqcp_group(self) -> Group:
+        """Matching local QCP ranks on each MQCP node."""
+        return _make_parallelism_group(self.rank, self.mqcp_size, self.tp_size)
+
+    @property
+    def replica_size(self) -> int:
+        return self.tp_size * self.mqcp_size
+
+    @cached_property
+    def replica_rank(self) -> int:
+        return self.rank % self.replica_size
+
+    @cached_property
+    def replica_group(self) -> Group:
+        return _make_parallelism_group(self.rank, self.replica_size)
+
     @cached_property
     def kvp_rank(self) -> int:
-        """Rank within the consecutive KVP subgroup of attention TP; it selects
+        """Rank within the consecutive KVP subgroup of the request replica; it selects
         the KV pages this rank stores."""
         return _make_parallelism_rank(self.rank, self.kvp_size, stride=1)
 
     @cached_property
     def kvp_replica_rank(self) -> int:
         return _make_parallelism_rank(
-            self.rank, self.tp_size // self.kvp_size, stride=self.kvp_size
+            self.rank, self.replica_size // self.kvp_size, stride=self.kvp_size
         )
 
     @cached_property
@@ -613,6 +651,7 @@ class Mapping(MappingBase):
         attn_head_tp_size: int | None = None,
         lm_head_tp_size: int | None = None,
         attn_qcp_size: int = 1,
+        mqcp_size: int = 1,
         dense_tp_size: int | None = None,
         dense_dp_size: int | None = None,
         moe_tp_size: int | None = None,
@@ -647,7 +686,12 @@ class Mapping(MappingBase):
             if pp_layer_partition
             else None
         )
-        stage_world_size = world_size // pp_size
+        if mqcp_size < 1 or world_size % (pp_size * mqcp_size):
+            raise ValueError("world size must be divisible by PP times MQCP")
+        if mqcp_size > 1 and pp_size != 1:
+            raise ValueError("MQCP does not support pipeline parallelism")
+        self.mqcp_size = mqcp_size
+        stage_world_size = world_size // pp_size // mqcp_size
         self.attn = AttentionLayerMapping(
             rank=rank,
             world_size=stage_world_size,
@@ -656,6 +700,7 @@ class Mapping(MappingBase):
             kvp_size=attn_kvp_size,
             head_tp_size=attn_head_tp_size,
             qcp_size=attn_qcp_size,
+            mqcp_size=mqcp_size,
         )
         self.lm_head = LmHeadMapping(
             rank=rank,
@@ -698,6 +743,18 @@ class Mapping(MappingBase):
         self.nprocs_per_node, self.nnodes = _resolve_parallelism_sizes(
             self.world_size, nprocs_per_node, nnodes
         )
+        if mqcp_size > 1 and (
+            self.nnodes != mqcp_size
+            or self.nprocs_per_node != self.attn.tp_size
+            or self.attn.kvp_size not in (1, self.attn.query_size)
+            or self.attn.head_tp_size != 1
+            or self.dense.tp_size != self.attn.tp_size
+            or self.moe.tp_ep_size != self.attn.tp_size
+        ):
+            raise ValueError(
+                "MQCP requires one full TP/QCP/EP group per node, "
+                "KVP1 or KVP equal to the global query size, and head TP1"
+            )
         assert base_gpu_id >= 0
         assert gpu_id_step > 0
         self.base_gpu_id = base_gpu_id
@@ -776,7 +833,7 @@ class Mapping(MappingBase):
         lines = [
             f"Mapping(rank={rank_str}, world_size={self.world_size})",
             f"  Cluster : {self.nnodes} node(s) x {self.nprocs_per_node} proc(s)",
-            f"  Pipeline: pp={self.pp_size}",
+            f"  Pipeline: pp={self.pp_size}; MQCP={self.mqcp_size}",
             f"  Attention: tp={self.attn.tp_size}  kvp={self.attn.kvp_size}  "
             f"qcp={self.attn.qcp_size}  dp={self.attn.dp_size}  "
             f"head_tp={self.attn.head_tp_size}",

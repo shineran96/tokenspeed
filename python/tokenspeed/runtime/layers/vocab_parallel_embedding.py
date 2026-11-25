@@ -591,12 +591,10 @@ class VocabParallelEmbedding(torch.nn.Module):
                     f"query shard rank {query_shard.rank} embeds "
                     f"{query_shard.local_rows} rows, got {tuple(input_.shape)}"
                 )
-            if len(self.tp_group) != query_shard.size:
-                raise ValueError(
-                    f"the embedding's TP group of {len(self.tp_group)} ranks is not "
-                    f"the query shard group of {query_shard.size}"
-                )
-            counts = list(query_shard.row_counts)
+            if query_shard.size % len(self.tp_group):
+                raise ValueError("embedding TP must tile the query shard group")
+            first = query_shard.rank // len(self.tp_group) * len(self.tp_group)
+            counts = list(query_shard.row_counts[first : first + len(self.tp_group)])
             ids = token_all_gather_rows(
                 input_.reshape(-1, 1), self.tp_group, counts
             ).reshape(-1)

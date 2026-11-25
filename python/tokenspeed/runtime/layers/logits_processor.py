@@ -329,6 +329,7 @@ class LogitsProcessor(nn.Module):
         *,
         dp_lm_head_tp: bool,
         attn_tp_size: int,
+        query_group: tuple[int, ...] | None = None,
     ):
         """``tp_*`` describe the group ``lm_head`` is vocab-sharded over.
 
@@ -375,6 +376,9 @@ class LogitsProcessor(nn.Module):
         if tp_size != 1 and tp_group is None:
             raise ValueError("tp_group is required when tp_size > 1.")
         self.tp_rank, self.tp_size, self.tp_group = tp_rank, tp_size, tp_group
+        # MQCP gathers query rows across nodes, then each local vocab group
+        # projects the same rows using its complete set of weight shards.
+        self.query_group = tp_group if query_group is None else query_group
         if dp_lm_head_tp and (tp_size == 1 or not skip_all_gather):
             raise ValueError(
                 "dp_lm_head_tp needs a vocab-sharded head (tp_size > 1) and "
@@ -922,11 +926,11 @@ class LogitsProcessor(nn.Module):
                     aux_pruned_states = list(aux_hidden_states)
             elif shard is not None:
                 pruned_states = gather_sampled_rows(
-                    hidden_states, shard, group=self.tp_group
+                    hidden_states, shard, group=self.query_group
                 )
                 if select_aux:
                     aux_pruned_states = [
-                        gather_sampled_rows(h, shard, group=self.tp_group)
+                        gather_sampled_rows(h, shard, group=self.query_group)
                         for h in aux_hidden_states
                     ]
             else:
@@ -1016,21 +1020,16 @@ class LogitsProcessor(nn.Module):
         )
 
     def _query_shard(self, logits_metadata: LogitsMetadata) -> QueryShardPlan | None:
-        """The forward's query shard when ``hidden_states`` are a shard.
+        """Validate the query-row group separately from vocabulary TP.
 
-        The shard's collectives (the sampled-row gather, the gather of the
-        planned prompt rows) run over this processor's TP group: it is the LM
-        head's vocab-shard group, every rank of which must hold the same rows
-        for the vocab all-gather to be consistent, and query context
-        parallelism shards queries over exactly that group
-        (``Mapping``: ``qcp_size == attn_tp_size``). A plan of another
-        width, or a replicated head (attention DP), names a layout this
-        processor cannot serve.
+        Query gathers give every vocabulary group the same complete rows.
+        MQCP may span several node-local vocabulary groups; ordinary QCP
+        uses the vocabulary group itself.
         """
         plan = logits_metadata.query_shard
         if plan is None or plan.size == 1:
             return None
-        if plan.size != self.tp_size or self.skip_all_gather:
+        if plan.size != len(self.query_group or ()) or self.skip_all_gather:
             head = (
                 "a replicated LM head"
                 if self.skip_all_gather
@@ -1039,7 +1038,7 @@ class LogitsProcessor(nn.Module):
             raise ValueError(
                 f"query shard of {plan.size} ranks over {head}: the sampled rows "
                 "and prompt logprobs are gathered over the head's vocab-shard "
-                "group, so the query shard group must be it"
+                "group, so an explicit matching query group is required"
             )
         return plan
 
@@ -1148,7 +1147,7 @@ class LogitsProcessor(nn.Module):
                     f"{plan.rows_per_rank[shard.rank]}"
                 )
             source = token_all_gather_rows(
-                hidden_states[plan.rows], self.tp_group, list(plan.rows_per_rank)
+                hidden_states[plan.rows], self.query_group, list(plan.rows_per_rank)
             ).index_select(0, plan.gathered_to_rows)
             index = None
             staged_rows = source.shape[0]

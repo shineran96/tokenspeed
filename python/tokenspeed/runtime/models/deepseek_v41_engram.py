@@ -711,13 +711,13 @@ class RowShardedEngramEmbedding(nn.Module):
         if sharded:
             if indices.ndim != 2 or indices.shape[0] != query_shard.local_rows:
                 raise ValueError("Engram hashes must match the query shard rows")
-            if len(self.tp_group) != query_shard.size:
-                raise ValueError(
-                    "Engram TP and query shard groups must have equal size"
-                )
+            if query_shard.size % len(self.tp_group):
+                raise ValueError("Engram TP must tile the query shard group")
+            first = query_shard.rank // len(self.tp_group) * len(self.tp_group)
+            counts = list(query_shard.row_counts[first : first + len(self.tp_group)])
             if self.host_layout != "shared":
                 indices = token_all_gather_rows(
-                    indices, self.tp_group, list(query_shard.row_counts)
+                    indices, self.tp_group, counts
                 )
         if indices.is_cuda and not self.host_table:
             from tokenspeed_kernel.ops.embedding import mxfp8_embedding
@@ -760,7 +760,7 @@ class RowShardedEngramEmbedding(nn.Module):
             flat = values.reshape(-1, values.shape[-2] * values.shape[-1])
             if sharded:
                 return token_reduce_scatter(
-                    flat, self.tp_group, list(query_shard.row_counts)
+                    flat, self.tp_group, counts
                 ).reshape(query_shard.local_rows, values.shape[-2], values.shape[-1])
             values = all_reduce(
                 flat,
