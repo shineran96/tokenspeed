@@ -1,0 +1,29 @@
+[
+  {
+    "dual_c": 64,
+    "single_c": 32,
+    "per_rank_batch": 4,
+    "throughput_ratio": 2.03399617139463,
+    "two_node_scaling_efficiency": 1.016998085697315,
+    "dual_tpot_ms": 6.1333846798880325,
+    "single_tpot_ms": 6.273729269579477
+  },
+  {
+    "dual_c": 128,
+    "single_c": 64,
+    "per_rank_batch": 8,
+    "throughput_ratio": 1.9843066549822044,
+    "two_node_scaling_efficiency": 0.9921533274911022,
+    "dual_tpot_ms": 8.195886651090118,
+    "single_tpot_ms": 8.228723292187903
+  },
+  {
+    "dual_c": 256,
+    "single_c": 128,
+    "per_rank_batch": 16,
+    "throughput_ratio": 1.9858420235327345,
+    "two_node_scaling_efficiency": 0.9929210117663673,
+    "dual_tpot_ms": 13.096414342949686,
+    "single_tpot_ms": 13.16808160237314
+  }
+]

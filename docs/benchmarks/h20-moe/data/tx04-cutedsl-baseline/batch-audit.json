@@ -1,0 +1,226 @@
+{
+  "c32": [
+    {
+      "phase": "formal1",
+      "common_output_seconds": 7.642795562744141,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 301,
+          "expected_per_rank": 2,
+          "full_batch_samples": 301,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 300,
+          "expected_per_rank": 2,
+          "full_batch_samples": 300,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal2",
+      "common_output_seconds": 7.661777019500732,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 306,
+          "expected_per_rank": 2,
+          "full_batch_samples": 306,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 304,
+          "expected_per_rank": 2,
+          "full_batch_samples": 304,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal3",
+      "common_output_seconds": 7.716640472412109,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 302,
+          "expected_per_rank": 2,
+          "full_batch_samples": 302,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 303,
+          "expected_per_rank": 2,
+          "full_batch_samples": 303,
+          "full_batch_fraction": 1.0
+        }
+      }
+    }
+  ],
+  "c64": [
+    {
+      "phase": "formal1",
+      "common_output_seconds": 7.359038591384888,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 238,
+          "expected_per_rank": 4,
+          "full_batch_samples": 238,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 236,
+          "expected_per_rank": 4,
+          "full_batch_samples": 236,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal2",
+      "common_output_seconds": 6.931345701217651,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 221,
+          "expected_per_rank": 4,
+          "full_batch_samples": 221,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 222,
+          "expected_per_rank": 4,
+          "full_batch_samples": 222,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal3",
+      "common_output_seconds": 7.189850568771362,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 230,
+          "expected_per_rank": 4,
+          "full_batch_samples": 230,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 231,
+          "expected_per_rank": 4,
+          "full_batch_samples": 231,
+          "full_batch_fraction": 1.0
+        }
+      }
+    }
+  ],
+  "c128": [
+    {
+      "phase": "formal1",
+      "common_output_seconds": 6.13039755821228,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 144,
+          "expected_per_rank": 8,
+          "full_batch_samples": 144,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 145,
+          "expected_per_rank": 8,
+          "full_batch_samples": 145,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal2",
+      "common_output_seconds": 6.449764728546143,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 153,
+          "expected_per_rank": 8,
+          "full_batch_samples": 153,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 152,
+          "expected_per_rank": 8,
+          "full_batch_samples": 152,
+          "full_batch_fraction": 1.0
+        }
+      }
+    },
+    {
+      "phase": "formal3",
+      "common_output_seconds": 5.60322380065918,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 131,
+          "expected_per_rank": 8,
+          "full_batch_samples": 131,
+          "full_batch_fraction": 1.0
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 133,
+          "expected_per_rank": 8,
+          "full_batch_samples": 133,
+          "full_batch_fraction": 1.0
+        }
+      }
+    }
+  ],
+  "c256": [
+    {
+      "phase": "formal1",
+      "common_output_seconds": -6.068746328353882,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        }
+      }
+    },
+    {
+      "phase": "formal2",
+      "common_output_seconds": -7.309364318847656,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        }
+      }
+    },
+    {
+      "phase": "formal3",
+      "common_output_seconds": -6.871047258377075,
+      "nodes": {
+        "cutedsl-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        },
+        "cutedsl-node1-batches.jsonl": {
+          "samples": 0,
+          "expected_per_rank": 16,
+          "full_batch_samples": 0,
+          "full_batch_fraction": null
+        }
+      }
+    }
+  ]
+}

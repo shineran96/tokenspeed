@@ -1,0 +1,310 @@
+{
+  "c32": [
+    {
+      "phase": "prime",
+      "requests": 32,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        1.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 16,
+        "cutedsl-node1.log": 16
+      }
+    },
+    {
+      "phase": "warmup",
+      "requests": 32,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 16,
+        "cutedsl-node1.log": 16
+      }
+    },
+    {
+      "phase": "formal1",
+      "requests": 32,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 16,
+        "cutedsl-node1.log": 16
+      }
+    },
+    {
+      "phase": "formal2",
+      "requests": 32,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 16,
+        "cutedsl-node1.log": 16
+      }
+    },
+    {
+      "phase": "formal3",
+      "requests": 32,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 16,
+        "cutedsl-node1.log": 16
+      }
+    }
+  ],
+  "c64": [
+    {
+      "phase": "prime",
+      "requests": 64,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        1.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 32,
+        "cutedsl-node1.log": 32
+      }
+    },
+    {
+      "phase": "warmup",
+      "requests": 64,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 32,
+        "cutedsl-node1.log": 32
+      }
+    },
+    {
+      "phase": "formal1",
+      "requests": 64,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 32,
+        "cutedsl-node1.log": 32
+      }
+    },
+    {
+      "phase": "formal2",
+      "requests": 64,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 32,
+        "cutedsl-node1.log": 32
+      }
+    },
+    {
+      "phase": "formal3",
+      "requests": 64,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 32,
+        "cutedsl-node1.log": 32
+      }
+    }
+  ],
+  "c128": [
+    {
+      "phase": "prime",
+      "requests": 128,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        1.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 64,
+        "cutedsl-node1.log": 64
+      }
+    },
+    {
+      "phase": "warmup",
+      "requests": 128,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 64,
+        "cutedsl-node1.log": 64
+      }
+    },
+    {
+      "phase": "formal1",
+      "requests": 128,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 64,
+        "cutedsl-node1.log": 64
+      }
+    },
+    {
+      "phase": "formal2",
+      "requests": 128,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 64,
+        "cutedsl-node1.log": 64
+      }
+    },
+    {
+      "phase": "formal3",
+      "requests": 128,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 64,
+        "cutedsl-node1.log": 64
+      }
+    }
+  ],
+  "c256": [
+    {
+      "phase": "prime",
+      "requests": 256,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        1.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 128,
+        "cutedsl-node1.log": 128
+      }
+    },
+    {
+      "phase": "warmup",
+      "requests": 256,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 128,
+        "cutedsl-node1.log": 128
+      }
+    },
+    {
+      "phase": "formal1",
+      "requests": 256,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 128,
+        "cutedsl-node1.log": 128
+      }
+    },
+    {
+      "phase": "formal2",
+      "requests": 256,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 128,
+        "cutedsl-node1.log": 128
+      }
+    },
+    {
+      "phase": "formal3",
+      "requests": 256,
+      "cached_tokens": [
+        130816
+      ],
+      "accept_lengths": [
+        4.0
+      ],
+      "preemptions": 0,
+      "requests_per_node": {
+        "cutedsl.log": 128,
+        "cutedsl-node1.log": 128
+      }
+    }
+  ]
+}

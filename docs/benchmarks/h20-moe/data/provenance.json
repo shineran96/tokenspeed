@@ -1,0 +1,214 @@
+{
+  "archive_root": "viewfs://hadoop-meituan/user/hadoop-efficient-llm/wangchangran/archives/tx01-tx03-20261125",
+  "outer_archives": [
+    {
+      "file": "local-reports-and-plots.tar.gz",
+      "bytes": 457043392,
+      "sha256": "156639291128944f2bdd58d95a2b1eecc28c5e6c383a531a029a04d9706de8ed"
+    },
+    {
+      "file": "tx01-codes-data.tar.gz",
+      "bytes": 932592067,
+      "sha256": "63616ebc6eea1b35264d7d4944be94a3c59522d37abc056730c07614db39ce32"
+    },
+    {
+      "file": "tx03-codes-data.tar.gz",
+      "bytes": 582661951,
+      "sha256": "94cf35485ac0a04f9f25cfc336ee4c859821ecb365a4bf4a43ddee1d3b01cb42"
+    }
+  ],
+  "snapshots": [
+    {
+      "file": "snapshots/tx-staged-20261124/audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-20261124/audit.py",
+      "sha256": "7fdf92698fd5e0df08bb2eb43b32b6f89fe00a77105b0afb70fb8aa6c4026110"
+    },
+    {
+      "file": "snapshots/tx-staged-20261124/client.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-20261124/client.py",
+      "sha256": "105593558f290097b5f1192d598c38c775d4c474f1ad3b2004912a2512d43bce"
+    },
+    {
+      "file": "snapshots/tx-staged-20261124/full_audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-20261124/full_audit.py",
+      "sha256": "0e99f1989922d6cc0fdae9ceb753c10ff90cb04989379bfc94c79d8344f26c3a"
+    },
+    {
+      "file": "snapshots/tx-staged-20261124/run.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-20261124/run.py",
+      "sha256": "01158ea7c3c862212fc977e8b942a1dfae52a409b9664c1e5746b6404a942b28"
+    },
+    {
+      "file": "snapshots/tx-staged-20261124/suite.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-20261124/suite.py",
+      "sha256": "89bc02dc9e04db51186738a88680104fe8882fdf7fa2ef78cea32db07af51da2"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/audit.py",
+      "sha256": "7fdf92698fd5e0df08bb2eb43b32b6f89fe00a77105b0afb70fb8aa6c4026110"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/client.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/client.py",
+      "sha256": "105593558f290097b5f1192d598c38c775d4c474f1ad3b2004912a2512d43bce"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/common.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/common.sh",
+      "sha256": "cafd5eb427f19a1741b0ea8d653ec74f763a297dfdf395c9077b8882b858e6a0"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/decode.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/decode.sh",
+      "sha256": "329ec22932e98a33f3e2ca5678a4e0ac8ccb843c8a069f0ddcda43494157de08"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/full_audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/full_audit.py",
+      "sha256": "d1ccd10bf14a2fc3e99e363c2a184d1ed9f5ae66aa5a19162c0d2cc6a53d6484"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/gateway.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/gateway.sh",
+      "sha256": "6352be80f89fbd9eedaf475e4ade48478c431bb5e0a10bfb13d8abf3a3df077b"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/observer/sitecustomize.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/observer/sitecustomize.py",
+      "sha256": "49e02f3264e2e6a78c1d226f215d7195505e181c94f61984d267ab827f4e5385"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/prime.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/prime.py",
+      "sha256": "86a1d41313cd6085497eaecc991360a49d12e4ad0bed5e9d12e24a15e478d2c6"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/run.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/run.py",
+      "sha256": "401c55d931719aabf389ba2b72eeccf658d7e5090a9b3ea2c6a1a473bf5ced08"
+    },
+    {
+      "file": "snapshots/tx-staged-humming-20261124/suite.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-humming-20261124/suite.py",
+      "sha256": "736dc4603e4f344e31180073c3daf11b0805382695b16c208058532011978e63"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/audit.py",
+      "sha256": "58ffe5b7b5fe050db8ddff06e516a2d1a298b70da580b527589d1a45105f4f46"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/client.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/client.py",
+      "sha256": "105593558f290097b5f1192d598c38c775d4c474f1ad3b2004912a2512d43bce"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/common.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/common.sh",
+      "sha256": "cafd5eb427f19a1741b0ea8d653ec74f763a297dfdf395c9077b8882b858e6a0"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/decode.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/decode.sh",
+      "sha256": "8eb98bdc1f8a1dda2ac77cd856bb6c637e5ae637fbbdb466cfe885e79e8d8ce8"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/decode256.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/decode256.sh",
+      "sha256": "a24e5b5b3e4daa98c6610de9064a80fae838226b902183b5a2131e8005afce92"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/full_audit.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/full_audit.py",
+      "sha256": "275e2a12280d104c94d0542f1bc00871f3a5ff82dd94814c8673f51fd30ba776"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/gateway.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/gateway.sh",
+      "sha256": "6352be80f89fbd9eedaf475e4ade48478c431bb5e0a10bfb13d8abf3a3df077b"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/observer/sitecustomize.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/observer/sitecustomize.py",
+      "sha256": "49e02f3264e2e6a78c1d226f215d7195505e181c94f61984d267ab827f4e5385"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/run.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/run.py",
+      "sha256": "09ac3fcc67e5b942e5a0e6110a50fe3ea2044d676ec5b019e014273ca79bb772"
+    },
+    {
+      "file": "snapshots/tx-staged-single-mega-20261124/suite.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx-staged-single-mega-20261124/suite.py",
+      "sha256": "176ae542f3814c59aac18c160ef77f0b90e08c42707b42f8300033e33e043831"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/bench.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/bench.py",
+      "sha256": "3ab8fe0a2309e8c28b05d5674d2f4e1e0163b262f1f9ef4cf99f0d472270cf61"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/client.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/client.py",
+      "sha256": "105593558f290097b5f1192d598c38c775d4c474f1ad3b2004912a2512d43bce"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/common.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/common.sh",
+      "sha256": "cafd5eb427f19a1741b0ea8d653ec74f763a297dfdf395c9077b8882b858e6a0"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/decode.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/decode.sh",
+      "sha256": "8eb98bdc1f8a1dda2ac77cd856bb6c637e5ae637fbbdb466cfe885e79e8d8ce8"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/gateway.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/gateway.sh",
+      "sha256": "22cae2b08fd4ecfa81d08726ddfde227b4414d4b0db699bc947ae78dd504b7aa"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/observer/sitecustomize.py",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/observer/sitecustomize.py",
+      "sha256": "49e02f3264e2e6a78c1d226f215d7195505e181c94f61984d267ab827f4e5385"
+    },
+    {
+      "file": "snapshots/tx04-cutedsl-baseline/prefill.sh",
+      "archive": "tx01-codes-data.tar.gz",
+      "member": "home/wangchangran/codes/tx04-cutedsl-baseline/prefill.sh",
+      "sha256": "b967a1d4542c081272041b690a3d70dd859f13395b0b07e386cf6cd1999bf6c2"
+    }
+  ]
+}

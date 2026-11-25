@@ -1,0 +1,459 @@
+From 219fc5061738dd5a0f7bfc92d3d3c9d36cd773ae Mon Sep 17 00:00:00 2001
+From: jumper <wangchangran@set-hldy-llm-multimodal-worker28.mt>
+Date: Mon, 23 Nov 2026 18:08:03 +0800
+Subject: [PATCH] perf(process-input): schedule grouped masks by active device
+ rows
+
+Use bounded per-expert workers for grouped masks that leave invalid rows
+untouched. Read counts after the PDL dependency wait and iterate over active
+rows while preserving padded storage and CUDA Graph replay addresses.
+Keep zero-invalid launches and scale finalizers on their existing layouts.
+
+Add graph replay coverage for changing counts, skew, empty experts and
+recovery with int32/int64 counts and PDL on/off. Verify reference values,
+untouched padding and exact eager/graph agreement. Document the capacity
+contract and scheduling behavior.
+
+Validation: 90 process-input layout tests passed on SM90; EP8 real-weight
+probes completed across five decode batch sizes with both expert stages.
+
+Co-authored-by: Codex (GPT-6) <codex@openai.com>
+Signed-off-by: jumper <wangchangran@set-hldy-llm-multimodal-worker28.mt>
+---
+ docs/config.md                                |  21 ++
+ humming/csrc/launcher/process_input.h         |  10 +-
+ .../include/humming/kernel/process_input.cuh  | 224 ++++++++++--------
+ .../humming/kernel/process_input/context.cuh  |   5 +-
+ tests/kernels/process_input/test_layout.py    |  77 ++++++
+ 5 files changed, 233 insertions(+), 104 deletions(-)
+
+diff --git a/docs/config.md b/docs/config.md
+index 7615f82..6b85bdb 100644
+--- a/docs/config.md
++++ b/docs/config.md
+@@ -444,3 +444,24 @@ Try `2` for large, regular matrices with long K. Prefer `1` for small workloads
+ Enables Programmatic Dependent Launch. Defaults to `False`.
+ 
+ Try `True` when the calling pipeline supports PDL and adjacent kernels have work that can overlap, measuring end-to-end latency. Usually keep `False` for isolated GEMM benchmarks.
++
++### Grouped-mask input processing with changing batches
++
++With `layout="grouped_mask"` and `zero_invalid=False`, input processing uses
++fixed workers per expert and reads the valid row counts from the device on each
++invocation. The workers iterate over valid rows while preserving the padded
++input/output addresses and scale layout. A captured CUDA Graph can therefore
++handle changing expert counts, including empty experts and later recovery,
++without reading counts back to the CPU or rebuilding the graph.
++
++This changes work scheduling, not allocation capacity. The caller must still
++reserve enough rows for the largest supported batch and routing skew. Counts
++must describe rows within each expert's allocated capacity. Input row count is
++the MoE batch size, not the attention context length.
++
++When PDL is enabled, workers wait for producer dependencies before reading
++counts and signal dependents only after all assigned rows are processed. Even
++empty workers participate in dependency completion. `zero_invalid=True` keeps
++the padded-row launch so invalid output rows and scales retain their documented
++zeroing behavior. The separate group/token scale finalizer also keeps its
++existing launch layout.
+diff --git a/humming/csrc/launcher/process_input.h b/humming/csrc/launcher/process_input.h
+index 355e4b3..1b1d0c5 100644
+--- a/humming/csrc/launcher/process_input.h
++++ b/humming/csrc/launcher/process_input.h
+@@ -59,6 +59,7 @@ struct ProcessInputKernelData {
+   bool separate_outputs;
+   bool use_pdl;
+   bool is_finalizer;
++  bool zero_invalid;
+ };
+ 
+ struct RegisteredProcessInputKernel {
+@@ -173,7 +174,8 @@ inline std::tuple<int64_t, std::string> register_process_input_kernel(const std:
+       reader.getUint32("FINALIZE_TOKENS_PER_BLOCK"),
+       reader.getBool("SEPARATE_OUTPUTS"),
+       reader.getBool("USE_PDL"),
+-      is_finalizer};
++      is_finalizer,
++      reader.getBool("ZERO_INVALID")};
+ 
+   Registration result = std::make_tuple(kernel_id, kernel_name);
+   std::unique_lock lock(g_process_input_kernel_mutex);
+@@ -396,6 +398,12 @@ inline void launch_process_input_main(
+     uint64_t blocks_per_row = CEIL_DIV(data.hidden_size, data.columns_per_task);
+     grid_x = work_rows * blocks_per_row;
+   }
++  if (data.layout == 3 && !data.zero_invalid) {
++    // Fixed workers read device counts, so graph replay follows the live batch.
++    uint64_t row_workers = std::min<uint64_t>(4, CEIL_DIV(shape.max_tokens_per_expert, data.tokens_per_block));
++    uint64_t column_tasks = data.use_tile_partition ? CEIL_DIV(data.hidden_size, data.columns_per_task) : 1;
++    grid_x = row_workers * column_tasks * static_cast<uint64_t>(shape.num_experts);
++  }
+   ASSERT_CHECK(grid_x > 0 && grid_x <= 0x7FFFFFFF, "invalid process-input grid");
+ 
+   CUlaunchConfig config = {};
+diff --git a/humming/include/humming/kernel/process_input.cuh b/humming/include/humming/kernel/process_input.cuh
+index 37c9e40..23b64f3 100644
+--- a/humming/include/humming/kernel/process_input.cuh
++++ b/humming/include/humming/kernel/process_input.cuh
+@@ -104,125 +104,146 @@ __global__ __launch_bounds__(TuningConfig::kThreadsPerTask * TuningConfig::kToke
+   if constexpr (Config::kUsePdl) griddepcontrol_wait();
+ 
+   __shared__ typename Config::SharedStorage shared;
+-  Config ctx(
+-      shared, expert_tokens, scatter_idx, num_valid_tokens, num_input_rows, num_output_rows,
+-      max_tokens_per_expert, use_int64_expert_tokens, use_int64_scatter_idx, use_int64_num_valid_tokens);
+-  float *scratch = shared.scratch;
+-  auto thread = ProcessInputThreadTask<Config>(ctx);
++  uint64_t row = (static_cast<uint64_t>(blockIdx.x) / Config::kBlocksPerRow) * Config::kTokensPerBlock;
++  uint64_t row_end = row + 1;
++  uint64_t row_stride = 1;
++  uint64_t expert_offset = 0;
++  uint64_t input_row_limit = num_input_rows;
++  if constexpr (Config::kLayout == ProcessInputLayoutType::GroupedMask && !Config::kZeroInvalid) {
++    uint64_t row_workers = min(uint64_t{4}, (static_cast<uint64_t>(max_tokens_per_expert) + Config::kTokensPerBlock - 1) / Config::kTokensPerBlock);
++    uint64_t expert = static_cast<uint64_t>(blockIdx.x) / (row_workers * Config::kBlocksPerRow);
++    row = (static_cast<uint64_t>(blockIdx.x) / Config::kBlocksPerRow % row_workers) * Config::kTokensPerBlock;
++    int64_t count = use_int64_expert_tokens
++                        ? reinterpret_cast<const int64_t *>(expert_tokens)[expert]
++                        : reinterpret_cast<const int32_t *>(expert_tokens)[expert];
++    row_end = count <= 0 ? 0 : min(static_cast<uint64_t>(count), static_cast<uint64_t>(max_tokens_per_expert));
++    row_stride = row_workers * Config::kTokensPerBlock;
++    expert_offset = expert * max_tokens_per_expert;
++    // A partial token block must not spill into the next expert's rows.
++    input_row_limit = min(num_input_rows, expert_offset + max_tokens_per_expert);
++  }
++  for (; row < row_end; row += row_stride) {
++    Config ctx(
++        shared, expert_tokens, scatter_idx, num_valid_tokens, input_row_limit, num_output_rows,
++        max_tokens_per_expert, use_int64_expert_tokens, use_int64_scatter_idx, use_int64_num_valid_tokens, expert_offset + row);
++    float *scratch = shared.scratch;
++    auto thread = ProcessInputThreadTask<Config>(ctx);
+ 
+-  if constexpr (kRawCopy) {
+-    alignas(16) SourceType values[V];
+-    if (!thread.skip_read) {
+-      const SourceType *input2 = reinterpret_cast<const SourceType *>(input);
+-      load_raw_values<SourceType, V>(values, thread.input(input2));
+-    }
++    if constexpr (kRawCopy) {
++      alignas(16) SourceType values[V];
++      if (!thread.skip_read) {
++        const SourceType *input2 = reinterpret_cast<const SourceType *>(input);
++        load_raw_values<SourceType, V>(values, thread.input(input2));
++      }
+ 
+-    PRAGMA_UNROLL
+-    for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
+-      auto write = ProcessInputThreadTask<Config>(ctx, route);
+-      if (!write.skip_output) {
+-        SourceType *destination = reinterpret_cast<SourceType *>(write.template output<sizeof(SourceType) * 8>(output));
+-        store_raw_values<SourceType, V>(destination, values, write.zero_output());
++      PRAGMA_UNROLL
++      for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
++        auto write = ProcessInputThreadTask<Config>(ctx, route);
++        if (!write.skip_output) {
++          SourceType *destination = reinterpret_cast<SourceType *>(write.template output<sizeof(SourceType) * 8>(output));
++          store_raw_values<SourceType, V>(destination, values, write.zero_output());
++        }
+       }
+-    }
+-  } else {
+-    float values[V];
+-    if (!thread.skip_read) {
+-      const SourceType *input2 = reinterpret_cast<const SourceType *>(input);
+-      if constexpr (Config::kActivation == ActivationType::None) {
+-        load_values<SourceType, V>(values, thread.input(input2));
++    } else {
++      float values[V];
++      if (!thread.skip_read) {
++        const SourceType *input2 = reinterpret_cast<const SourceType *>(input);
++        if constexpr (Config::kActivation == ActivationType::None) {
++          load_values<SourceType, V>(values, thread.input(input2));
++        } else {
++          Activation::template load<SourceType>(values, input2, thread.input_row, thread.input_col);
++        }
+       } else {
+-        Activation::template load<SourceType>(values, input2, thread.input_row, thread.input_col);
++        PRAGMA_UNROLL
++        for (uint32_t value = 0; value < V; value++)
++          values[value] = 0.f;
+       }
+-    } else {
+-      PRAGMA_UNROLL
+-      for (uint32_t value = 0; value < V; value++)
+-        values[value] = 0.f;
+-    }
+ 
+-    if constexpr (Config::kHadamard) {
+-      constexpr bool kTileBarriers = !kPureHadamard && H / V >= 128;
+-      hadamard<V, H, kNumWarps, 0, kTileBarriers>(values, scratch);
+-      if constexpr (kTransformScratch > 0 && kReduceScratch > 0) __syncthreads();
+-    }
++      if constexpr (Config::kHadamard) {
++        constexpr bool kTileBarriers = !kPureHadamard && H / V >= 128;
++        hadamard<V, H, kNumWarps, 0, kTileBarriers>(values, scratch);
++        if constexpr (kTransformScratch > 0 && kReduceScratch > 0) __syncthreads();
++      }
+ 
+-    if constexpr (Config::kQuantize) {
+-      ScaleStorage<QuantScaleType> collected_scale{};
+-      if constexpr (Config::kPhase == ProcessInputQuantizationPhase::Quantize) {
+-        PRAGMA_UNROLL
+-        for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
+-          auto write = ProcessInputThreadTask<Config>(ctx, route);
+-          if (!write.skip_output && !write.zero_output()) {
+-            collected_scale = load_scale<Float32>(output_scales, write.output_row);
+-            break;
++      if constexpr (Config::kQuantize) {
++        ScaleStorage<QuantScaleType> collected_scale{};
++        if constexpr (Config::kPhase == ProcessInputQuantizationPhase::Quantize) {
++          PRAGMA_UNROLL
++          for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
++            auto write = ProcessInputThreadTask<Config>(ctx, route);
++            if (!write.skip_output && !write.zero_output()) {
++              collected_scale = load_scale<Float32>(output_scales, write.output_row);
++              break;
++            }
+           }
+         }
+-      }
+ 
+-      uint32_t group = thread.input_col < K ? thread.input_col / G : 0;
+-      float static_scale = 1.f;
+-      if constexpr (Config::kStaticTensorScale)
+-        static_scale *= __ldg(static_tensor_scales);
++        uint32_t group = thread.input_col < K ? thread.input_col / G : 0;
++        float static_scale = 1.f;
++        if constexpr (Config::kStaticTensorScale)
++          static_scale *= __ldg(static_tensor_scales);
+ 
+-      auto result = quant_group<Config>(values, scratch + kTransformScratch, static_scale, collected_scale);
+-      ScaleStorage<OutputScaleType> group_output_scale{};
+-      float token_scale = 0.f;
+-      if constexpr (Config::kFusedGroupToken) {
+-        float m3_scale = decode_scale<QuantScaleType>(result.scale);
+-        float token_maximum = token_group_scale_max<
+-            G,
+-            V,
+-            Config::kThreadsPerTask,
+-            kNumWarps,
+-            0>(m3_scale, scratch + kTransformScratch);
+-        token_scale = token_scale_from_m3_bits(__float_as_uint(token_maximum));
+-        float local_scale = token_scale > 0.f ? m3_scale / token_scale : 0.f;
+-        group_output_scale = encode_scale<OutputScaleType>(local_scale);
+-      } else {
+-        group_output_scale = result.scale;
+-      }
+-      bool scale_leader;
+-      if constexpr (Config::kDynamicTokenMode) {
+-        scale_leader = thread.input_col == 0;
+-      } else {
+-        scale_leader = thread.input_col % G == 0;
+-      }
++        auto result = quant_group<Config>(values, scratch + kTransformScratch, static_scale, collected_scale);
++        ScaleStorage<OutputScaleType> group_output_scale{};
++        float token_scale = 0.f;
++        if constexpr (Config::kFusedGroupToken) {
++          float m3_scale = decode_scale<QuantScaleType>(result.scale);
++          float token_maximum = token_group_scale_max<
++              G,
++              V,
++              Config::kThreadsPerTask,
++              kNumWarps,
++              0>(m3_scale, scratch + kTransformScratch);
++          token_scale = token_scale_from_m3_bits(__float_as_uint(token_maximum));
++          float local_scale = token_scale > 0.f ? m3_scale / token_scale : 0.f;
++          group_output_scale = encode_scale<OutputScaleType>(local_scale);
++        } else {
++          group_output_scale = result.scale;
++        }
++        bool scale_leader;
++        if constexpr (Config::kDynamicTokenMode) {
++          scale_leader = thread.input_col == 0;
++        } else {
++          scale_leader = thread.input_col % G == 0;
++        }
+ 
+-      PRAGMA_UNROLL
+-      for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
+-        auto write = ProcessInputThreadTask<Config>(ctx, route);
+-        if (!write.skip_output) {
+-          if constexpr (Config::kReduce) {
+-            if (scale_leader) {
+-              uint64_t scale_index = write.output_row;
+-              if constexpr (Config::kDynamicGroupScale) {
+-                scale_index = group_scale_index<Config, OutputScaleType>(write.output_row, group, group_scale_stride);
+-              }
+-              ScaleStorage<OutputScaleType> stored_scale = write.zero_output() ? ScaleStorage<OutputScaleType>{} : group_output_scale;
+-              store_scale<OutputScaleType>(output_scales, scale_index, stored_scale);
+-              if constexpr (Config::kDynamicGroupScale) {
+-                if (group == CEIL_DIV(K, G) - 1)
+-                  clear_packed_group_scale_padding<Config, OutputScaleType>(output_scales, write.output_row, group_scale_stride);
++        PRAGMA_UNROLL
++        for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
++          auto write = ProcessInputThreadTask<Config>(ctx, route);
++          if (!write.skip_output) {
++            if constexpr (Config::kReduce) {
++              if (scale_leader) {
++                uint64_t scale_index = write.output_row;
++                if constexpr (Config::kDynamicGroupScale) {
++                  scale_index = group_scale_index<Config, OutputScaleType>(write.output_row, group, group_scale_stride);
++                }
++                ScaleStorage<OutputScaleType> stored_scale = write.zero_output() ? ScaleStorage<OutputScaleType>{} : group_output_scale;
++                store_scale<OutputScaleType>(output_scales, scale_index, stored_scale);
++                if constexpr (Config::kDynamicGroupScale) {
++                  if (group == CEIL_DIV(K, G) - 1)
++                    clear_packed_group_scale_padding<Config, OutputScaleType>(output_scales, write.output_row, group_scale_stride);
++                }
+               }
++              if constexpr (Config::kFusedGroupToken)
++                if (thread.input_col == 0) token_scales[write.output_row] = write.zero_output() ? 0.f : token_scale;
++            }
++            if constexpr (Config::kPhase != ProcessInputQuantizationPhase::CollectAbsmax) {
++              store_packed<kPackedBytes>(write.template output<TargetType::kBits>(output), result.packed, write.zero_output());
+             }
+-            if constexpr (Config::kFusedGroupToken)
+-              if (thread.input_col == 0) token_scales[write.output_row] = write.zero_output() ? 0.f : token_scale;
+-          }
+-          if constexpr (Config::kPhase != ProcessInputQuantizationPhase::CollectAbsmax) {
+-            store_packed<kPackedBytes>(write.template output<TargetType::kBits>(output), result.packed, write.zero_output());
+           }
+         }
+-      }
+-    } else {
+-      PRAGMA_UNROLL
+-      for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
+-        auto write = ProcessInputThreadTask<Config>(ctx, route);
+-        if (!write.skip_output) {
+-          SourceType *destination = reinterpret_cast<SourceType *>(write.template output<sizeof(SourceType) * 8>(output));
+-          store_values<SourceType, V>(destination, values, write.zero_output());
++      } else {
++        PRAGMA_UNROLL
++        for (uint32_t route = 0; route < Config::kOutputsPerToken; route++) {
++          auto write = ProcessInputThreadTask<Config>(ctx, route);
++          if (!write.skip_output) {
++            SourceType *destination = reinterpret_cast<SourceType *>(write.template output<sizeof(SourceType) * 8>(output));
++            store_values<SourceType, V>(destination, values, write.zero_output());
++          }
+         }
+       }
+     }
++    __syncthreads();
+   }
+ 
+   if constexpr (Config::kUsePdl) {
+@@ -258,7 +279,8 @@ __global__ __launch_bounds__(kTokensPerBlock * 32) void finalize_group_token_sca
+   __shared__ typename Config::SharedStorage shared;
+   Config ctx(
+       shared, expert_tokens, scatter_idx, num_valid_tokens, num_input_rows, num_output_rows,
+-      max_tokens_per_expert, use_int64_expert_tokens, use_int64_scatter_idx, use_int64_num_valid_tokens);
++      max_tokens_per_expert, use_int64_expert_tokens, use_int64_scatter_idx, use_int64_num_valid_tokens,
++      (static_cast<uint64_t>(blockIdx.x) / Config::kBlocksPerRow) * Config::kTokensPerBlock);
+   uint32_t lane = threadIdx.x & 31;
+   uint64_t source_row = ~uint64_t{0};
+   PRAGMA_UNROLL
+diff --git a/humming/include/humming/kernel/process_input/context.cuh b/humming/include/humming/kernel/process_input/context.cuh
+index 11acae7..13dbaee 100644
+--- a/humming/include/humming/kernel/process_input/context.cuh
++++ b/humming/include/humming/kernel/process_input/context.cuh
+@@ -104,9 +104,10 @@ struct ProcessInputContext : Config, TuningConfig {
+       uint32_t max_tokens_per_expert,
+       bool use_int64_expert_tokens,
+       bool use_int64_scatter_idx,
+-      bool use_int64_num_valid_tokens)
++      bool use_int64_num_valid_tokens,
++      uint64_t first_row)
+       : smem(shared), load(false), zero(false) {
+-    uint64_t logical_row = (static_cast<uint64_t>(blockIdx.x) / kBlocksPerRow) * kTokensPerBlock + threadIdx.x / kThreadsPerTask;
++    uint64_t logical_row = first_row + threadIdx.x / kThreadsPerTask;
+     column = kFinalizer ? 0 : (blockIdx.x % kBlocksPerRow) * kColumnsPerTask + (threadIdx.x % kThreadsPerTask) * kValuesPerThread;
+     input_row = kScatterSingleOutput ? logical_row / Config::kScatterWidth : logical_row;
+     PRAGMA_UNROLL
+diff --git a/tests/kernels/process_input/test_layout.py b/tests/kernels/process_input/test_layout.py
+index 8486a10..d4c9cb1 100644
+--- a/tests/kernels/process_input/test_layout.py
++++ b/tests/kernels/process_input/test_layout.py
+@@ -133,3 +133,80 @@ def test_masked_layout(quant_mode, zero_invalid, activation_type, layout):
+         valid_rows=valid_rows,
+         zero_invalid=zero_invalid,
+     )
++
++
++@pytest.mark.parametrize("capacity", [7, 2048])
++@pytest.mark.parametrize("count_dtype", [torch.int32, torch.int64])
++@pytest.mark.parametrize("use_pdl", [False, True])
++def test_grouped_mask_graph_changing_counts(capacity, count_dtype, use_pdl):
++    """Replay one graph across sparse, skewed, empty and recovered batches."""
++    torch.manual_seed(17)
++    experts, hidden = 3, 2304
++    inputs = torch.randn(experts * capacity, hidden * 2, device="cuda", dtype=torch.bfloat16)
++    counts = torch.full((experts,), capacity, device="cuda", dtype=count_dtype)
++    outputs = torch.empty((experts * capacity, hidden), device="cuda", dtype=torch.float8_e4m3fn)
++    scales = torch.empty((experts * capacity, hidden // 128), device="cuda", dtype=torch.float32)
++    activation = ACTIVATION_TYPE_IMPL_TEST_MAP[ActivationType("binary_split")]["impl"]
++    options = dict(
++        quant_mode="dynamic_group",
++        quant_dtype="float8e4m3",
++        quant_group_size=128,
++        group_scale_dtype="float32",
++        activation_type="binary_split",
++        layout="grouped_mask",
++        expert_tokens=counts,
++        zero_invalid=False,
++    )
++
++    def run():
++        return process_input(
++            inputs,
++            outputs=outputs,
++            group_scales=scales,
++            activation_impl=activation,
++            use_pdl=use_pdl,
++            **options,
++        )
++
++    run()
++    torch.cuda.synchronize()
++    graph = torch.cuda.CUDAGraph()
++    with torch.cuda.graph(graph):
++        run()
++    for values in (
++        [1, 3, 0],
++        [capacity, 0, 0],
++        [0, 0, 0],
++        [min(6, capacity)] * experts,
++        [min(12, capacity)] * experts,
++        [min(24, capacity)] * experts,
++        [min(48, capacity)] * experts,
++        [min(96, capacity)] * experts,
++        [capacity] * experts,
++        [2, 0, 1],
++    ):
++        counts.copy_(torch.tensor(values, dtype=count_dtype, device="cuda"))
++        inputs.mul_(-0.75)
++        outputs.fill_(7)
++        scales.fill_(7)
++        graph.replay()
++        expected = process_input_ref(inputs, **options)
++        valid = (torch.arange(capacity, device="cuda")[None, :] < counts[:, None]).flatten()
++        actual = (outputs, scales, None)
++        assert_process_input_close(
++            actual,
++            expected,
++            quant_mode=InputQuantizationMode.DynamicGroup,
++            quant_dtype="float8e4m3",
++            group_scale_dtype="float32",
++            quant_group_size=128,
++            valid_rows=valid,
++            zero_invalid=False,
++        )
++        assert torch.all(outputs.float()[~valid] == 7)
++        assert torch.all(scales[~valid] == 7)
++        graph_output = outputs.float().clone()
++        graph_scales = scales.clone()
++        run()
++        torch.testing.assert_close(outputs.float(), graph_output, rtol=0, atol=0)
++        torch.testing.assert_close(scales, graph_scales, rtol=0, atol=0)
+-- 
+2.33.0
+

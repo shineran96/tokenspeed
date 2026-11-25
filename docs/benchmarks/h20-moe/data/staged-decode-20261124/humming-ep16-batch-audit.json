@@ -1,0 +1,218 @@
+[
+  {
+    "c": 32,
+    "phase": "formal1",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 2
+      }
+    },
+    "node_requests": {
+      "node0": 16,
+      "node1": 16
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 11.8474600315094
+  },
+  {
+    "c": 32,
+    "phase": "formal2",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 2
+      }
+    },
+    "node_requests": {
+      "node0": 16,
+      "node1": 16
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 11.922642946243286
+  },
+  {
+    "c": 32,
+    "phase": "formal3",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 2
+      }
+    },
+    "node_requests": {
+      "node0": 16,
+      "node1": 16
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 11.981258392333984
+  },
+  {
+    "c": 64,
+    "phase": "formal1",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 4
+      }
+    },
+    "node_requests": {
+      "node0": 32,
+      "node1": 32
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 15.831601619720459
+  },
+  {
+    "c": 64,
+    "phase": "formal2",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 4
+      }
+    },
+    "node_requests": {
+      "node0": 32,
+      "node1": 32
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 15.885259866714478
+  },
+  {
+    "c": 64,
+    "phase": "formal3",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 4
+      }
+    },
+    "node_requests": {
+      "node0": 32,
+      "node1": 32
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 15.900767803192139
+  },
+  {
+    "c": 128,
+    "phase": "formal1",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 8
+      }
+    },
+    "node_requests": {
+      "node0": 64,
+      "node1": 64
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 23.395697832107544
+  },
+  {
+    "c": 128,
+    "phase": "formal2",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 8
+      }
+    },
+    "node_requests": {
+      "node0": 64,
+      "node1": 64
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 23.488142013549805
+  },
+  {
+    "c": 128,
+    "phase": "formal3",
+    "batch": {
+      "node0": {
+        "samples": 410,
+        "full_batch_samples": 410,
+        "rank_batch": 8
+      }
+    },
+    "node_requests": {
+      "node0": 64,
+      "node1": 64
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 23.59541344642639
+  },
+  {
+    "c": 256,
+    "phase": "formal1",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 16
+      }
+    },
+    "node_requests": {
+      "node0": 128,
+      "node1": 128
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 37.60803580284119
+  },
+  {
+    "c": 256,
+    "phase": "formal2",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 16
+      }
+    },
+    "node_requests": {
+      "node0": 128,
+      "node1": 128
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 37.687620401382446
+  },
+  {
+    "c": 256,
+    "phase": "formal3",
+    "batch": {
+      "node0": {
+        "samples": 409,
+        "full_batch_samples": 409,
+        "rank_batch": 16
+      }
+    },
+    "node_requests": {
+      "node0": 128,
+      "node1": 128
+    },
+    "accept_length": 4,
+    "preemptions": 0,
+    "common_window_s": 37.7270724773407
+  }
+]

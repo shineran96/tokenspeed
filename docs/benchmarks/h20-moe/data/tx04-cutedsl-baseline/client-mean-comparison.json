@@ -1,0 +1,106 @@
+{
+  "c32": {
+    "completed_formal_rounds": 3,
+    "requests": 96,
+    "client_tpot_mean_ms": 5.031210083882674,
+    "mean_whole_output_tps": 5421.743978848526,
+    "rounds": [
+      {
+        "phase": "formal1",
+        "requests": 32,
+        "client_tpot_mean_ms": 5.060373080696894,
+        "whole_output_tps": 5356.946228658142
+      },
+      {
+        "phase": "formal2",
+        "requests": 32,
+        "client_tpot_mean_ms": 4.955873661321958,
+        "whole_output_tps": 5566.7975211036855
+      },
+      {
+        "phase": "formal3",
+        "requests": 32,
+        "client_tpot_mean_ms": 5.07738350962917,
+        "whole_output_tps": 5341.48818678375
+      }
+    ]
+  },
+  "c64": {
+    "completed_formal_rounds": 3,
+    "requests": 192,
+    "client_tpot_mean_ms": 5.983000890238241,
+    "mean_whole_output_tps": 8044.745832391292,
+    "rounds": [
+      {
+        "phase": "formal1",
+        "requests": 64,
+        "client_tpot_mean_ms": 5.9281712207755755,
+        "whole_output_tps": 8142.542589424093
+      },
+      {
+        "phase": "formal2",
+        "requests": 64,
+        "client_tpot_mean_ms": 6.021176237825888,
+        "whole_output_tps": 7853.752207231036
+      },
+      {
+        "phase": "formal3",
+        "requests": 64,
+        "client_tpot_mean_ms": 5.99965521211326,
+        "whole_output_tps": 8137.942700518749
+      }
+    ]
+  },
+  "c128": {
+    "completed_formal_rounds": 3,
+    "requests": 384,
+    "client_tpot_mean_ms": 7.831291178660854,
+    "mean_whole_output_tps": 11069.62217084557,
+    "rounds": [
+      {
+        "phase": "formal1",
+        "requests": 128,
+        "client_tpot_mean_ms": 7.834811503377902,
+        "whole_output_tps": 11113.974342951464
+      },
+      {
+        "phase": "formal2",
+        "requests": 128,
+        "client_tpot_mean_ms": 7.879387053174686,
+        "whole_output_tps": 11205.219179728541
+      },
+      {
+        "phase": "formal3",
+        "requests": 128,
+        "client_tpot_mean_ms": 7.779674979429974,
+        "whole_output_tps": 10889.672989856706
+      }
+    ]
+  },
+  "c256": {
+    "completed_formal_rounds": 3,
+    "requests": 768,
+    "client_tpot_mean_ms": 11.826888272443844,
+    "mean_whole_output_tps": 12922.200619515866,
+    "rounds": [
+      {
+        "phase": "formal1",
+        "requests": 256,
+        "client_tpot_mean_ms": 11.834893716407306,
+        "whole_output_tps": 13181.363207033592
+      },
+      {
+        "phase": "formal2",
+        "requests": 256,
+        "client_tpot_mean_ms": 11.771156803832644,
+        "whole_output_tps": 12733.653368825513
+      },
+      {
+        "phase": "formal3",
+        "requests": 256,
+        "client_tpot_mean_ms": 11.874614297091583,
+        "whole_output_tps": 12851.585282688493
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "file": "single-mega-results.tar.gz",
+    "bytes": 11886591,
+    "sha256": "94da72d61fd20d15b059e96f25fb21e3ec4af08cef9631f57c15045270a3ce21",
+    "path_in_local_reports_archive": "h20-megamoe-bench-20261122/staged-decode-20261124/single-mega-results.tar.gz"
+  },
+  {
+    "file": "dual-mega-results.tar.gz",
+    "bytes": 19442346,
+    "sha256": "d19ba3880f7a987a0786d11e798854b7bf0df31965978162bde1c765ec4b1b56",
+    "path_in_local_reports_archive": "h20-megamoe-bench-20261122/staged-decode-20261124/dual-mega-results.tar.gz"
+  },
+  {
+    "file": "humming-ep16-results-final.tar.gz",
+    "bytes": 14635204,
+    "sha256": "43439a15216a40695b354e42fef35a8425f2b18c1fdecd082dec50e73ed8fad4",
+    "path_in_local_reports_archive": "h20-megamoe-bench-20261122/staged-decode-20261124/humming-ep16-results-final.tar.gz"
+  }
+]

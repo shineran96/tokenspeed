@@ -1,0 +1,5234 @@
+[
+  {
+    "stage": "target",
+    "rows_per_rank": 24,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": {
+          "max_abs": 0.125,
+          "rel_l2": 0.005115383304655552,
+          "mismatch": 0.35254722833633423
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.004703382961452007,
+              "mismatch": 0.30651041865348816
+            },
+            "eager_repeat": {
+              "max_abs": 0.125,
+              "rel_l2": 0.005571168381720781,
+              "mismatch": 0.42136234045028687
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": {
+          "max_abs": 0.078125,
+          "rel_l2": 0.003009220352396369,
+          "mismatch": 0.1823730617761612
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.002238796092569828,
+              "mismatch": 0.13738606870174408
+            },
+            "eager_repeat": {
+              "max_abs": 0.03125,
+              "rel_l2": 0.0015007220208644867,
+              "mismatch": 0.1027425155043602
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": {
+          "max_abs": 0.03125,
+          "rel_l2": 0.003344700438901782,
+          "mismatch": 0.21404623985290527
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.03125,
+              "rel_l2": 0.00476403534412384,
+              "mismatch": 0.3768717646598816
+            },
+            "eager_repeat": {
+              "max_abs": 0.03515625,
+              "rel_l2": 0.0034876277204602957,
+              "mismatch": 0.18727214634418488
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": {
+          "max_abs": 0.125,
+          "rel_l2": 0.00426166458055377,
+          "mismatch": 0.2893473505973816
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.125,
+              "rel_l2": 0.00424546655267477,
+              "mismatch": 0.3023437559604645
+            },
+            "eager_repeat": {
+              "max_abs": 0.125,
+              "rel_l2": 0.005854702088981867,
+              "mismatch": 0.4703938961029053
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 32,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "32": 408.9503860473633
+    },
+    "rank_windows_us": [
+      {
+        "32": [
+          400.44769287109375,
+          403.392333984375,
+          408.91902923583984,
+          416.3782501220703,
+          418.2672119140625,
+          408.6531066894531,
+          417.19200134277344
+        ]
+      },
+      {
+        "32": [
+          401.10206604003906,
+          403.37921142578125,
+          408.9254379272461,
+          416.7951965332031,
+          418.28990936279297,
+          408.6671829223633,
+          417.33280181884766
+        ]
+      },
+      {
+        "32": [
+          400.8726501464844,
+          403.38367462158203,
+          408.93184661865234,
+          416.7776107788086,
+          417.99583435058594,
+          408.58367919921875,
+          417.3116683959961
+        ]
+      },
+      {
+        "32": [
+          401.0406494140625,
+          403.3628845214844,
+          408.9164733886719,
+          416.7375946044922,
+          418.2511901855469,
+          408.6463928222656,
+          417.3334503173828
+        ]
+      },
+      {
+        "32": [
+          401.0985565185547,
+          403.39488983154297,
+          408.9503860473633,
+          416.81312561035156,
+          418.3107376098633,
+          408.68446350097656,
+          417.3740768432617
+        ]
+      },
+      {
+        "32": [
+          400.81920623779297,
+          402.88673400878906,
+          408.8288116455078,
+          416.7475128173828,
+          418.23585510253906,
+          408.6220932006836,
+          417.19615936279297
+        ]
+      },
+      {
+        "32": [
+          400.61790466308594,
+          403.35201263427734,
+          408.9094543457031,
+          416.75392150878906,
+          418.2467269897461,
+          408.6220932006836,
+          417.3206329345703
+        ]
+      },
+      {
+        "32": [
+          401.06719970703125,
+          403.36353302001953,
+          408.68896484375,
+          416.7523193359375,
+          418.2505416870117,
+          408.6393737792969,
+          417.28607177734375
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.005115383304655552,
+            "mismatch": 0.35254722833633423
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004703382961452007,
+                "mismatch": 0.30651041865348816
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005571168381720781,
+                "mismatch": 0.42136234045028687
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.078125,
+            "rel_l2": 0.003009220352396369,
+            "mismatch": 0.1823730617761612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002238796092569828,
+                "mismatch": 0.13738606870174408
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0015007220208644867,
+                "mismatch": 0.1027425155043602
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.003344700438901782,
+            "mismatch": 0.21404623985290527
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.00476403534412384,
+                "mismatch": 0.3768717646598816
+              },
+              "eager_repeat": {
+                "max_abs": 0.03515625,
+                "rel_l2": 0.0034876277204602957,
+                "mismatch": 0.18727214634418488
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.00426166458055377,
+            "mismatch": 0.2893473505973816
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.00424546655267477,
+                "mismatch": 0.3023437559604645
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005854702088981867,
+                "mismatch": 0.4703938961029053
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.003949557431042194,
+            "mismatch": 0.19554036855697632
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0041224355809390545,
+                "mismatch": 0.19720053672790527
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002356991171836853,
+                "mismatch": 0.0981038436293602
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.004140348173677921,
+            "mismatch": 0.2278238981962204
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005294212140142918,
+                "mismatch": 0.3129069209098816
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0037692992482334375,
+                "mismatch": 0.17160645127296448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0027741752564907074,
+            "mismatch": 0.0927327498793602
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0026732671540230513,
+                "mismatch": 0.10813802480697632
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0044904486276209354,
+                "mismatch": 0.24944663047790527
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0033795505296438932,
+            "mismatch": 0.19931641221046448
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0038995458744466305,
+                "mismatch": 0.22238770127296448
+              },
+              "eager_repeat": {
+                "max_abs": 0.0703125,
+                "rel_l2": 0.004823427181690931,
+                "mismatch": 0.27713218331336975
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00547664612531662,
+                "mismatch": 0.6590250730514526
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0020914217457175255,
+            "mismatch": 0.15240071713924408
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0703125,
+                "rel_l2": 0.0037923811469227076,
+                "mismatch": 0.25529786944389343
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0018820337718352675,
+                "mismatch": 0.11460775136947632
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002758082002401352,
+            "mismatch": 0.11909180134534836
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00451888469979167,
+                "mismatch": 0.2942301630973816
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.002854214981198311,
+                "mismatch": 0.10989584028720856
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002791901584714651,
+            "mismatch": 0.14296875894069672
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004233012907207012,
+                "mismatch": 0.2788655757904053
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002814396284520626,
+                "mismatch": 0.15411785244941711
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0034281061962246895,
+            "mismatch": 0.20986329019069672
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004299971740692854,
+                "mismatch": 0.2831624448299408
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0038112103939056396,
+                "mismatch": 0.1882324367761612
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.004786995705217123,
+            "mismatch": 0.3028320372104645
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005121937952935696,
+                "mismatch": 0.3219401240348816
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004634257405996323,
+                "mismatch": 0.2599446773529053
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.00260089966468513,
+            "mismatch": 0.18160808086395264
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0036942458245903254,
+                "mismatch": 0.24615073204040527
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003819150384515524,
+                "mismatch": 0.22434082627296448
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.004433956928551197,
+            "mismatch": 0.2847656309604645
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0034796965774148703,
+                "mismatch": 0.23214519023895264
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004164304118603468,
+                "mismatch": 0.29991862177848816
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002910369075834751,
+            "mismatch": 0.39833173155784607
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002921008737757802,
+                "mismatch": 0.3639323115348816
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005652062129229307,
+                "mismatch": 0.6754394769668579
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002738041104748845,
+            "mismatch": 0.1864827573299408
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0028789620846509933,
+                "mismatch": 0.19997559487819672
+              },
+              "eager_repeat": {
+                "max_abs": 0.046875,
+                "rel_l2": 0.0018664661329239607,
+                "mismatch": 0.09441732615232468
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002645771251991391,
+            "mismatch": 0.16031087934970856
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004516897723078728,
+                "mismatch": 0.2792806029319763
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0026875357143580914,
+                "mismatch": 0.11469727009534836
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0036140817683190107,
+            "mismatch": 0.19436036050319672
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004108064342290163,
+                "mismatch": 0.2806966304779053
+              },
+              "eager_repeat": {
+                "max_abs": 0.063720703125,
+                "rel_l2": 0.004220506176352501,
+                "mismatch": 0.27071940898895264
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.06640625,
+            "rel_l2": 0.003147294744849205,
+            "mismatch": 0.1205240935087204
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.0035420386120676994,
+                "mismatch": 0.17744141817092896
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002038997132331133,
+                "mismatch": 0.08643392473459244
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0038576098158955574,
+            "mismatch": 0.42398276925086975
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004756314214318991,
+                "mismatch": 0.5529215931892395
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005534011404961348,
+                "mismatch": 0.6589274406433105
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03515625,
+            "rel_l2": 0.003643020987510681,
+            "mismatch": 0.19056804478168488
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03515625,
+                "rel_l2": 0.0037085299845784903,
+                "mismatch": 0.20191244781017303
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.002916797064244747,
+                "mismatch": 0.1313069760799408
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.03515625,
+            "rel_l2": 0.0012470036745071411,
+            "mismatch": 0.03933105617761612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0019456958398222923,
+                "mismatch": 0.0622558631002903
+              },
+              "eager_repeat": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.0036894306540489197,
+                "mismatch": 0.16858725249767303
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.1875,
+            "rel_l2": 0.004520290996879339,
+            "mismatch": 0.23890788853168488
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005621473304927349,
+                "mismatch": 0.3464599847793579
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00238054315559566,
+                "mismatch": 0.12408041208982468
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.006291765719652176,
+                "mismatch": 0.7087972164154053
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002729326719418168,
+            "mismatch": 0.19133301079273224
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002621359657496214,
+                "mismatch": 0.16957195103168488
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0024805741850286722,
+                "mismatch": 0.16926270723342896
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.004220687784254551,
+            "mismatch": 0.20580242574214935
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004928577225655317,
+                "mismatch": 0.2847493588924408
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004696909803897142,
+                "mismatch": 0.25916343927383423
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.002976640360429883,
+            "mismatch": 0.17701824009418488
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0025908807292580605,
+                "mismatch": 0.14724121987819672
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004938425961881876,
+                "mismatch": 0.2712809443473816
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0029955944046378136,
+            "mismatch": 0.2243652492761612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003548938315361738,
+                "mismatch": 0.2551025450229645
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0038717889692634344,
+                "mismatch": 0.2881917357444763
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.0032658942509442568,
+            "mismatch": 0.2490071803331375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0037467225920408964,
+                "mismatch": 0.28711754083633423
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.003608816070482135,
+                "mismatch": 0.1962483823299408
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0030389365274459124,
+            "mismatch": 0.1870931088924408
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0031894403509795666,
+                "mismatch": 0.20187988877296448
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004065811634063721,
+                "mismatch": 0.28628745675086975
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "target",
+    "rows_per_rank": 32,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": {
+          "max_abs": 0.0625,
+          "rel_l2": 0.004071039613336325,
+          "mismatch": 0.21906737983226776
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.0035806207451969385,
+              "mismatch": 0.22252808511257172
+            },
+            "eager_repeat": {
+              "max_abs": 0.064453125,
+              "rel_l2": 0.0033726280089467764,
+              "mismatch": 0.13697509467601776
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": {
+          "max_abs": 0.0625,
+          "rel_l2": 0.0007618922973051667,
+          "mismatch": 0.038177490234375
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.005087737459689379,
+              "mismatch": 0.643109142780304
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": {
+          "max_abs": 0.125,
+          "rel_l2": 0.004553659353405237,
+          "mismatch": 0.3267578184604645
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.125,
+              "rel_l2": 0.005901109427213669,
+              "mismatch": 0.38310548663139343
+            },
+            "eager_repeat": {
+              "max_abs": 0.125,
+              "rel_l2": 0.005183911416679621,
+              "mismatch": 0.2954467833042145
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": {
+          "max_abs": 0.03125,
+          "rel_l2": 0.003970593214035034,
+          "mismatch": 0.23959961533546448
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0435791015625,
+              "rel_l2": 0.0041886260733008385,
+              "mismatch": 0.22080688178539276
+            },
+            "eager_repeat": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.00427593756467104,
+              "mismatch": 0.22682495415210724
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": {
+          "max_abs": 0.0625,
+          "rel_l2": 0.00391980679705739,
+          "mismatch": 0.23671875894069672
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.00450736191123724,
+              "mismatch": 0.22877807915210724
+            },
+            "eager_repeat": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.0038467298727482557,
+              "mismatch": 0.19786988198757172
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 32,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "32": 434.29630279541016
+    },
+    "rank_windows_us": [
+      {
+        "32": [
+          435.4345703125,
+          435.04383087158203,
+          432.48382568359375,
+          433.2886505126953,
+          434.2870330810547,
+          433.6764907836914,
+          437.74078369140625
+        ]
+      },
+      {
+        "32": [
+          435.4537582397461,
+          435.0307083129883,
+          432.60608673095703,
+          433.28800201416016,
+          434.2851257324219,
+          433.7129592895508,
+          437.75230407714844
+        ]
+      },
+      {
+        "32": [
+          435.3654479980469,
+          435.0243377685547,
+          432.59742736816406,
+          433.1760025024414,
+          434.25121307373047,
+          433.70849609375,
+          437.72449493408203
+        ]
+      },
+      {
+        "32": [
+          435.0979232788086,
+          434.98111724853516,
+          432.57537841796875,
+          433.26656341552734,
+          434.25697326660156,
+          433.5452651977539,
+          437.6976013183594
+        ]
+      },
+      {
+        "32": [
+          435.3955078125,
+          435.0281524658203,
+          432.6134490966797,
+          433.2972717285156,
+          434.29630279541016,
+          433.73600006103516,
+          437.74688720703125
+        ]
+      },
+      {
+        "32": [
+          435.4403305053711,
+          434.97440338134766,
+          432.57633209228516,
+          433.26080322265625,
+          434.2313766479492,
+          433.6912155151367,
+          437.7062225341797
+        ]
+      },
+      {
+        "32": [
+          435.44734954833984,
+          434.9990463256836,
+          432.5859069824219,
+          433.26305389404297,
+          434.26944732666016,
+          433.70849609375,
+          437.7280044555664
+        ]
+      },
+      {
+        "32": [
+          435.45310974121094,
+          435.0137710571289,
+          432.5708770751953,
+          433.25599670410156,
+          434.26464080810547,
+          433.68896484375,
+          437.7302551269531
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.004071039613336325,
+            "mismatch": 0.21906737983226776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0035806207451969385,
+                "mismatch": 0.22252808511257172
+              },
+              "eager_repeat": {
+                "max_abs": 0.064453125,
+                "rel_l2": 0.0033726280089467764,
+                "mismatch": 0.13697509467601776
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0007618922973051667,
+            "mismatch": 0.038177490234375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005087737459689379,
+                "mismatch": 0.643109142780304
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.004553659353405237,
+            "mismatch": 0.3267578184604645
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005901109427213669,
+                "mismatch": 0.38310548663139343
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005183911416679621,
+                "mismatch": 0.2954467833042145
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.003970593214035034,
+            "mismatch": 0.23959961533546448
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0435791015625,
+                "rel_l2": 0.0041886260733008385,
+                "mismatch": 0.22080688178539276
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00427593756467104,
+                "mismatch": 0.22682495415210724
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.00391980679705739,
+            "mismatch": 0.23671875894069672
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00450736191123724,
+                "mismatch": 0.22877807915210724
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0038467298727482557,
+                "mismatch": 0.19786988198757172
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0032754179555922747,
+            "mismatch": 0.17133788764476776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003847158746793866,
+                "mismatch": 0.22398681938648224
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.002854196121916175,
+                "mismatch": 0.13419190049171448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0037939639296382666,
+            "mismatch": 0.23009644448757172
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004637191537767649,
+                "mismatch": 0.2740539610385895
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004418402910232544,
+                "mismatch": 0.21540527045726776
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0018978476291522384,
+            "mismatch": 0.075775146484375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0032110586762428284,
+                "mismatch": 0.14172974228858948
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003462183987721801,
+                "mismatch": 0.196136474609375
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0011679594172164798,
+            "mismatch": 0.05175171047449112
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.0033250637352466583,
+                "mismatch": 0.15128174424171448
+              },
+              "eager_repeat": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.00308155152015388,
+                "mismatch": 0.11917724460363388
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00438670301809907,
+                "mismatch": 0.481781005859375
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003974080551415682,
+                "mismatch": 0.41365358233451843
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.0058294362388551235,
+            "mismatch": 0.35982057452201843
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.006358148064464331,
+                "mismatch": 0.39373779296875
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004645190667361021,
+                "mismatch": 0.21480102837085724
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.0025866515934467316,
+            "mismatch": 0.10256347805261612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0021147215738892555,
+                "mismatch": 0.08165893703699112
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0036900739651173353,
+                "mismatch": 0.18480224907398224
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.078125,
+            "rel_l2": 0.0029933457262814045,
+            "mismatch": 0.13105468451976776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0033329706639051437,
+                "mismatch": 0.19722901284694672
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002745923353359103,
+                "mismatch": 0.15437011420726776
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0036914923693984747,
+            "mismatch": 0.18659667670726776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004017938394099474,
+                "mismatch": 0.20876465737819672
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002290650736540556,
+                "mismatch": 0.08533325046300888
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.001645746873691678,
+                "mismatch": 0.18475952744483948
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.003354608081281185,
+            "mismatch": 0.13991089165210724
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004843779373914003,
+                "mismatch": 0.2651916444301605
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004684049170464277,
+                "mismatch": 0.24125365912914276
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.002605622634291649,
+            "mismatch": 0.11503296345472336
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0035879933275282383,
+                "mismatch": 0.22594605386257172
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0007675353554077446,
+                "mismatch": 0.018951416015625
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0400390625,
+            "rel_l2": 0.0020100437104701996,
+            "mismatch": 0.071929931640625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0040484825149178505,
+                "mismatch": 0.20685425400733948
+              },
+              "eager_repeat": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.004548638127744198,
+                "mismatch": 0.23966065049171448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.001485122600570321,
+                "mismatch": 0.14876098930835724
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.003472365206107497,
+            "mismatch": 0.1983642578125
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.00527237867936492,
+                "mismatch": 0.3022522032260895
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004553347826004028,
+                "mismatch": 0.26762697100639343
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.0020873085595667362,
+            "mismatch": 0.07676392048597336
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004728925880044699,
+                "mismatch": 0.3149475157260895
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004130011890083551,
+                "mismatch": 0.2570434510707855
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.046875,
+            "rel_l2": 0.0029488219879567623,
+            "mismatch": 0.14277954399585724
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0023509939201176167,
+                "mismatch": 0.11002808064222336
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004099882207810879,
+                "mismatch": 0.2530517578125
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0032955724745988846,
+            "mismatch": 0.139373779296875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002858464140444994,
+                "mismatch": 0.13481445610523224
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003377617336809635,
+                "mismatch": 0.17607422173023224
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0032147360034286976,
+            "mismatch": 0.30946046113967896
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0009061906603164971,
+                "mismatch": 0.05708007887005806
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0007323283352889121,
+                "mismatch": 0.03767700120806694
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.002035214565694332,
+            "mismatch": 0.09783935546875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0035387594252824783,
+                "mismatch": 0.1248779296875
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0037062386982142925,
+                "mismatch": 0.18771973252296448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0033753386233001947,
+            "mismatch": 0.159881591796875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.00335131399333477,
+                "mismatch": 0.137969970703125
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.00384341599419713,
+                "mismatch": 0.19764403998851776
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0027760122902691364,
+            "mismatch": 0.15435181558132172
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0036369424778968096,
+                "mismatch": 0.18671265244483948
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002900024875998497,
+                "mismatch": 0.1353759765625
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0031551015563309193,
+            "mismatch": 0.2936462461948395
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0031551015563309193,
+                "mismatch": 0.2936462461948395
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.005078255198895931,
+            "mismatch": 0.35933229327201843
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005436418578028679,
+                "mismatch": 0.3772521913051605
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00450684642419219,
+                "mismatch": 0.24384765326976776
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.004060414619743824,
+            "mismatch": 0.22574463486671448
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005151002202183008,
+                "mismatch": 0.284698486328125
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005024995654821396,
+                "mismatch": 0.2728820741176605
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.06640625,
+            "rel_l2": 0.004208885133266449,
+            "mismatch": 0.2675109803676605
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.0044698454439640045,
+                "mismatch": 0.253265380859375
+              },
+              "eager_repeat": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.003885350888594985,
+                "mismatch": 0.20221558213233948
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 0.125,
+            "rel_l2": 0.002110485453158617,
+            "mismatch": 0.11881714314222336
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.002424638019874692,
+                "mismatch": 0.13197632133960724
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0029001981019973755,
+                "mismatch": 0.143035888671875
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.03125,
+            "rel_l2": 0.0021489830687642097,
+            "mismatch": 0.11464843899011612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0024784624110907316,
+                "mismatch": 0.13237915933132172
+              },
+              "eager_repeat": {
+                "max_abs": 0.0390625,
+                "rel_l2": 0.0030900421552360058,
+                "mismatch": 0.15258179605007172
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 0.0625,
+            "rel_l2": 0.0028777867555618286,
+            "mismatch": 0.13289795815944672
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002256643958389759,
+                "mismatch": 0.11367187649011612
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003050984116271138,
+                "mismatch": 0.16254882514476776
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "draft",
+    "rows_per_rank": 4,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": {
+          "max_abs": 1.0,
+          "rel_l2": 0.0020793674048036337,
+          "mismatch": 0.16889648139476776
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0014927810989320278,
+              "mismatch": 0.09682617336511612
+            },
+            "eager_repeat": {
+              "max_abs": 1.0,
+              "rel_l2": 0.001349009107798338,
+              "mismatch": 0.08002930134534836
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.5,
+              "rel_l2": 0.0005348297418095171,
+              "mismatch": 0.01723632775247097
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": {
+          "max_abs": 2.5,
+          "rel_l2": 0.008951454423367977,
+          "mismatch": 0.758984386920929
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 2.640625,
+              "rel_l2": 0.008994383737444878,
+              "mismatch": 0.7618652582168579
+            },
+            "eager_repeat": {
+              "max_abs": 3.0,
+              "rel_l2": 0.009051238186657429,
+              "mismatch": 0.7295898795127869
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": {
+          "max_abs": 0.5,
+          "rel_l2": 0.0015173766296356916,
+          "mismatch": 0.10786133259534836
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.5,
+              "rel_l2": 0.0015983842313289642,
+              "mismatch": 0.11166992038488388
+            },
+            "eager_repeat": {
+              "max_abs": 0.5,
+              "rel_l2": 0.0017980921547859907,
+              "mismatch": 0.14697265625
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": {
+          "max_abs": 1.0,
+          "rel_l2": 0.002225529635325074,
+          "mismatch": 0.1904296875
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0020969395991414785,
+              "mismatch": 0.17509765923023224
+            },
+            "eager_repeat": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0015276847407221794,
+              "mismatch": 0.09926757961511612
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 32,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "32": 161.12672805786133
+    },
+    "rank_windows_us": [
+      {
+        "32": [
+          161.56639099121094,
+          161.10431671142578,
+          161.1555290222168,
+          161.08928680419922,
+          161.0063934326172,
+          160.9859275817871,
+          161.4441680908203
+        ]
+      },
+      {
+        "32": [
+          161.6364860534668,
+          161.10496520996094,
+          161.14336013793945,
+          161.0982322692871,
+          161.00448608398438,
+          160.98751068115234,
+          161.50880813598633
+        ]
+      },
+      {
+        "32": [
+          161.05663299560547,
+          161.060791015625,
+          161.1414337158203,
+          161.0860824584961,
+          160.99712371826172,
+          160.9721565246582,
+          161.495361328125
+        ]
+      },
+      {
+        "32": [
+          161.69952392578125,
+          161.12672805786133,
+          161.16640090942383,
+          161.03071212768555,
+          161.02783203125,
+          161.01503372192383,
+          161.52767181396484
+        ]
+      },
+      {
+        "32": [
+          161.74528121948242,
+          161.08543395996094,
+          161.13567352294922,
+          161.06048583984375,
+          160.98495483398438,
+          160.97631454467773,
+          161.48256301879883
+        ]
+      },
+      {
+        "32": [
+          161.69408798217773,
+          161.07168197631836,
+          161.11648559570312,
+          161.05632781982422,
+          160.88768005371094,
+          160.94783782958984,
+          161.47232055664062
+        ]
+      },
+      {
+        "32": [
+          161.54239654541016,
+          161.07328414916992,
+          161.12319946289062,
+          161.06016159057617,
+          160.9779167175293,
+          160.96351623535156,
+          161.4841651916504
+        ]
+      },
+      {
+        "32": [
+          161.66976928710938,
+          161.06752395629883,
+          161.12287521362305,
+          161.06304168701172,
+          160.96927642822266,
+          160.95327377319336,
+          161.40384674072266
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0020793674048036337,
+            "mismatch": 0.16889648139476776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0014927810989320278,
+                "mismatch": 0.09682617336511612
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001349009107798338,
+                "mismatch": 0.08002930134534836
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0005348297418095171,
+                "mismatch": 0.01723632775247097
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.008951454423367977,
+            "mismatch": 0.758984386920929
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.640625,
+                "rel_l2": 0.008994383737444878,
+                "mismatch": 0.7618652582168579
+              },
+              "eager_repeat": {
+                "max_abs": 3.0,
+                "rel_l2": 0.009051238186657429,
+                "mismatch": 0.7295898795127869
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.5,
+            "rel_l2": 0.0015173766296356916,
+            "mismatch": 0.10786133259534836
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0015983842313289642,
+                "mismatch": 0.11166992038488388
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0017980921547859907,
+                "mismatch": 0.14697265625
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.002225529635325074,
+            "mismatch": 0.1904296875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0020969395991414785,
+                "mismatch": 0.17509765923023224
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0015276847407221794,
+                "mismatch": 0.09926757961511612
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.004991903435438871,
+            "mismatch": 0.437744140625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005511874798685312,
+                "mismatch": 0.44218751788139343
+              },
+              "eager_repeat": {
+                "max_abs": 1.75,
+                "rel_l2": 0.005261723417788744,
+                "mismatch": 0.408203125
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0012132764095440507,
+            "mismatch": 0.100341796875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.765625,
+            "rel_l2": 0.004479129333049059,
+            "mismatch": 0.3795410096645355
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.004936685785651207,
+                "mismatch": 0.5010742545127869
+              },
+              "eager_repeat": {
+                "max_abs": 1.125,
+                "rel_l2": 0.005411316175013781,
+                "mismatch": 0.39116212725639343
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.004289057571440935,
+            "mismatch": 0.48164063692092896
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004433510825037956,
+                "mismatch": 0.41850587725639343
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0038645644672214985,
+                "mismatch": 0.36083984375
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.001343152136541903,
+            "mismatch": 0.08837890625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0008954247459769249,
+                "mismatch": 0.04912109300494194
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0008954247459769249,
+                "mismatch": 0.04912109300494194
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0011395723558962345,
+                "mismatch": 0.09506835788488388
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0005605300539173186,
+                "mismatch": 0.01796874962747097
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 3.15625,
+            "rel_l2": 0.009503207169473171,
+            "mismatch": 0.8014160394668579
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.008450577966868877,
+                "mismatch": 0.788378894329071
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.009445917792618275,
+                "mismatch": 0.811474621295929
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.75,
+            "rel_l2": 0.0032671603839844465,
+            "mismatch": 0.17744140326976776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0013509263517335057,
+                "mismatch": 0.0947265625
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.001556880190037191,
+            "mismatch": 0.10761719197034836
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001343152136541903,
+                "mismatch": 0.08837890625
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001367819495499134,
+                "mismatch": 0.09062500298023224
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.75,
+            "rel_l2": 0.004118039272725582,
+            "mismatch": 0.198974609375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004631664603948593,
+                "mismatch": 0.33940431475639343
+              },
+              "eager_repeat": {
+                "max_abs": 2.25,
+                "rel_l2": 0.00559971434995532,
+                "mismatch": 0.37519532442092896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0033996044658124447,
+            "mismatch": 0.18408203125
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0029050149023532867,
+                "mismatch": 0.16748046875
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0040403446182608604,
+                "mismatch": 0.19501952826976776
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.0053261155262589455,
+            "mismatch": 0.21088866889476776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0034382787998765707,
+                "mismatch": 0.23159180581569672
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.003664892166852951,
+                "mismatch": 0.24116210639476776
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.002514410065487027,
+            "mismatch": 0.23974609375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0028801073785871267,
+                "mismatch": 0.2574218809604645
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.003246980020776391,
+                "mismatch": 0.26972657442092896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.001261826721020043,
+            "mismatch": 0.09750976413488388
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.00136940972879529,
+                "mismatch": 0.116943359375
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 3.5,
+            "rel_l2": 0.010911430232226849,
+            "mismatch": 0.79931640625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 3.125,
+                "rel_l2": 0.009430418722331524,
+                "mismatch": 0.7855468988418579
+              },
+              "eager_repeat": {
+                "max_abs": 3.125,
+                "rel_l2": 0.010426859371364117,
+                "mismatch": 0.7786621451377869
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.5,
+            "rel_l2": 0.0029545645229518414,
+            "mismatch": 0.2752441465854645
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.75,
+                "rel_l2": 0.0033369362354278564,
+                "mismatch": 0.18149414658546448
+              },
+              "eager_repeat": {
+                "max_abs": 0.75,
+                "rel_l2": 0.0032963056582957506,
+                "mismatch": 0.18120117485523224
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 1.25,
+            "rel_l2": 0.002549104392528534,
+            "mismatch": 0.15629883110523224
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.003638054011389613,
+                "mismatch": 0.27880859375
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.003200757084414363,
+                "mismatch": 0.17270508408546448
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0010916959727182984,
+            "mismatch": 0.0537109375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.125,
+                "rel_l2": 0.003997561056166887,
+                "mismatch": 0.32866212725639343
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.004138223361223936,
+                "mismatch": 0.33662110567092896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.5,
+            "rel_l2": 0.0012685529654845595,
+            "mismatch": 0.05903320387005806
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.001722492859698832,
+                "mismatch": 0.10356445610523224
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0023116194643080235,
+                "mismatch": 0.18491211533546448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.0033406896982342005,
+            "mismatch": 0.27812501788139343
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0029867212288081646,
+                "mismatch": 0.21157227456569672
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.003599749878048897,
+                "mismatch": 0.3099609315395355
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.006194449961185455,
+            "mismatch": 0.5948730707168579
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005588153842836618,
+                "mismatch": 0.521484375
+              },
+              "eager_repeat": {
+                "max_abs": 1.0625,
+                "rel_l2": 0.003991712816059589,
+                "mismatch": 0.48383790254592896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0012766305590048432,
+                "mismatch": 0.10092773288488388
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 3.0,
+            "rel_l2": 0.01145089976489544,
+            "mismatch": 0.82080078125
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 3.0625,
+                "rel_l2": 0.012644045986235142,
+                "mismatch": 0.8475586175918579
+              },
+              "eager_repeat": {
+                "max_abs": 3.0,
+                "rel_l2": 0.011365621350705624,
+                "mismatch": 0.83056640625
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 0.75,
+            "rel_l2": 0.004458656068891287,
+            "mismatch": 0.481201171875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0024368122685700655,
+                "mismatch": 0.14345704019069672
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.003811400383710861,
+                "mismatch": 0.18056641519069672
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.00543577503412962,
+            "mismatch": 0.5099121332168579
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.004737525247037411,
+                "mismatch": 0.5326172113418579
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004828349221497774,
+                "mismatch": 0.2542480528354645
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.006047839764505625,
+            "mismatch": 0.4696289002895355
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0053375097922980785,
+                "mismatch": 0.3672851622104645
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.004390320740640163,
+                "mismatch": 0.34697267413139343
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0014144234592095017,
+                "mismatch": 0.12119140475988388
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.005292890593409538,
+            "mismatch": 0.34965822100639343
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.78125,
+                "rel_l2": 0.004302449524402618,
+                "mismatch": 0.36542969942092896
+              },
+              "eager_repeat": {
+                "max_abs": 1.125,
+                "rel_l2": 0.005637436173856258,
+                "mismatch": 0.40869140625
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.00518457917496562,
+            "mismatch": 0.45185548067092896
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004465332254767418,
+                "mismatch": 0.422119140625
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005987781565636396,
+                "mismatch": 0.388916015625
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "draft",
+    "rows_per_rank": 32,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": {
+          "max_abs": 2.125,
+          "rel_l2": 0.0027016212698072195,
+          "mismatch": 0.08528442680835724
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 2.0,
+              "rel_l2": 0.0029126121662557125,
+              "mismatch": 0.08883056789636612
+            },
+            "eager_repeat": {
+              "max_abs": 2.0,
+              "rel_l2": 0.0025105620734393597,
+              "mismatch": 0.08045043796300888
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": {
+          "max_abs": 2.125,
+          "rel_l2": 0.006163557525724173,
+          "mismatch": 0.37684327363967896
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 2.125,
+              "rel_l2": 0.006163557525724173,
+              "mismatch": 0.37684327363967896
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": {
+          "max_abs": 1.125,
+          "rel_l2": 0.0013905607629567385,
+          "mismatch": 0.07872314751148224
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 1.125,
+              "rel_l2": 0.0011246193898841739,
+              "mismatch": 0.04711303859949112
+            },
+            "eager_repeat": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0007327687344513834,
+              "mismatch": 0.02681884728372097
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": {
+          "max_abs": 0.0,
+          "rel_l2": 0.0,
+          "mismatch": 0.0
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": {
+          "max_abs": 1.625,
+          "rel_l2": 0.00357250333763659,
+          "mismatch": 0.12774048745632172
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 1.5,
+              "rel_l2": 0.002753990236669779,
+              "mismatch": 0.09760742634534836
+            },
+            "eager_repeat": {
+              "max_abs": 1.25,
+              "rel_l2": 0.002702724654227495,
+              "mismatch": 0.07961425930261612
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": {
+          "max_abs": 2.34375,
+          "rel_l2": 0.002743433928117156,
+          "mismatch": 0.09573974460363388
+        },
+        "within": {
+          "32": {
+            "graph_vs_eager": {
+              "max_abs": 2.875,
+              "rel_l2": 0.0032321871258318424,
+              "mismatch": 0.08812866359949112
+            },
+            "eager_repeat": {
+              "max_abs": 3.0,
+              "rel_l2": 0.0031325716990977526,
+              "mismatch": 0.09600219875574112
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 32,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "32": 249.93440628051758
+    },
+    "rank_windows_us": [
+      {
+        "32": [
+          249.89952087402344,
+          249.9679946899414,
+          249.74464416503906,
+          249.75231170654297,
+          249.44063186645508,
+          249.89728927612305,
+          250.22016525268555
+        ]
+      },
+      {
+        "32": [
+          249.93440628051758,
+          249.96768951416016,
+          249.7385597229004,
+          249.75263595581055,
+          249.4371223449707,
+          249.96063232421875,
+          250.22016525268555
+        ]
+      },
+      {
+        "32": [
+          249.8636817932129,
+          249.94016647338867,
+          249.71807479858398,
+          249.75711822509766,
+          249.40799713134766,
+          249.76800918579102,
+          250.18335342407227
+        ]
+      },
+      {
+        "32": [
+          249.87167358398438,
+          250.00288009643555,
+          249.76863861083984,
+          249.78784561157227,
+          249.45695877075195,
+          249.99679565429688,
+          250.23040771484375
+        ]
+      },
+      {
+        "32": [
+          249.90079879760742,
+          249.92128372192383,
+          249.72511291503906,
+          249.749755859375,
+          249.41791534423828,
+          249.94144439697266,
+          250.19615173339844
+        ]
+      },
+      {
+        "32": [
+          249.89248275756836,
+          249.93152618408203,
+          249.6963119506836,
+          249.7382354736328,
+          249.35327529907227,
+          249.9452781677246,
+          250.18911361694336
+        ]
+      },
+      {
+        "32": [
+          249.80640411376953,
+          249.93280410766602,
+          249.7235107421875,
+          249.52640533447266,
+          249.37728881835938,
+          249.9452781677246,
+          250.19296646118164
+        ]
+      },
+      {
+        "32": [
+          249.81983184814453,
+          249.84031677246094,
+          249.72576141357422,
+          249.73663330078125,
+          249.4233512878418,
+          249.92864608764648,
+          250.16704559326172
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.125,
+            "rel_l2": 0.0027016212698072195,
+            "mismatch": 0.08528442680835724
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0029126121662557125,
+                "mismatch": 0.08883056789636612
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0025105620734393597,
+                "mismatch": 0.08045043796300888
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.125,
+            "rel_l2": 0.006163557525724173,
+            "mismatch": 0.37684327363967896
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.125,
+                "rel_l2": 0.006163557525724173,
+                "mismatch": 0.37684327363967896
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 1.125,
+            "rel_l2": 0.0013905607629567385,
+            "mismatch": 0.07872314751148224
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.125,
+                "rel_l2": 0.0011246193898841739,
+                "mismatch": 0.04711303859949112
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0007327687344513834,
+                "mismatch": 0.02681884728372097
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.625,
+            "rel_l2": 0.00357250333763659,
+            "mismatch": 0.12774048745632172
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.002753990236669779,
+                "mismatch": 0.09760742634534836
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.002702724654227495,
+                "mismatch": 0.07961425930261612
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.34375,
+            "rel_l2": 0.002743433928117156,
+            "mismatch": 0.09573974460363388
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.875,
+                "rel_l2": 0.0032321871258318424,
+                "mismatch": 0.08812866359949112
+              },
+              "eager_repeat": {
+                "max_abs": 3.0,
+                "rel_l2": 0.0031325716990977526,
+                "mismatch": 0.09600219875574112
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 1.75,
+            "rel_l2": 0.002126624109223485,
+            "mismatch": 0.05501098558306694
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.15625,
+                "rel_l2": 0.002451255451887846,
+                "mismatch": 0.05010376125574112
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002336655743420124,
+                "mismatch": 0.07351074367761612
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.005411683581769466,
+            "mismatch": 0.3658508360385895
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.75,
+            "rel_l2": 0.002762430114671588,
+            "mismatch": 0.04987793043255806
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0025172806344926357,
+                "mismatch": 0.04896850511431694
+              },
+              "eager_repeat": {
+                "max_abs": 1.625,
+                "rel_l2": 0.0027867055032402277,
+                "mismatch": 0.07454834133386612
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.25,
+            "rel_l2": 0.0038886021357029676,
+            "mismatch": 0.12047729641199112
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002307839458808303,
+                "mismatch": 0.04993896558880806
+              },
+              "eager_repeat": {
+                "max_abs": 1.75,
+                "rel_l2": 0.002248890930786729,
+                "mismatch": 0.05264892801642418
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 3.0,
+            "rel_l2": 0.003835508832708001,
+            "mismatch": 0.14042358100414276
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0023947858717292547,
+                "mismatch": 0.08489380031824112
+              },
+              "eager_repeat": {
+                "max_abs": 1.65625,
+                "rel_l2": 0.0014383397065103054,
+                "mismatch": 0.03128662332892418
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.0025137809570878744,
+            "mismatch": 0.13819579780101776
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.002672699047252536,
+                "mismatch": 0.14542236924171448
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.0027551844250410795,
+                "mismatch": 0.12189330905675888
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.25,
+            "rel_l2": 0.00308997486717999,
+            "mismatch": 0.10911865532398224
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.875,
+                "rel_l2": 0.0039742691442370415,
+                "mismatch": 0.13544921576976776
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.001589024905115366,
+                "mismatch": 0.03201904520392418
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.0017122580902650952,
+            "mismatch": 0.03403930738568306
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0018489258363842964,
+                "mismatch": 0.03734130784869194
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0018921559676527977,
+                "mismatch": 0.04948120191693306
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.003252249676734209,
+            "mismatch": 0.11149292439222336
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0024560533929616213,
+                "mismatch": 0.08310546725988388
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0024248985573649406,
+                "mismatch": 0.08751221001148224
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.009683306328952312,
+            "mismatch": 0.7876831293106079
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.009683306328952312,
+                "mismatch": 0.7876831293106079
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.71875,
+            "rel_l2": 0.004248813726007938,
+            "mismatch": 0.12933960556983948
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0040046642534434795,
+                "mismatch": 0.12093506008386612
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.002400769153609872,
+                "mismatch": 0.08513183891773224
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 3.0,
+            "rel_l2": 0.003763409098610282,
+            "mismatch": 0.11690673977136612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.875,
+                "rel_l2": 0.003723776200786233,
+                "mismatch": 0.119964599609375
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0028295970987528563,
+                "mismatch": 0.074249267578125
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.003351053223013878,
+            "mismatch": 0.15258179605007172
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0034533687867224216,
+                "mismatch": 0.16043701767921448
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0035428516566753387,
+                "mismatch": 0.16004028916358948
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.009625186212360859,
+            "mismatch": 0.784381091594696
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.00957962404936552,
+                "mismatch": 0.782763659954071
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.00957962404936552,
+                "mismatch": 0.782763659954071
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0011275910073891282,
+            "mismatch": 0.06020507961511612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0010657167294993997,
+                "mismatch": 0.04979247972369194
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001204516040161252,
+                "mismatch": 0.05562744289636612
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.004137010313570499,
+            "mismatch": 0.17479859292507172
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.004062499385327101,
+                "mismatch": 0.17404785752296448
+              },
+              "eager_repeat": {
+                "max_abs": 1.34375,
+                "rel_l2": 0.0037900854367762804,
+                "mismatch": 0.16919556260108948
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 3.0,
+            "rel_l2": 0.0037956952583044767,
+            "mismatch": 0.167633056640625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 3.0,
+                "rel_l2": 0.0053571611642837524,
+                "mismatch": 0.23709717392921448
+              },
+              "eager_repeat": {
+                "max_abs": 2.625,
+                "rel_l2": 0.0047230347990989685,
+                "mismatch": 0.21535034477710724
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.001948265708051622,
+            "mismatch": 0.048492431640625
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0023121226113289595,
+                "mismatch": 0.05176391825079918
+              },
+              "eager_repeat": {
+                "max_abs": 2.125,
+                "rel_l2": 0.0025855659041553736,
+                "mismatch": 0.04935913160443306
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.009334323927760124,
+            "mismatch": 0.7821106314659119
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005880121141672134,
+                "mismatch": 0.3756774961948395
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.007758178282529116,
+                "mismatch": 0.714825451374054
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.8125,
+            "rel_l2": 0.0038637977559119463,
+            "mismatch": 0.09998168796300888
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.25,
+                "rel_l2": 0.0032007889822125435,
+                "mismatch": 0.05539551004767418
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0028625023551285267,
+                "mismatch": 0.05118408426642418
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.002721642144024372,
+            "mismatch": 0.05352173000574112
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 3.5,
+                "rel_l2": 0.004088880028575659,
+                "mismatch": 0.10437621921300888
+              },
+              "eager_repeat": {
+                "max_abs": 2.25,
+                "rel_l2": 0.0027423815336078405,
+                "mismatch": 0.053436279296875
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.75,
+            "rel_l2": 0.0025222068652510643,
+            "mismatch": 0.04946289211511612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002030185190960765,
+                "mismatch": 0.0462646484375
+              },
+              "eager_repeat": {
+                "max_abs": 1.75,
+                "rel_l2": 0.002020269399508834,
+                "mismatch": 0.04619751125574112
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 2.5,
+            "rel_l2": 0.008920755237340927,
+            "mismatch": 0.767913818359375
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0018225603271275759,
+                "mismatch": 0.15346680581569672
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001569335232488811,
+                "mismatch": 0.113128662109375
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 1.0,
+            "rel_l2": 0.0007244041189551353,
+            "mismatch": 0.02276611328125
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0005192319513298571,
+                "mismatch": 0.013836669735610485
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0005346437101252377,
+                "mismatch": 0.014233398251235485
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.0025727583561092615,
+            "mismatch": 0.04973755031824112
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.002088828245177865,
+                "mismatch": 0.04753417894244194
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0020480628591030836,
+                "mismatch": 0.04677123948931694
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.001905277487821877,
+            "mismatch": 0.04999389871954918
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002109213499352336,
+                "mismatch": 0.05136718973517418
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.0025830776430666447,
+                "mismatch": 0.05363769456744194
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.0030762052629143,
+            "mismatch": 0.11312256008386612
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.25,
+                "rel_l2": 0.0025796080008149147,
+                "mismatch": 0.06813354790210724
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002898002741858363,
+                "mismatch": 0.09037476032972336
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.005526414606720209,
+                "mismatch": 0.36358642578125
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": {
+            "max_abs": 0.0,
+            "rel_l2": 0.0,
+            "mismatch": 0.0
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": {
+            "max_abs": 1.5,
+            "rel_l2": 0.0027494351379573345,
+            "mismatch": 0.089080810546875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0024423953145742416,
+                "mismatch": 0.08790283650159836
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0019001478794962168,
+                "mismatch": 0.064117431640625
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": {
+            "max_abs": 2.0,
+            "rel_l2": 0.0024412444327026606,
+            "mismatch": 0.06854248046875
+          },
+          "within": {
+            "32": {
+              "graph_vs_eager": {
+                "max_abs": 2.015625,
+                "rel_l2": 0.002585532609373331,
+                "mismatch": 0.08088379353284836
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.00221328460611403,
+                "mismatch": 0.08168335258960724
+              }
+            }
+          }
+        }
+      ]
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "decode_nodes": [
+    "tx-01",
+    "tx-03"
+  ],
+  "prefill_node": "tx-04",
+  "replicas": 1,
+  "dp_per_replica": 16,
+  "ep_per_replica": 16,
+  "target_backend": "humming MXFP4/FP8 + DeepEP low latency",
+  "draft_backend": "humming MXFP4/FP8 + DeepEP low latency",
+  "simulated_accept_rate": 0.6,
+  "simulated_accept_length": 4.0,
+  "input_tokens": 131072,
+  "shared_prefix_tokens": 130816,
+  "suffix_tokens": 256,
+  "output_tokens": 2048,
+  "concurrencies": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "formal_rounds": 3,
+  "primary_metric": "arithmetic mean per-request client TPOT, (last event-first event)*1000/(2048-1)",
+  "source_commit": "345481b592a2f909953c63ca93251d4f8b73cee5",
+  "pdl": true,
+  "cuda_graph": true,
+  "swa_new_fusion": false,
+  "method": "Pause P; admit D requests; bootstrap grace; pause D; resume P; require all P KV-transfer-completed records; resume the decode worker",
+  "readiness": "Exact phase request count of P RequestStats finished after RDMA transfer; all client outputs must occur after this gate",
+  "bootstrap_grace_seconds": 5,
+  "output_tps": "C*2048/(latest client output-earliest client output)",
+  "limitation": "Staging TTFT is artificial; this tests decode capacity, not normal end-to-end service latency",
+  "humming_commit": "219fc5061738dd5a0f7bfc92d3d3c9d36cd773ae"
+}

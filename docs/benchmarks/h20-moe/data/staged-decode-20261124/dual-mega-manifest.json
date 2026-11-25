@@ -1,0 +1,36 @@
+{
+  "decode_nodes": [
+    "tx-01",
+    "tx-03"
+  ],
+  "prefill_node": "tx-04",
+  "replicas": 2,
+  "dp_per_replica": 8,
+  "ep_per_replica": 8,
+  "target_backend": "mega_moe / SM90 fp8_mxfp4_bf16_pull_cutedsl",
+  "draft_backend": "mega_moe (inherits target, webpage default)",
+  "simulated_accept_rate": 0.6,
+  "simulated_accept_length": 4.0,
+  "input_tokens": 131072,
+  "shared_prefix_tokens": 130816,
+  "suffix_tokens": 256,
+  "output_tokens": 2048,
+  "concurrencies": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "formal_rounds": 3,
+  "primary_metric": "arithmetic mean per-request client TPOT, (last event-first event)*1000/(2048-1)",
+  "source_commit": "345481b592a2f909953c63ca93251d4f8b73cee5",
+  "pdl": true,
+  "cuda_graph": true,
+  "swa_new_fusion": false,
+  "method": "Pause P; admit D requests; bootstrap grace; pause D; resume P; require all P KV-transfer-completed records; release both D replicas concurrently",
+  "readiness": "Exact phase request count of P RequestStats finished after RDMA transfer; no time-based decode release",
+  "bootstrap_grace_seconds": 5,
+  "output_tps": "C*2048/(latest client output-earliest client output)",
+  "limitation": "Staging TTFT is artificial; this tests decode capacity, not normal end-to-end service latency",
+  "attempt1": "Excluded: manual early release required after bootstrap race"
+}

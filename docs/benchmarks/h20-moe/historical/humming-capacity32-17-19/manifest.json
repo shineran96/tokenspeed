@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-23",
+  "decode": "worker17 8 x H20-3e DP8 EP8",
+  "prefill": "worker19 4 x H20 TP4 QCP4 EP4",
+  "model": "DeepSeek-V4.1-Flash-1017",
+  "target_backend": "humming",
+  "draft_backend": "inherits humming",
+  "communication": "DeepEP low_latency, GPU NIC handler, NVLink peer access enabled",
+  "activation": "FP8, K128 Humming input configuration",
+  "global_concurrency": 32,
+  "decode_batch_per_dp": 4,
+  "target_verify_rows_per_dp": 24,
+  "input_tokens": 131072,
+  "output_tokens": 4096,
+  "cached_tokens": 130816,
+  "simulated_accept_len": 5.5,
+  "cuda_graph": true,
+  "pdl": true,
+  "deepep_low_latency_max_num_tokens_per_gpu": [
+    32,
+    256
+  ],
+  "humming_head": "d0c7af98d7f556132f86e671de7f397991e2df2b",
+  "profiler": "Nsight Systems 2025.3.2 cuda,nvtx cuda-graph-trace=node; cudaProfilerApi triggered at full C32",
+  "runtime": "pd17-37-c32-128k-20261122/cutedsl-pdl17-19/runtime",
+  "venv": "local_work/flashinfer-h20-multinode/venv",
+  "extra_pythonpath": "local_work/h20-humming-deepep-20261115/humming-src:local_work/h20-humming-deepep-20261115/deepep-compat",
+  "local_symbols": true,
+  "remote_dir": "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-efficient-llm/wangchangran/ts_master_h20/local_work/pd17-37-c32-128k-20261122/humming-capacity32-17-19",
+  "source_files_sha256": {
+    "ts_humming.py": "608ffb66442d18a2e1697c373d800c4c1d866394f69204aeb3f9880c16ddecf2",
+    "context.cuh": "5e190eb0362812515d630038ab369578b08824db0fd136c0bd6b1889e26dddec",
+    "process_input.h": "7429d3a1f4d3df306dcbff66968a09f582c995ed215df0f00aca7d0ec5da2369",
+    "process_input.cuh": "244f4bf777170fa5887e6a37f4d5b36397a5c1b632aae428637e7faab5e2a85b",
+    "humming_provider.py": "0adc76b5b562c36c8b39cbd0a2a29b45da38128a4f1d6df729003863d834f3fb",
+    "thread_task.cuh": "22b935f2af6daeb8c56de356fd5f9ca37110f8458f282e6a20e18d1f570731b1"
+  },
+  "formal_rounds_per_arm": 3,
+  "profile_arm": "cap32",
+  "service_execution_order": [
+    "cap32",
+    "cap256"
+  ],
+  "source_change": false,
+  "probe_note": "Separate processes are required: dispatcher-only cap32 shared with a cap256 buffer still uses wire capacity 256. probe.json/shared diagnostic is not an effective capacity A/B.",
+  "numerical_note": "Humming is not bitwise deterministic in these tests. Report cross-capacity error alongside repeated-run error; not a model quality evaluation."
+}

@@ -1,0 +1,32 @@
+{
+  "tested_backend": "tokenspeed-deepep 2.1.0.post20260810 legacy Buffer low_latency",
+  "hosts": [
+    "tx-01",
+    "tx-03"
+  ],
+  "dp": 16,
+  "ep": 16,
+  "nic_handler": "gpu",
+  "intranode": "NVLink P2P enabled by installed allow_nvlink_for_low_latency_mode=True default",
+  "internode": "NVSHMEM IBGDA direct to destination PE",
+  "dispatch": "FP8 with block scales",
+  "combine": "BF16",
+  "combine_zero_copy": false,
+  "combine_use_logfmt": false,
+  "nic_per_local_gpu": {
+    "0": "mlx5_bond_0",
+    "1": "mlx5_bond_1",
+    "2": "mlx5_bond_2",
+    "3": "mlx5_bond_3",
+    "4": "mlx5_bond_4",
+    "5": "mlx5_bond_5",
+    "6": "mlx5_bond_6",
+    "7": "mlx5_bond_7"
+  },
+  "communication_tests": "All 16 ranks NCCL, DeepEP BF16 roundtrip, DeepEP FP8 CUDA Graph roundtrip passed",
+  "limitations": [
+    "No per-layer timing attribution collected in this run",
+    "Public v1.2.1 kernel used as legacy mechanism reference, not claimed as exact installed binary source"
+  ],
+  "reference": "https://github.com/deepseek-ai/DeepEP/blob/v1.2.1/csrc/kernels/internode_ll.cu"
+}

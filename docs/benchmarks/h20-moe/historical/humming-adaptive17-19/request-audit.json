@@ -1,0 +1,21 @@
+{
+  "adaptive": {
+    "requests": 160,
+    "all_success": true,
+    "completion_tokens": [
+      4096
+    ],
+    "cached_tokens": [
+      130816
+    ],
+    "request_stats_count": 160,
+    "accept_lengths": [
+      5.5
+    ],
+    "accept_rates": [
+      0.8993
+    ],
+    "preemptions": 0.0,
+    "gpu_nic_log_matches": 8
+  }
+}

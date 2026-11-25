@@ -1,0 +1,4370 @@
+[
+  {
+    "stage": "target",
+    "rows_per_rank": 24,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.004816045984625816,
+              "mismatch": 0.29804688692092896
+            },
+            "eager_repeat": {
+              "max_abs": 0.03955078125,
+              "rel_l2": 0.0028756936080753803,
+              "mismatch": 0.16970215737819672
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.078125,
+              "rel_l2": 0.0031507175881415606,
+              "mismatch": 0.21442872285842896
+            },
+            "eager_repeat": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.001473047537729144,
+              "mismatch": 0.09047038108110428
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.004668537061661482,
+              "mismatch": 0.3120687007904053
+            },
+            "eager_repeat": {
+              "max_abs": 0.03125,
+              "rel_l2": 0.003211488015949726,
+              "mismatch": 0.23416341841220856
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.0034885487984865904,
+              "mismatch": 0.18649089336395264
+            },
+            "eager_repeat": {
+              "max_abs": 0.125,
+              "rel_l2": 0.005791664123535156,
+              "mismatch": 0.45463868975639343
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 256,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "256": 549.0879821777344
+    },
+    "rank_windows_us": [
+      {
+        "256": [
+          549.0188980102539,
+          548.3334350585938,
+          549.3142318725586,
+          549.8617553710938,
+          548.6876678466797,
+          547.2601699829102,
+          547.9740905761719
+        ]
+      },
+      {
+        "256": [
+          548.9753723144531,
+          548.2316970825195,
+          549.1596984863281,
+          549.8204803466797,
+          549.4374465942383,
+          547.2975921630859,
+          547.8844833374023
+        ]
+      },
+      {
+        "256": [
+          549.0614318847656,
+          548.51806640625,
+          549.285774230957,
+          549.8928070068359,
+          549.4393539428711,
+          547.3107147216797,
+          547.9967880249023
+        ]
+      },
+      {
+        "256": [
+          549.0879821777344,
+          548.5228729248047,
+          549.3046569824219,
+          549.8998260498047,
+          549.422721862793,
+          547.3222351074219,
+          547.9904174804688
+        ]
+      },
+      {
+        "256": [
+          548.996467590332,
+          548.5548782348633,
+          549.249267578125,
+          549.9311828613281,
+          549.3328094482422,
+          547.3417663574219,
+          547.8867340087891
+        ]
+      },
+      {
+        "256": [
+          548.8441467285156,
+          548.4780883789062,
+          549.2655944824219,
+          549.8880004882812,
+          549.4041442871094,
+          547.270393371582,
+          547.9324722290039
+        ]
+      },
+      {
+        "256": [
+          548.8585662841797,
+          548.4953689575195,
+          549.246711730957,
+          549.8684692382812,
+          549.4160079956055,
+          547.2921752929688,
+          547.9692840576172
+        ]
+      },
+      {
+        "256": [
+          548.7104034423828,
+          548.4793472290039,
+          548.1388854980469,
+          549.8291015625,
+          549.3753433227539,
+          546.9811248779297,
+          547.9337692260742
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004816045984625816,
+                "mismatch": 0.29804688692092896
+              },
+              "eager_repeat": {
+                "max_abs": 0.03955078125,
+                "rel_l2": 0.0028756936080753803,
+                "mismatch": 0.16970215737819672
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.0031507175881415606,
+                "mismatch": 0.21442872285842896
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.001473047537729144,
+                "mismatch": 0.09047038108110428
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004668537061661482,
+                "mismatch": 0.3120687007904053
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.003211488015949726,
+                "mismatch": 0.23416341841220856
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0034885487984865904,
+                "mismatch": 0.18649089336395264
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005791664123535156,
+                "mismatch": 0.45463868975639343
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005003949161618948,
+                "mismatch": 0.31949058175086975
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002064155414700508,
+                "mismatch": 0.07590332627296448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003772800089791417,
+                "mismatch": 0.16588541865348816
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004191947169601917,
+                "mismatch": 0.2288411557674408
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002604239620268345,
+                "mismatch": 0.09149577468633652
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0019363195169717073,
+                "mismatch": 0.07433268427848816
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0703125,
+                "rel_l2": 0.004841526970267296,
+                "mismatch": 0.2755778133869171
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003392717568203807,
+                "mismatch": 0.17048341035842896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002437981776893139,
+                "mismatch": 0.20847982168197632
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003306197701022029,
+                "mismatch": 0.16384278237819672
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005030025728046894,
+                "mismatch": 0.29750165343284607
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004890100564807653,
+                "mismatch": 0.26069337129592896
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005141885485500097,
+                "mismatch": 0.3153645992279053
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003392430255189538,
+                "mismatch": 0.15619304776191711
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0033178783487528563,
+                "mismatch": 0.20394694805145264
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0029050030279904604,
+                "mismatch": 0.14829102158546448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.00363437132909894,
+                "mismatch": 0.24283041059970856
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0029665520414710045,
+                "mismatch": 0.15914714336395264
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004682090599089861,
+                "mismatch": 0.3255859613418579
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0037713986821472645,
+                "mismatch": 0.21822917461395264
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003448319621384144,
+                "mismatch": 0.20695802569389343
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003599511692300439,
+                "mismatch": 0.23614910244941711
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005611781496554613,
+                "mismatch": 0.6754476428031921
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005661004222929478,
+                "mismatch": 0.6747884750366211
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.046875,
+                "rel_l2": 0.0019861557520926,
+                "mismatch": 0.11452637612819672
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0022533193696290255,
+                "mismatch": 0.13263347744941711
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004352598451077938,
+                "mismatch": 0.28858238458633423
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004813275299966335,
+                "mismatch": 0.26504722237586975
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003991724923253059,
+                "mismatch": 0.24579265713691711
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0036778550129383802,
+                "mismatch": 0.23804526031017303
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.0035229490604251623,
+                "mismatch": 0.12714031338691711
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002440580166876316,
+                "mismatch": 0.10540365427732468
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005722996313124895,
+                "mismatch": 0.659375011920929
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005506650544703007,
+                "mismatch": 0.6648763418197632
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.017578125,
+                "rel_l2": 0.0013505490496754646,
+                "mismatch": 0.04477539286017418
+              },
+              "eager_repeat": {
+                "max_abs": 0.01611328125,
+                "rel_l2": 0.0015079822624102235,
+                "mismatch": 0.06077474355697632
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00194161559920758,
+                "mismatch": 0.08326823264360428
+              },
+              "eager_repeat": {
+                "max_abs": 0.046875,
+                "rel_l2": 0.00227221567183733,
+                "mismatch": 0.10362955927848816
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0036745325196534395,
+                "mismatch": 0.18281251192092896
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0029073061887174845,
+                "mismatch": 0.15379232168197632
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005662658251821995,
+                "mismatch": 0.6532471179962158
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005662658251821995,
+                "mismatch": 0.6532471179962158
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0037464762572199106,
+                "mismatch": 0.2491862177848816
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00371645693667233,
+                "mismatch": 0.25228679180145264
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03515625,
+                "rel_l2": 0.00591502757743001,
+                "mismatch": 0.3401286005973816
+              },
+              "eager_repeat": {
+                "max_abs": 0.03515625,
+                "rel_l2": 0.004713411442935467,
+                "mismatch": 0.24313965439796448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005351050291210413,
+                "mismatch": 0.3105306029319763
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004613546654582024,
+                "mismatch": 0.27774253487586975
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0046656159684062,
+                "mismatch": 0.3430176079273224
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003518560901284218,
+                "mismatch": 0.24753418564796448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0060790590941905975,
+                "mismatch": 0.7003743648529053
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0060790590941905975,
+                "mismatch": 0.7003743648529053
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004504355601966381,
+                "mismatch": 0.32203778624534607
+              },
+              "eager_repeat": {
+                "max_abs": 0.0390625,
+                "rel_l2": 0.004263326525688171,
+                "mismatch": 0.30518394708633423
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0034250884782522917,
+                "mismatch": 0.23500163853168488
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0041653127409517765,
+                "mismatch": 0.3130696713924408
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "target",
+    "rows_per_rank": 32,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.003204107517376542,
+              "mismatch": 0.16457520425319672
+            },
+            "eager_repeat": {
+              "max_abs": 0.078125,
+              "rel_l2": 0.004004593938589096,
+              "mismatch": 0.21454468369483948
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.005102971568703651,
+              "mismatch": 0.644378662109375
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.125,
+              "rel_l2": 0.004979755263775587,
+              "mismatch": 0.3468261659145355
+            },
+            "eager_repeat": {
+              "max_abs": 0.125,
+              "rel_l2": 0.0054536983370780945,
+              "mismatch": 0.35487672686576843
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0390625,
+              "rel_l2": 0.003598412498831749,
+              "mismatch": 0.18470458686351776
+            },
+            "eager_repeat": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.0043547204695641994,
+              "mismatch": 0.23372803628444672
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.0048209382221102715,
+              "mismatch": 0.2839721739292145
+            },
+            "eager_repeat": {
+              "max_abs": 0.0625,
+              "rel_l2": 0.004072021692991257,
+              "mismatch": 0.25380250811576843
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 256,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "256": 581.8851089477539
+    },
+    "rank_windows_us": [
+      {
+        "256": [
+          584.0307235717773,
+          582.5766372680664,
+          581.2416076660156,
+          579.0732955932617,
+          581.8851089477539,
+          580.9577560424805,
+          582.224006652832
+        ]
+      },
+      {
+        "256": [
+          583.5718536376953,
+          582.3500823974609,
+          580.994873046875,
+          578.919677734375,
+          578.5478210449219,
+          580.8480072021484,
+          581.8892669677734
+        ]
+      },
+      {
+        "256": [
+          584.2515182495117,
+          582.5872039794922,
+          581.1785507202148,
+          579.0771102905273,
+          581.8617630004883,
+          580.8601760864258,
+          582.1843338012695
+        ]
+      },
+      {
+        "256": [
+          584.2275238037109,
+          582.6054382324219,
+          581.2483215332031,
+          579.0707015991211,
+          581.8825531005859,
+          580.8540725708008,
+          582.2195053100586
+        ]
+      },
+      {
+        "256": [
+          584.2633438110352,
+          582.6092910766602,
+          581.2278366088867,
+          579.08447265625,
+          581.8841552734375,
+          580.9699249267578,
+          582.2339248657227
+        ]
+      },
+      {
+        "256": [
+          584.2220687866211,
+          582.5727844238281,
+          581.2220764160156,
+          579.0476989746094,
+          581.8521499633789,
+          580.9283065795898,
+          582.1987152099609
+        ]
+      },
+      {
+        "256": [
+          584.2134475708008,
+          582.5763320922852,
+          581.2150573730469,
+          579.0534210205078,
+          581.8563079833984,
+          580.9622573852539,
+          582.1814346313477
+        ]
+      },
+      {
+        "256": [
+          583.9974212646484,
+          582.5043106079102,
+          581.2041473388672,
+          578.9849472045898,
+          581.8310546875,
+          580.8623886108398,
+          582.1839904785156
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003204107517376542,
+                "mismatch": 0.16457520425319672
+              },
+              "eager_repeat": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.004004593938589096,
+                "mismatch": 0.21454468369483948
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005102971568703651,
+                "mismatch": 0.644378662109375
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004979755263775587,
+                "mismatch": 0.3468261659145355
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0054536983370780945,
+                "mismatch": 0.35487672686576843
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0390625,
+                "rel_l2": 0.003598412498831749,
+                "mismatch": 0.18470458686351776
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0043547204695641994,
+                "mismatch": 0.23372803628444672
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0048209382221102715,
+                "mismatch": 0.2839721739292145
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004072021692991257,
+                "mismatch": 0.25380250811576843
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0036269286647439003,
+                "mismatch": 0.17042846977710724
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0035112136974930763,
+                "mismatch": 0.19505615532398224
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004462102428078651,
+                "mismatch": 0.23352661728858948
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0032839542254805565,
+                "mismatch": 0.16256104409694672
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0030109810177236795,
+                "mismatch": 0.16926269233226776
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004852913785725832,
+                "mismatch": 0.33671876788139343
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005071327555924654,
+                "mismatch": 0.33746337890625
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0013320297002792358,
+                "mismatch": 0.056243896484375
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.005371503531932831,
+                "mismatch": 0.660198986530304
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0061358679085969925,
+                "mismatch": 0.4329833984375
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005998497828841209,
+                "mismatch": 0.4147705137729645
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.002043077489361167,
+                "mismatch": 0.07977294921875
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0013873196439817548,
+                "mismatch": 0.05193481594324112
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.0035621158313006163,
+                "mismatch": 0.17246094346046448
+              },
+              "eager_repeat": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.0034282051492482424,
+                "mismatch": 0.15606689453125
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004079602658748627,
+                "mismatch": 0.20610962808132172
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0027174849528819323,
+                "mismatch": 0.110687255859375
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0031511997804045677,
+                "mismatch": 0.28773805499076843
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0037169272545725107,
+                "mismatch": 0.16611938178539276
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004642223473638296,
+                "mismatch": 0.23916016519069672
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003929019905626774,
+                "mismatch": 0.19996948540210724
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.002860832028090954,
+                "mismatch": 0.13057251274585724
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0029011638835072517,
+                "mismatch": 0.15288697183132172
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.002935785101726651,
+                "mismatch": 0.15207520127296448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0014705377398058772,
+                "mismatch": 0.14751587808132172
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0014705377398058772,
+                "mismatch": 0.14751587808132172
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004436672665178776,
+                "mismatch": 0.28519898653030396
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004596449434757233,
+                "mismatch": 0.332183837890625
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0031257777009159327,
+                "mismatch": 0.14246216416358948
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.004558220040053129,
+                "mismatch": 0.2605224549770355
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0030825173016637564,
+                "mismatch": 0.19381104409694672
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003523240564391017,
+                "mismatch": 0.20854492485523224
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.004141072742640972,
+                "mismatch": 0.20594482123851776
+              },
+              "eager_repeat": {
+                "max_abs": 0.09375,
+                "rel_l2": 0.003066068748012185,
+                "mismatch": 0.127593994140625
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0034025958739221096,
+                "mismatch": 0.3802246153354645
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0016702383290976286,
+                "mismatch": 0.18930664658546448
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004210288170725107,
+                "mismatch": 0.2567138671875
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0037450813688337803,
+                "mismatch": 0.16752929985523224
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0037527054082602262,
+                "mismatch": 0.18399658799171448
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.0038235862739384174,
+                "mismatch": 0.18303833901882172
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.003494377713650465,
+                "mismatch": 0.17998047173023224
+              },
+              "eager_repeat": {
+                "max_abs": 0.078125,
+                "rel_l2": 0.004038331098854542,
+                "mismatch": 0.26051026582717896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0007688128389418125,
+                "mismatch": 0.0382080078125
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005290687549859285,
+                "mismatch": 0.35621950030326843
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.005551011301577091,
+                "mismatch": 0.4050964415073395
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.00448458781465888,
+                "mismatch": 0.2694946229457855
+              },
+              "eager_repeat": {
+                "max_abs": 0.03125,
+                "rel_l2": 0.0031754281371831894,
+                "mismatch": 0.21170654892921448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.06640625,
+                "rel_l2": 0.0033503861632198095,
+                "mismatch": 0.19482421875
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.0029756666626781225,
+                "mismatch": 0.167694091796875
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003048459766432643,
+                "mismatch": 0.15578003227710724
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003084844443947077,
+                "mismatch": 0.16171875596046448
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004576494917273521,
+                "mismatch": 0.4831604063510895
+              },
+              "eager_repeat": {
+                "max_abs": 0.0625,
+                "rel_l2": 0.004576494917273521,
+                "mismatch": 0.4831604063510895
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0390625,
+                "rel_l2": 0.0028800044674426317,
+                "mismatch": 0.140289306640625
+              },
+              "eager_repeat": {
+                "max_abs": 0.0390625,
+                "rel_l2": 0.002864085603505373,
+                "mismatch": 0.13486328721046448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.125,
+                "rel_l2": 0.003964642528444529,
+                "mismatch": 0.21938477456569672
+              },
+              "eager_repeat": {
+                "max_abs": 0.125,
+                "rel_l2": 0.002344595268368721,
+                "mismatch": 0.13511963188648224
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "draft",
+    "rows_per_rank": 4,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 1.0,
+              "rel_l2": 0.002539227483794093,
+              "mismatch": 0.22490234673023224
+            },
+            "eager_repeat": {
+              "max_abs": 1.5,
+              "rel_l2": 0.002828567288815975,
+              "mismatch": 0.259521484375
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 2.5,
+              "rel_l2": 0.008431651629507542,
+              "mismatch": 0.718554675579071
+            },
+            "eager_repeat": {
+              "max_abs": 2.5,
+              "rel_l2": 0.008264927193522453,
+              "mismatch": 0.6736816763877869
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.5,
+              "rel_l2": 0.0023223403841257095,
+              "mismatch": 0.21333007514476776
+            },
+            "eager_repeat": {
+              "max_abs": 0.5,
+              "rel_l2": 0.0014926630537956953,
+              "mismatch": 0.1025390625
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0015142092015594244,
+              "mismatch": 0.10000000149011612
+            },
+            "eager_repeat": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0014979168772697449,
+              "mismatch": 0.092529296875
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 256,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "256": 362.344970703125
+    },
+    "rank_windows_us": [
+      {
+        "256": [
+          363.6812973022461,
+          362.97889709472656,
+          362.1356964111328,
+          362.10559844970703,
+          362.31616973876953,
+          362.3478317260742,
+          362.2777557373047
+        ]
+      },
+      {
+        "256": [
+          363.2294464111328,
+          362.99072265625,
+          362.13024139404297,
+          362.1263885498047,
+          362.344970703125,
+          362.36385345458984,
+          362.29854583740234
+        ]
+      },
+      {
+        "256": [
+          363.49536895751953,
+          362.99713134765625,
+          362.10880279541016,
+          362.12318420410156,
+          362.3427200317383,
+          362.35008239746094,
+          362.29854583740234
+        ]
+      },
+      {
+        "256": [
+          363.44608306884766,
+          363.0409622192383,
+          362.1334457397461,
+          362.1379089355469,
+          362.35870361328125,
+          362.2371292114258,
+          362.23934173583984
+        ]
+      },
+      {
+        "256": [
+          363.5772705078125,
+          362.97950744628906,
+          362.1321487426758,
+          362.0492935180664,
+          362.3091125488281,
+          362.33150482177734,
+          362.25345611572266
+        ]
+      },
+      {
+        "256": [
+          363.4592056274414,
+          362.608642578125,
+          362.1139144897461,
+          362.0934295654297,
+          362.0889663696289,
+          362.3068618774414,
+          362.25887298583984
+        ]
+      },
+      {
+        "256": [
+          363.07838439941406,
+          362.8540802001953,
+          362.11360931396484,
+          362.0832061767578,
+          362.31616973876953,
+          362.33665466308594,
+          362.2777557373047
+        ]
+      },
+      {
+        "256": [
+          363.44417572021484,
+          362.9520034790039,
+          362.05982208251953,
+          362.0841598510742,
+          362.3040008544922,
+          362.23934173583984,
+          362.24830627441406
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.002539227483794093,
+                "mismatch": 0.22490234673023224
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.002828567288815975,
+                "mismatch": 0.259521484375
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.008431651629507542,
+                "mismatch": 0.718554675579071
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.008264927193522453,
+                "mismatch": 0.6736816763877869
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0023223403841257095,
+                "mismatch": 0.21333007514476776
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0014926630537956953,
+                "mismatch": 0.1025390625
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0015142092015594244,
+                "mismatch": 0.10000000149011612
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0014979168772697449,
+                "mismatch": 0.092529296875
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.75,
+                "rel_l2": 0.004823961295187473,
+                "mismatch": 0.45952150225639343
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005249484907835722,
+                "mismatch": 0.4693847596645355
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.005640069022774696,
+                "mismatch": 0.621533215045929
+              },
+              "eager_repeat": {
+                "max_abs": 1.125,
+                "rel_l2": 0.005273087415844202,
+                "mismatch": 0.3592285215854645
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0040349168702960014,
+                "mismatch": 0.3561035096645355
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0036158745642751455,
+                "mismatch": 0.330322265625
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0009029495995491743,
+                "mismatch": 0.04863281175494194
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0009029495995491743,
+                "mismatch": 0.04863281175494194
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0011395723558962345,
+                "mismatch": 0.09506835788488388
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0011395723558962345,
+                "mismatch": 0.09506835788488388
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.65625,
+                "rel_l2": 0.008471782319247723,
+                "mismatch": 0.746630847454071
+              },
+              "eager_repeat": {
+                "max_abs": 2.15625,
+                "rel_l2": 0.008552507497370243,
+                "mismatch": 0.780224621295929
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0013343868777155876,
+                "mismatch": 0.09501953423023224
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0009029562934301794,
+                "mismatch": 0.04863281175494194
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 3.0,
+                "rel_l2": 0.004736487753689289,
+                "mismatch": 0.19765625894069672
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.00515295285731554,
+                "mismatch": 0.3126464784145355
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001374435960315168,
+                "mismatch": 0.11572265625
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.004026717506349087,
+                "mismatch": 0.28759765625
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0034075353760272264,
+                "mismatch": 0.17890624701976776
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.00520684290677309,
+                "mismatch": 0.25117188692092896
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004244642797857523,
+                "mismatch": 0.23569336533546448
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.003721394808962941,
+                "mismatch": 0.28242188692092896
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0034610265865921974,
+                "mismatch": 0.27592775225639343
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 3.25,
+                "rel_l2": 0.008902388624846935,
+                "mismatch": 0.6468750238418579
+              },
+              "eager_repeat": {
+                "max_abs": 3.40625,
+                "rel_l2": 0.010681016370654106,
+                "mismatch": 0.719921886920929
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.75,
+                "rel_l2": 0.0032554937060922384,
+                "mismatch": 0.18032227456569672
+              },
+              "eager_repeat": {
+                "max_abs": 0.75,
+                "rel_l2": 0.00281389057636261,
+                "mismatch": 0.16757813096046448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0033808548469096422,
+                "mismatch": 0.2747558653354645
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0024902205914258957,
+                "mismatch": 0.24125976860523224
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.25,
+                "rel_l2": 0.003835775423794985,
+                "mismatch": 0.31987306475639343
+              },
+              "eager_repeat": {
+                "max_abs": 1.125,
+                "rel_l2": 0.003906708676367998,
+                "mismatch": 0.3240722715854645
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.5,
+                "rel_l2": 0.0012385268928483129,
+                "mismatch": 0.05571288987994194
+              },
+              "eager_repeat": {
+                "max_abs": 0.5,
+                "rel_l2": 0.001619678339920938,
+                "mismatch": 0.11572265625
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.003988177049905062,
+                "mismatch": 0.32636719942092896
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001845883671194315,
+                "mismatch": 0.14462891221046448
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005271438509225845,
+                "mismatch": 0.49370118975639343
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005376490764319897,
+                "mismatch": 0.4458984434604645
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0012766305590048432,
+                "mismatch": 0.10092773288488388
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 3.5,
+                "rel_l2": 0.012346385046839714,
+                "mismatch": 0.8423828482627869
+              },
+              "eager_repeat": {
+                "max_abs": 3.0,
+                "rel_l2": 0.012943020090460777,
+                "mismatch": 0.8575683832168579
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.505615234375,
+                "rel_l2": 0.0028541984502226114,
+                "mismatch": 0.24970702826976776
+              },
+              "eager_repeat": {
+                "max_abs": 0.53125,
+                "rel_l2": 0.0025935929734259844,
+                "mismatch": 0.234130859375
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0049485256895422935,
+                "mismatch": 0.43999025225639343
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004831667989492416,
+                "mismatch": 0.4373535215854645
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.004989317152649164,
+                "mismatch": 0.45063477754592896
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.004978913813829422,
+                "mismatch": 0.42963868379592896
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0014144234592095017,
+                "mismatch": 0.12119140475988388
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0013134771725162864,
+                "mismatch": 0.10292968899011612
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.005515370052307844,
+                "mismatch": 0.4208984375
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.004428551997989416,
+                "mismatch": 0.3384765684604645
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005204867105931044,
+                "mismatch": 0.43378907442092896
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0033099947031587362,
+                "mismatch": 0.34282228350639343
+              }
+            }
+          }
+        }
+      ]
+    ]
+  },
+  {
+    "stage": "draft",
+    "rows_per_rank": 32,
+    "checks": [
+      {
+        "mode": "normal",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 2.0,
+              "rel_l2": 0.0025620211381465197,
+              "mismatch": 0.086761474609375
+            },
+            "eager_repeat": {
+              "max_abs": 2.015625,
+              "rel_l2": 0.0023261397145688534,
+              "mismatch": 0.06340332329273224
+            }
+          }
+        }
+      },
+      {
+        "mode": "skewed",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "odd_rank_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 1.0,
+              "rel_l2": 0.001156125101260841,
+              "mismatch": 0.06690063327550888
+            },
+            "eager_repeat": {
+              "max_abs": 1.0,
+              "rel_l2": 0.0008627543575130403,
+              "mismatch": 0.03914795070886612
+            }
+          }
+        }
+      },
+      {
+        "mode": "all_idle",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            },
+            "eager_repeat": {
+              "max_abs": 0.0,
+              "rel_l2": 0.0,
+              "mismatch": 0.0
+            }
+          }
+        }
+      },
+      {
+        "mode": "changed_input",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 1.75,
+              "rel_l2": 0.0036599552258849144,
+              "mismatch": 0.12054443359375
+            },
+            "eager_repeat": {
+              "max_abs": 1.3125,
+              "rel_l2": 0.002575239632278681,
+              "mismatch": 0.07430420070886612
+            }
+          }
+        }
+      },
+      {
+        "mode": "recovery",
+        "cross": null,
+        "within": {
+          "256": {
+            "graph_vs_eager": {
+              "max_abs": 2.7890625,
+              "rel_l2": 0.004840416833758354,
+              "mismatch": 0.17455445230007172
+            },
+            "eager_repeat": {
+              "max_abs": 2.7890625,
+              "rel_l2": 0.004619315266609192,
+              "mismatch": 0.16269531846046448
+            }
+          }
+        }
+      }
+    ],
+    "capacity": 256,
+    "bitwise_equal": false,
+    "pdl": true,
+    "median_us": {
+      "256": 451.99230194091797
+    },
+    "rank_windows_us": [
+      {
+        "256": [
+          451.99230194091797,
+          452.1449661254883,
+          451.78783416748047,
+          450.72608947753906,
+          450.8860778808594,
+          453.60286712646484,
+          452.43072509765625
+        ]
+      },
+      {
+        "256": [
+          451.86878204345703,
+          452.1446228027344,
+          451.8345642089844,
+          450.66078186035156,
+          450.8988952636719,
+          453.4182357788086,
+          451.8716812133789
+        ]
+      },
+      {
+        "256": [
+          451.8755340576172,
+          452.0982360839844,
+          451.8707275390625,
+          450.7215881347656,
+          450.89664459228516,
+          453.55457305908203,
+          452.58975982666016
+        ]
+      },
+      {
+        "256": [
+          451.98143005371094,
+          452.17918395996094,
+          451.7772674560547,
+          450.7535934448242,
+          450.87169647216797,
+          453.37406158447266,
+          452.6095962524414
+        ]
+      },
+      {
+        "256": [
+          451.95201873779297,
+          452.12799072265625,
+          451.824951171875,
+          450.68897247314453,
+          450.87520599365234,
+          453.57025146484375,
+          452.5596618652344
+        ]
+      },
+      {
+        "256": [
+          451.8921661376953,
+          451.8422317504883,
+          451.84608459472656,
+          450.7068634033203,
+          450.8710479736328,
+          451.9388961791992,
+          452.06336975097656
+        ]
+      },
+      {
+        "256": [
+          451.98368072509766,
+          452.14271545410156,
+          451.8534469604492,
+          450.7279968261719,
+          450.8969497680664,
+          453.5734558105469,
+          452.56736755371094
+        ]
+      },
+      {
+        "256": [
+          451.890869140625,
+          451.8502426147461,
+          451.81568145751953,
+          450.7097625732422,
+          450.68958282470703,
+          453.5740661621094,
+          452.54207611083984
+        ]
+      }
+    ],
+    "all_rank_checks": [
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0025620211381465197,
+                "mismatch": 0.086761474609375
+              },
+              "eager_repeat": {
+                "max_abs": 2.015625,
+                "rel_l2": 0.0023261397145688534,
+                "mismatch": 0.06340332329273224
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001156125101260841,
+                "mismatch": 0.06690063327550888
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0008627543575130403,
+                "mismatch": 0.03914795070886612
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.75,
+                "rel_l2": 0.0036599552258849144,
+                "mismatch": 0.12054443359375
+              },
+              "eager_repeat": {
+                "max_abs": 1.3125,
+                "rel_l2": 0.002575239632278681,
+                "mismatch": 0.07430420070886612
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.7890625,
+                "rel_l2": 0.004840416833758354,
+                "mismatch": 0.17455445230007172
+              },
+              "eager_repeat": {
+                "max_abs": 2.7890625,
+                "rel_l2": 0.004619315266609192,
+                "mismatch": 0.16269531846046448
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.75,
+                "rel_l2": 0.0021342479158192873,
+                "mismatch": 0.05869751051068306
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0019094923045486212,
+                "mismatch": 0.05106811597943306
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005411533638834953,
+                "mismatch": 0.3658508360385895
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0029052894096821547,
+                "mismatch": 0.05659179762005806
+              },
+              "eager_repeat": {
+                "max_abs": 1.5625,
+                "rel_l2": 0.002744673751294613,
+                "mismatch": 0.06624145805835724
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.25,
+                "rel_l2": 0.0037027178332209587,
+                "mismatch": 0.12208252400159836
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0022529284469783306,
+                "mismatch": 0.07731323689222336
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0019623260013759136,
+                "mismatch": 0.066375732421875
+              },
+              "eager_repeat": {
+                "max_abs": 1.625,
+                "rel_l2": 0.0014706850051879883,
+                "mismatch": 0.03135376051068306
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.002906983718276024,
+                "mismatch": 0.157073974609375
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0025324609596282244,
+                "mismatch": 0.145355224609375
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.3125,
+                "rel_l2": 0.0020446975249797106,
+                "mismatch": 0.037841796875
+              },
+              "eager_repeat": {
+                "max_abs": 1.25,
+                "rel_l2": 0.0017687779618427157,
+                "mismatch": 0.02435302734375
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.001506584114395082,
+                "mismatch": 0.04494629055261612
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0012907155323773623,
+                "mismatch": 0.03027954138815403
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.25,
+                "rel_l2": 0.00407808180898428,
+                "mismatch": 0.171356201171875
+              },
+              "eager_repeat": {
+                "max_abs": 2.875,
+                "rel_l2": 0.0036189190577715635,
+                "mismatch": 0.12871704995632172
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.009682554751634598,
+                "mismatch": 0.787139892578125
+              },
+              "eager_repeat": {
+                "max_abs": 2.5,
+                "rel_l2": 0.009682554751634598,
+                "mismatch": 0.787139892578125
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.625,
+                "rel_l2": 0.00507800979539752,
+                "mismatch": 0.209136962890625
+              },
+              "eager_repeat": {
+                "max_abs": 1.6328125,
+                "rel_l2": 0.004945292603224516,
+                "mismatch": 0.19357910752296448
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.002232952509075403,
+                "mismatch": 0.07380981743335724
+              },
+              "eager_repeat": {
+                "max_abs": 2.875,
+                "rel_l2": 0.003475981531664729,
+                "mismatch": 0.10036621242761612
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0034223708789795637,
+                "mismatch": 0.16026000678539276
+              },
+              "eager_repeat": {
+                "max_abs": 2.125,
+                "rel_l2": 0.0034526558592915535,
+                "mismatch": 0.15311889350414276
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.008145985193550587,
+                "mismatch": 0.736285388469696
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.00592510960996151,
+                "mismatch": 0.377044677734375
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.0,
+                "rel_l2": 0.001357279485091567,
+                "mismatch": 0.07150878757238388
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0013895995216444135,
+                "mismatch": 0.079498291015625
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.375,
+                "rel_l2": 0.004199025686830282,
+                "mismatch": 0.17399291694164276
+              },
+              "eager_repeat": {
+                "max_abs": 1.6328125,
+                "rel_l2": 0.0040121483616530895,
+                "mismatch": 0.1680908203125
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0036448906175792217,
+                "mismatch": 0.16553954780101776
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.003842661390081048,
+                "mismatch": 0.18013305962085724
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.002839174121618271,
+                "mismatch": 0.05087890848517418
+              },
+              "eager_repeat": {
+                "max_abs": 2.3125,
+                "rel_l2": 0.002483909949660301,
+                "mismatch": 0.04898681864142418
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.00933395978063345,
+                "mismatch": 0.7821106314659119
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.005647472105920315,
+                "mismatch": 0.37249755859375
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.8125,
+                "rel_l2": 0.0036232867278158665,
+                "mismatch": 0.09847412258386612
+              },
+              "eager_repeat": {
+                "max_abs": 1.75,
+                "rel_l2": 0.0028396870475262403,
+                "mismatch": 0.05122680589556694
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 3.5,
+                "rel_l2": 0.0037183412350714207,
+                "mismatch": 0.10246582329273224
+              },
+              "eager_repeat": {
+                "max_abs": 2.125,
+                "rel_l2": 0.0025389406364411116,
+                "mismatch": 0.049468994140625
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0023040324449539185,
+                "mismatch": 0.05232543870806694
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0018083899049088359,
+                "mismatch": 0.04876708984375
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.5,
+                "rel_l2": 0.008920439518988132,
+                "mismatch": 0.767913818359375
+              },
+              "eager_repeat": {
+                "max_abs": 1.0,
+                "rel_l2": 0.0018498720601201057,
+                "mismatch": 0.15374146401882172
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0012734319316223264,
+                "mismatch": 0.04401855543255806
+              },
+              "eager_repeat": {
+                "max_abs": 1.5,
+                "rel_l2": 0.001124056288972497,
+                "mismatch": 0.02824096754193306
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.5,
+                "rel_l2": 0.0025556120090186596,
+                "mismatch": 0.05438232421875
+              },
+              "eager_repeat": {
+                "max_abs": 1.125,
+                "rel_l2": 0.0022691332269459963,
+                "mismatch": 0.05201416090130806
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.0019241509726271033,
+                "mismatch": 0.04543457180261612
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002004444831982255,
+                "mismatch": 0.04617920145392418
+              }
+            }
+          }
+        }
+      ],
+      [
+        {
+          "mode": "normal",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002862428082153201,
+                "mismatch": 0.13023070991039276
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002138538984581828,
+                "mismatch": 0.07586669921875
+              }
+            }
+          }
+        },
+        {
+          "mode": "skewed",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 2.25,
+                "rel_l2": 0.008993882685899734,
+                "mismatch": 0.7643188834190369
+              }
+            }
+          }
+        },
+        {
+          "mode": "odd_rank_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "all_idle",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              },
+              "eager_repeat": {
+                "max_abs": 0.0,
+                "rel_l2": 0.0,
+                "mismatch": 0.0
+              }
+            }
+          }
+        },
+        {
+          "mode": "changed_input",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 1.25,
+                "rel_l2": 0.002952114213258028,
+                "mismatch": 0.08857422322034836
+              },
+              "eager_repeat": {
+                "max_abs": 1.3046875,
+                "rel_l2": 0.0034434348344802856,
+                "mismatch": 0.134857177734375
+              }
+            }
+          }
+        },
+        {
+          "mode": "recovery",
+          "cross": null,
+          "within": {
+            "256": {
+              "graph_vs_eager": {
+                "max_abs": 2.25,
+                "rel_l2": 0.003013164969161153,
+                "mismatch": 0.107574462890625
+              },
+              "eager_repeat": {
+                "max_abs": 2.0,
+                "rel_l2": 0.002557037863880396,
+                "mismatch": 0.0987548828125
+              }
+            }
+          }
+        }
+      ]
+    ]
+  }
+]

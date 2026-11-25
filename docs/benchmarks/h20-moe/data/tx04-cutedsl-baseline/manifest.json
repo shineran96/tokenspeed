@@ -1,0 +1,41 @@
+{
+  "decode_nodes": [
+    "tx-01",
+    "tx-03"
+  ],
+  "prefill_node": "tx-04",
+  "replicas": 2,
+  "dp_per_replica": 8,
+  "ep_per_replica": 8,
+  "target_backend": "mega_moe / SM90 fp8_mxfp4_bf16_pull_cutedsl",
+  "draft_backend": "mega_moe (inherits target, webpage default)",
+  "simulated_accept_rate": 0.6,
+  "simulated_accept_length": 4.0,
+  "input_tokens": 131072,
+  "shared_prefix_tokens": 130816,
+  "suffix_tokens": 256,
+  "output_tokens": 2048,
+  "concurrencies": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "formal_rounds": 3,
+  "primary_metric": "arithmetic mean per-request client TPOT excluding prime/warmup",
+  "source_commit": "345481b592a2f909953c63ca93251d4f8b73cee5",
+  "pdl": true,
+  "cuda_graph": true,
+  "swa_new_fusion": false,
+  "status": "complete",
+  "prefill_ib_device": "mlx5_bond_4",
+  "kv_transfer": "Mooncake RDMA",
+  "published_repository_commit": "b4e20664e76675687773d8824c29b3ed64555ad2",
+  "runtime_note": "Benchmark remains pinned to 345481b, without the SWA fusion commit; target and draft both use native MegaMoE.",
+  "validation": {
+    "formal_requests": 1440,
+    "formal_rounds_per_concurrency": 3,
+    "request_audit": "passed; all requests successful, equal requests per D replica, cache 130816, acceptance approximately 0.6, no preemptions"
+  },
+  "c256_limitation": "No common output interval across all 256 clients; tx01 peak 127 requests, tx03 peak 128. Metrics describe normal client concurrency, not steady full-batch decode."
+}

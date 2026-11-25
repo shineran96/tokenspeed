@@ -1,0 +1,84 @@
+{
+  "mega-c32": {
+    "rank_count": 8,
+    "graphs_per_rank": 16,
+    "mean": {
+      "span_ms": 25.622655303955078,
+      "busy_union_ms": 24.519369804382325,
+      "target_span_ms": 23.818904747009277,
+      "draft_span_ms": 1.8037505569458008,
+      "target_moe_window_ms": 14.621398155212402,
+      "next_start_interval_ms": 25.76241410064697
+    },
+    "mean_categories_ms": {
+      "target": {
+        "other": 1.9664706796874962,
+        "activation_quant": 0.0899713125,
+        "attention_core": 1.7681761171875001,
+        "indexer_topk": 0.5662542578125,
+        "mhc": 1.6861988984375005,
+        "mega_output_reduce": 0.098602625,
+        "dense_gemm": 5.750561148437501,
+        "activation_amax": 0.57377428125,
+        "routing": 0.15120709375000002,
+        "mega_moe_fused": 12.659307453124999
+      },
+      "draft": {
+        "other": 0.4368091796875,
+        "mhc": 0.1379665703125,
+        "activation_quant": 0.0220188046875,
+        "mega_output_reduce": 0.00527284375,
+        "dense_gemm": 0.7727192421875,
+        "activation_amax": 0.0392225859375,
+        "mega_moe_fused": 0.4789719140625
+      }
+    },
+    "rank_graph_span_range_ms": [
+      25.615981079101562,
+      25.628014099121096
+    ],
+    "warning": "Kernel sums can overlap; graph span and MoE windows are wall-time metrics. Fused MegaMoE does not expose independent communication time. DeepEP kernel durations include waits, not pure NIC transfer time."
+  },
+  "humming-c64": {
+    "rank_count": 16,
+    "graphs_per_rank": 16,
+    "mean": {
+      "span_ms": 31.617727787017824,
+      "busy_union_ms": 30.61339670562744,
+      "target_span_ms": 28.720520236968994,
+      "draft_span_ms": 2.897207550048828,
+      "target_moe_window_ms": 19.557889892578125,
+      "next_start_interval_ms": 31.755957511901855
+    },
+    "mean_categories_ms": {
+      "target": {
+        "other": 1.4351504062499987,
+        "activation_quant": 1.1769017890625,
+        "attention_core": 1.7705401640625003,
+        "indexer_topk": 0.55349255078125,
+        "scale_copy": 0.12016048828125002,
+        "deepep_combine": 8.2846384140625,
+        "mhc": 1.6903151992187504,
+        "dense_gemm": 6.41449325390625,
+        "expert_gemm": 6.93584451171875,
+        "routing": 0.15207448828125,
+        "deepep_dispatch": 2.0855519453125
+      },
+      "draft": {
+        "other": 0.95323165234375,
+        "mhc": 0.1437018984375,
+        "activation_quant": 0.06600469140625,
+        "dense_gemm": 0.79460666015625,
+        "expert_gemm": 0.18086169921875,
+        "scale_copy": 0.005890375,
+        "deepep_dispatch": 0.13585059375,
+        "deepep_combine": 0.68969046484375
+      }
+    },
+    "rank_graph_span_range_ms": [
+      31.61110302734375,
+      31.623243225097657
+    ],
+    "warning": "Kernel sums can overlap; graph span and MoE windows are wall-time metrics. Fused MegaMoE does not expose independent communication time. DeepEP kernel durations include waits, not pure NIC transfer time."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "requests_4k": 64,
+  "accept_lengths": [
+    "5.5"
+  ],
+  "accept_rates": [
+    "0.8993"
+  ],
+  "preempt_counts": [
+    "0"
+  ],
+  "gpu_nic_handler_log_count": 8
+}

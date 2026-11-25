@@ -1,0 +1,3 @@
+# Historical patch context and script snapshots retain their original bytes.
+historical/**/*.patch -whitespace
+snapshots/** -whitespace

@@ -1,0 +1,26 @@
+{
+  "base": "d0c7af98d7f556132f86e671de7f397991e2df2b",
+  "head": "219fc5061738dd5a0f7bfc92d3d3c9d36cd773ae",
+  "branch": "perf/grouped-mask-active-rows",
+  "humming_path": "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-efficient-llm/wangchangran/ts_master_h20/local_work/humming-adaptive",
+  "decode": "worker17 DP8 EP8 TP1",
+  "prefill": "worker19 TP4 QCP4 EP4",
+  "global_concurrency": 32,
+  "per_rank_concurrency": 4,
+  "target_rows_per_rank": 24,
+  "input_tokens": 131072,
+  "output_tokens": 4096,
+  "simulated_accept_length": 5.5,
+  "communication_capacity": 256,
+  "pdl": true,
+  "cuda_graph": true,
+  "target_backend": "humming",
+  "draft_backend": "humming",
+  "source_sha256": {
+    "humming/csrc/launcher/process_input.h": "fc6f13a0f0ed8711282c0f0588d2864bd515e181d12f1b4cb2efbbd8f437de4f",
+    "humming/include/humming/kernel/process_input.cuh": "15c8162dff6019183558c3ab6848b0e1607d61f3aaa836eec145bac5b9c714de",
+    "humming/include/humming/kernel/process_input/context.cuh": "311eb05f3c6db2bda6179ebebeb42da979dbc94b15239390862dc2e2c2a0e364",
+    "tests/kernels/process_input/test_layout.py": "3bfce3304b5865d371679fe7b957257ff30cf3a0e40a8cd007bfa477e0ae4beb",
+    "docs/config.md": "e0b0bfe8b22e1ebffb4fbd4ea45ec3d2efd1b91dd1d678bfe7462d8c71b0117d"
+  }
+}
